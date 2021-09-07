@@ -1,16 +1,74 @@
-!!Edition and Templates
+!!Basic definitions
 
-There is also a template system, you can find template in the folder ''_support/template''.
-Some template are already written, but if you want to have your own, you had two solutions:
--edit the existing template related to the format you want to change (recommanded)
--create your own template with its own name
+Graphs are discrete mathematical structures that consist of a set of vertices (also called nodes) and a set of edges that connect those vertices.
+In computer science is more commonly used the term ''node'' instead of ''vertex''. In this booklet the term node is going to be the one used.
+There are multiple types of graphs according if the edges are directed or undirected, if the edges are weighted or unweighted and so on.
+There are a great set of mathematical problems that can be solved using graph models. Graphs are vastly used in all kind of computer science problems.
+In this chapter, basic graph concepts and graphs types are going to be explained in order to ease the following of the algorithms.
 
-You will found some template examples in ''_support/template'' folder to see how it works.
-The default template system is ''Mustache''.
+!!!Directed Graph
 
-Output directory's default name is ''book-result'' but you can change it in the pillar.conf file by editing the
-==OUTPUTDIRECTORY== variable
+A directed graph is a type of graph in which every edges has a direction: an ingoing node and an outgoing node. The most commonly way of representing a graph is to draw it.
+A directed graph can de drawn like this:
 
++Directed graph>figures/directed_graph.pdf|width=30+
 
-+>figures/pharo.png|width=30+
-+>figures/rmod.png|width=30+
+!!!Undirected Graph
+
+An undirected graph is a type of graph in which the edges does not have a direction. They can be drawn without a line that does not have any arrows head. It is
+understood that the graph has no direction if the direction is not specified explicitly.
+
++Undirected graph>figures/undirected_graph.pdf|width=30+
+
+!!!Weighted Graph
+
+A weighted graph is a graph that each of its edges has an associated weight. In real life examples, the weights can represent several things. For example, a graph can be a map in which
+the nodes represent cities and the edges represent the distance between those cities.
+
++Weighted graph>figures/weighted_graph.pdf|width=40+
+
+!!!Connected Graph
+
+A connected graph is an undirected graph in which exists a path for every pair of nodes.
+For example, the first figure is a connected graph because from any node you can get to any node.
+
++Connected graph>figures/connected_graph.pdf|width=40+
+
+But, the second figure is a disconnected graph because the nodes F and G are isolated from the rest.
+
++Disconnected graph>figures/disconnected_graph.pdf|width=48+
+
+!!! Graph Cycle
+
+A graph cycle is a sequence of adjacent nodes in which all nodes are different except of the first and the last one.
+That means, a graph cycle is a path that ends and starts in the same node without repeating any other node.
+
+For example, in the first figure exists a cycle between nodes ''A, B, D''.
+
++Cycle in a graph>figures/cycle_in_a_graph.pdf|width=40+height=10+
+
+But, in the second figure there is no cycle because the node D has to be traveled twice to reach node A from A.
+
++Not a cycle>figures/not_a_cycle.pdf|width=45+
+
+!!!Directed Acyclic Graph (DAG)
+
+Like the name suggest, a directed acyclic graph is a directed graph that does not have any cycles.
+
++Directed Acyclic Graph>figures/dag.pdf|width=40+
+
+!!!Strongly Connected Graph
+
+Unlike the Connected Graph, a Strongly Connect is a ""directed"" graph in which exists a path for every pair of nodes. For example, the following graph is not strongly connected
+because it is impossible to reach node A from node B.
+But, this following graph it is strongly connected because from whatever node it is possible to reach every other node in the graph.
+
+!!! Strongly Connected Component
+
+A strongly connected component of a directed graph is the maximal subgraph that is strongly connected.
+
+!!!Tree
+
+A tree is a connected graph without cycles. That means that there is only one path between every pair of vertices. But, in the computer science context, normally a tree is
+represented as a ""directed"" graph. In that case, the definition will be that a ""directed"" tree is a directed graph acyclic graph in which every node has only one incoming (parent) node.
+If you remove the direction of the directed acyclic graph the reaming graph has to be an ""undirected"" tree.

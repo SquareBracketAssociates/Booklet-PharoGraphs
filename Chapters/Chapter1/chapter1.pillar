@@ -1,8 +1,3 @@
-!!Compilation
+!!Introduction
 
-+Pillar logo>figures/pillar.png|width=30+
-Welcome to Pillar's little user-guide !!
-
-To write a book, you can create chapters and include them into ''book.pillar'' (see the ''book.pillar'' file)
-or directly edit the file.
-If you don't know ''Pillar'', check its documentation at *http://github.com/pillar-markup/pillar*.
+This booklet will explain some of the most common graph algorithms and its real life applications. All of them will be programmed in Pharo. It will cover the implementation code and the pseudo-code of the algorithms. 
