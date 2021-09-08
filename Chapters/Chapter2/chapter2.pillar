@@ -59,16 +59,28 @@ Like the name suggest, a directed acyclic graph is a directed graph that does no
 
 !!!Strongly Connected Graph
 
-Unlike the Connected Graph, a Strongly Connect is a ""directed"" graph in which exists a path for every pair of nodes. For example, the following graph is not strongly connected
-because it is impossible to reach node A from node B.
-But, this following graph it is strongly connected because from whatever node it is possible to reach every other node in the graph.
+Unlike the Connected Graph, a Strongly Connect is a ""directed"" graph in which exists a path for every pair of nodes. The first figure is a strongly connected graph.
+
++Strongly connected graph>figures/strongly_connected_graph.pdf|width=40+
+
+The second figure is not strongly connected because it is not possible to reach node D from node A. However, if the directions of the graph are deleted, the graph becomes a
+""undirected"" connected graph. For that reason, the second figure is called a weakly connected graph.
+
++Weakly connected graph>figures/not_strongly_connected_graph.pdf|width=40+
 
 !!! Strongly Connected Component
 
-A strongly connected component of a directed graph is the maximal subgraph that is strongly connected.
+A strongly connected component of a directed graph is the maximal subgraph that is strongly connected. In the figure there are three strongly connected components in the graph:
+ {{{$\{A, B, C\}$}}}, {{{$\{F, E\}$}}}, {{{$\{D\}$}}}.
+
++Graph with three strongly connected components>figures/strongly_connected_components.pdf|width=50+
 
 !!!Tree
 
 A tree is a connected graph without cycles. That means that there is only one path between every pair of vertices. But, in the computer science context, normally a tree is
-represented as a ""directed"" graph. In that case, the definition will be that a ""directed"" tree is a directed graph acyclic graph in which every node has only one incoming (parent) node.
+represented as a ""directed"" graph. In that case, the definition will be that a ""directed"" tree is a directed acyclic graph in which every node has only one incoming (parent) node.
 If you remove the direction of the directed acyclic graph the reaming graph has to be an ""undirected"" tree.
+
++Tree>figures/tree.pdf|width=40+
+
++Directed tree>figures/directed_tree.pdf|width=40+
