@@ -32,7 +32,12 @@ nodeA to: nodeC.
 nodeB to: nodeC.
 ]]]
 
-The library also provides an API for creating the graph without the need of creating the adjacencies one by one:
+!!!Graph algorithms
+
+All the different graph algorithms that are present in this library have a common API. All the algorithms are
+subclasses of AIGraphAlgorithm. The class AIGraphAlgorithm provides the common API to add nodes, edges, searching the nodes, etc.
+
+For example, to creating a graph without the need of creating the adjacencies one by one, you can use the methods ==nodes:== and ==edges:==.
 
 [[[
 | graph |

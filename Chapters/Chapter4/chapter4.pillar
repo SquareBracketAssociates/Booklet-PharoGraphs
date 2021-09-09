@@ -1,1 +1,94 @@
 !!Topological sorting
+
+Topological sorting is a way of ordering a ""directed acyclic graph"" such that for every directed edge {{{$(U, V)$}}} from
+node {{{$U$}}} to node {{{$V$}}}, {{{$U$}}} becomes first in the resulting ordering. The topological sorting can be applied
+for example to a graph in which its nodes represents software dependencies. In order to install a library, there are some
+modules that need to be installed before others. So, in case case a topological sorting will be useful to know which modules
+to install first (the one that has no dependencies) and so on.
+
+In order to apply a topological sort to a graph, the graph must be a directed acyclic graph (DAG). There is at least one topological
+possible order for a DAG.
+
+The algorithm that is used in this library is the Kahn's algorithm. It has a time complexity of {{{$O(V + E)$}}}.
+The pseudocode is:${footnote:note=https://en.wikipedia.org/wiki/Topological\_sorting}$.
+
+[[[
+L ← Empty list that will contain the sorted elements
+S ← Set of all nodes with no incoming edge
+while S is not empty do
+    remove a node n from S
+    add n to L
+    for each node m with an edge e from n to m do
+        remove edge e from the graph
+        if m has no other incoming edges then
+            insert m into S
+if graph has edges then
+    return error   (graph is not a DAG)
+else
+    return L   (a topologically sorted order)
+]]]
+
+This algorithm is implemented in the class ==AITopologicalSorting==. As said in the previous chapter, this ==AITopologicalSorting==
+class is a subclass of ==AIGraphAlgorithm==. So, the parent class provides all the mechanisms to handle the implementation of the
+graph data structure and the algorithm class only has the responsibility to implement the logic of the algorithm.
+
+The implementation of this algorithm is as follows:
+
+[[[
+AITopologicalSorting>>#run
+
+  topologicalSortedElements := OrderedCollection empty.
+  nodesWithNoIncomingEdges := OrderedCollection empty.
+  "Obtain all the nodes without incoming nodes"
+  nodesWithNoIncomingEdges addAll:
+  	(nodes select: [ :node | node incomingNodes isEmpty ]).
+
+  [ nodesWithNoIncomingEdges isNotEmpty ] whileTrue: [
+  	| node |
+  	node := nodesWithNoIncomingEdges removeFirst.
+  	topologicalSortedElements addLast: node model.
+
+  	"Remove all the edges of node from the graph"
+  	node adjacentNodes do: [ :adjacentNode |
+  		adjacentNode incomingNodes remove: node.
+  		adjacentNode incomingNodes ifEmpty: [
+  			nodesWithNoIncomingEdges add: adjacentNode ] ].
+  	node adjacentNodes: #(  ) ].
+
+  "If the graph still has edges"
+  (nodes anySatisfy: [ :node | node adjacentNodes isNotEmpty ])
+    ifTrue: [ Error signal: 'Not a DAG (Directed Acyclic Graph)' ].
+
+  "Return the topological order the first element being the node without any dependencies"
+  ^ topologicalSortedElements
+]]]
+
+!!!Problem
+
+Image that the following graph represents software dependencies. You want to install the module ''G''. But, in order to install
+that module you must install all the other ones before in a topological order. You need to install module ''C'' and ''A'' before installing
+module ''D''. So in this case the topological sorting is the algorithm that we need in order to solve the problem.
+
++Software modules>figures/topological_sorting.pdf|width=45+
+
+To solve this problem programatically we only need to declare the nodes, the edges and them running the algorithm.
+
+[[[
+"First define the nodes and the edges"
+nodes := #( $A $B $C $D $E $F $G ).
+edges := #( #( $A $B ) #( $A $C ) #( $B $E ) #( $C $E ) #( $C $D )
+            #( $D $E ) #( $D $F ) #( $E $G ) #( $F $G ) ).
+"Instantiate the graph algorithm"
+topSortingAlgo := AITopologicalSorting new.
+"Set the nodes and edges"
+topSortingAlgo
+	nodes: nodes;
+	edges: edges from: #first to: #second.
+"Run to obtain the result"
+topologicalSortedElements := topSortingAlgo run.
+]]]
+
+Note that a ''DAG'' may have several topological orders which all of them are correct. If we look at the result we get the
+order in which the software dependencies need to be installed.
+
+==\#( $A $B $C $D $E $F $G )==
