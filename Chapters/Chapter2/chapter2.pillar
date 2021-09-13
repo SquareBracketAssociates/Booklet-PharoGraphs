@@ -45,7 +45,7 @@ That means, a graph cycle is a path that ends and starts in the same node withou
 
 For example, in the first figure exists a cycle between nodes ''A, B, D''.
 
-+Cycle in a graph>figures/cycle_in_a_graph.pdf|width=40+height=10+
++Cycle in a graph>figures/cycle_in_a_graph.pdf|width=40+
 
 But, in the second figure there is no cycle because the node D has to be traveled twice to reach node A from A.
 
