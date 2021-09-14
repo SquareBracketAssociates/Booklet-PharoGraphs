@@ -1,3 +1,18 @@
 !!Introduction
 
-This booklet will explain some of the most common graph algorithms and its real life applications. All of them will be programmed in Pharo. It will cover the implementation code and the pseudo-code of the algorithms. 
+In this booklet the most common graph algorithms will be explained along with some case studies
+where these algorithms can be applied. These algorithms are available in the ''Pharo AI'' ''graph-algorithms'' library.
+''https://github.com/pharo-ai/graph-algorithms''
+
+This booklet will have the pseudocode of the algotihms and an explanation of how do they work. You can install the library
+running the following code in a Playground.
+
+[[[
+Metacello new
+	repository: 'github://pharo-ai/graph-algorithms/src';
+	baseline: 'AIGraphAlgorithms';
+	load
+]]]
+
+All the algorithms have the same API to set the nodes and the edges. The edges can be both weighted or unweighted.
+A detailed explanation of how to use the API will be given on chapter 3.
