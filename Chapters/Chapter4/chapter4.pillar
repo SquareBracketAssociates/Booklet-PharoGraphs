@@ -63,11 +63,11 @@ AITopologicalSorting>>#run
   ^ topologicalSortedElements
 ]]]
 
-!!!Problem
+!!!Case study
 
-Image that the following graph represents software dependencies. You want to install the module ''G''. But, in order to install
+Image that the following graph represents software dependencies. You want to install the module ''G''. But, to install
 that module you must install all the other ones before in a topological order. You need to install module ''C'' and ''A'' before installing
-module ''D''. So in this case the topological sorting is the algorithm that we need in order to solve the problem.
+module ''D''. So in this case the topological sorting is the algorithm that we need to solve the problem.
 
 +Software modules>figures/topological_sorting.pdf|width=45+
 

@@ -70,7 +70,7 @@ AITarjan>>#traverse: aTarjanNode
 		self popStackAndAddNewSccUntil: aTarjanNode ]
 ]]]
 
-!!!!Problem
+!!!Case study
 
 The following graph represents a graph of connected people on a social media. An edge represents a follow. One person can follow
 and can be followed. We want to know which and how many strongly connected components has the social network.
@@ -117,7 +117,7 @@ To do that
 
 ''Note that this algorithm for reducing a graph does not work on weighted graphs.''
 
-!!!!Problem
+!!!Case study
 
 We want to reduce the same graph collapsing all strongly connected components into one node.
 

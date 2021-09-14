@@ -4,7 +4,7 @@ Graphs are discrete mathematical structures that consist of a set of vertices (a
 In computer science is more commonly used the term ''node'' instead of ''vertex''. In this booklet the term node is going to be the one used.
 There are multiple types of graphs according if the edges are directed or undirected, if the edges are weighted or unweighted and so on.
 There are a great set of mathematical problems that can be solved using graph models. Graphs are vastly used in all kind of computer science problems.
-In this chapter, basic graph concepts and graphs types are going to be explained in order to ease the following of the algorithms.
+In this chapter, basic graph concepts and graphs types are going to be explained to ease the following of the algorithms.
 
 !!!Directed Graph
 

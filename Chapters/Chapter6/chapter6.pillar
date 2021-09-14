@@ -91,7 +91,7 @@ In the implementation we only need to change one line:
 sortBlock := [ :e1 :e2 | e1 weight > e2 weight ].
 ]]]
 
-!!!!Problem
+!!!Case study
 
 Imagine that you have a telecommunications company and you want to build a connection between different neighbourhoods.
 Some of the connections are more expensive than the other. For example, one connection has to pass under the ground or above some mountains.
