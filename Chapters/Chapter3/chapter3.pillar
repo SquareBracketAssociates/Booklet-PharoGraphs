@@ -6,38 +6,14 @@ So far the graphs were represented as drawings. But, to program them a data stru
 
 In this library the adjacency list is the data structure that is used.
 
-!!!Adjacency Matrix
-
-Like the name suggest, an adjacency matrix is a way of representing a graph as a square matrix that contains boolean values (1's and 0's).
-The boolean value of the matrix represent if there is a direct path between the two nodes. For constructing the matrix, the nodes are put in the {{{$i$}}} and {{{$j$}}} columns.
-In the case of an undirected graph the matrix is going to be symmetric because for every pair of nodes {{{$(i, j)$}}} exists a path for {{{$(j, i)$}}}.
-
-!!!Adjacency List
-
-As said, this library uses the adjacency list to represent the graph. An adjacency list is a list that contains the nodes. In this library, the nodes are represented as objects.
-
-There is the default class of a Node which provides a basic API. For example, you can represent this graph with the following code
-
-[[[
-| nodeA nodeB nodeC |
-
-"Create the nodes"
-nodeA := AIGraphNode new model: $A.
-nodeB := AIGraphNode new model: $B.
-nodeC := AIGraphNode new model: $C.
-
-"Declare the adjacencies"
-nodeA to: nodeB.
-nodeA to: nodeC.
-nodeB to: nodeC.
-]]]
-
 !!!Graph algorithms
 
-All the different graph algorithms that are present in this library have a common API. All the algorithms are
-subclasses of AIGraphAlgorithm. The class AIGraphAlgorithm provides the common API to add nodes, edges, searching the nodes, etc.
+All the different graph algorithms of this library have a common API. All the algorithms are
+subclasses of ==AIGraphAlgorithm==. The class ==AIGraphAlgorithm== provides the common API to add nodes, edges, searching the nodes, etc.
 
-For example, to creating a graph without the need of creating the adjacencies one by one, you can use the methods ==nodes:== and ==edges:==.
++Class diagram>figures/uml.pdf|width=30+
+
+For example, to creating a graph, you can use the methods ==nodes:== and ==edges:from:to:==
 
 [[[
 | graph |
@@ -46,14 +22,16 @@ graph nodes: #( $A $B $C ).
 graph edges: #( #( $A $B ) #( $A $C ) #( $B $C ) )
   from: #first
   to: #second.
+graph run.
 ]]]
 
-First, we instantiate the graph algorithm (in this case a generic one). Then, instantiate the nodes. And finally, set the edges.
-Note that for the edges we need to pass a list. The elements inside a list can be any kind of object. In the above example the objects were also a list. And then, we need to
-specific which message is needed to send to the objects to obtain the ''from:'' and ''to:'' relationships. In the example, the ''in node'' is the first element
-of the list and the second one is the ''out node''. So, we need only to send the messages ''first'' and ''second''.
+First, we instantiate the graph algorithm (in this case the abstract one). Then, instantiate the nodes. And finally, set the edges.
+Note that for the edges we need to pass a list. The elements inside a list can be any kind of object. In the above example
+the objects are also a list. And then, we need to specific a block that is needed to obtain
+the ==from:== and ==to:== relationships. In the example, the ''in node'' is the first element
+of the list and the second one is the ''out node''. So, we need only to send the messages ==first== and ==second==.
 
-To represent weighted graphs:
+To represent weighted graphs we use the ==edges:from:to:weight:== method.
 
 [[[
 | graph |
@@ -63,6 +41,7 @@ graph edges: #( #( $A $B 2 ) #( $A $C 4 ) #( $B $C 7 ) )
   from: #first
   to: #second
   weight: #third.
+graph run.
 ]]]
 
 So in this case the library is going to take the third element as the weight for each of the edges.
