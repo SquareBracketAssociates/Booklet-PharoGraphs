@@ -1,13 +1,141 @@
 !!Shortest path problem
 
-The shot
+The shortest path problem consists on finding a path between two pais of nodes in which the sum
+of the weights is minimized. For a general graph this problem is NP-hard. For some kind of graphs this problem
+can be solved in linear time.
+
 !!!Shortest path on unweighted graphs
 
+If the graph is unweighted or all edges have the same ""non-negative"" weight, the shortest path can be found
+in linear time {{{$O(V + E)$}}} using Breadth First Search (BFS) algorithm. BFS algorithm travels the graph in a traversal way.
+
+[[[
+initialize a queue Q
+mark start node as visited
+Q.enqueue(start)
+while Q is not empty do:
+  node := Q.dequeue()
+  if node is the end then:
+    return node
+  for adjacent nodes of node do:
+    if adjacentNode is not visited then:
+      mark adjacentNode as visited
+      Q.enqueue(adjacentNode)
+]]]
+
+In the Pharo implementation we use a linked list as a queue.
+
+[[[
+AIBFS>>#run
+
+	| node neighbours |
+	queue := LinkedList with: start.
+	start visited: true.
+
+	[ queue isNotEmpty ] whileTrue: [
+		node := queue removeFirst.
+		neighbours := node adjacentNodes.
+
+		neighbours do: [ :next |
+			next visited ifFalse: [
+				queue addLast: next.
+				next visited: true.
+				next previousNode: node ] ] ]
+]]]
+
+After running the algorithm, to reconstruct the shortest path between the start and the end
+node, we use the following method:
+
+[[[
+AIBFS>>#reconstructPath
+
+	| path previous |
+	"If no path exists between the start and the end node"
+	end previousNode ifNil: [ ^ #(  ) ].
+	path := LinkedList empty.
+	previous := end.
+	path addFirst: end model.
+	[ previous = start ] whileFalse: [
+		previous := previous previousNode.
+		path addFirst: previous model ].
+	^ path
+]]]
+
 !!!!Case study
+
++BFS graph>figures/bfs.pdf|width=45+
+
+For the BFS graph, the shortest path can be calculated using the class ==AIBFS== like shown in the following example.
+
+[[[
+nodes := $a to: $i.
+edges := #( #( $a $b ) #( $b $c ) #( $c $d ) #( $d $e ) #( $e $a )
+            #( $b $e ) #( $e $b ) #( $e $f ) #( $f $g ) #( $g $h )
+            #( $h $f ) #( $g $i ) #( $i $g ) ).
+bfs := AIBFS new.
+bfs
+	nodes: nodes;
+	edges: edges from: #first to: #second.
+path := bfs runFrom: $a to: $g
+]]]
+
+The ==path== variable constains all the nodes that are part of the path, if we inspect the variable we see:
+[[[
+($a $b $e $f $g)
+]]]
+
+If we want to get the shortest path between the same starting node A and some other node, there is no need
+of re-running the algorithm. We only need to change the end node and call the method reconstruct path.
+
+[[[
+bfs end: $d.
+pathToD := bfs reconstructPath
+]]]
 
 !!!Shortest path on Directed Acyclic Graphs (DAG)
 
+If the graph is a directed acyclic graph (DAG), we can calculate the shortest path using an algorithm
+based on topological sort. The time complexity of the algorithm is also {{{$O(V + E)$}}}.
+The idea of the algorithm is order the nodes in a topological order, then keep tracking of the path weight
+of each node. Then, start poping the nodes in topological order and store the ones with the lowest path weight.
+The pseudocode is:
+
+[[[
+1. Initialize the initial distance to every node to be infinity and the distance of the start node to be 0.
+2. Create a topological order of all nodes.
+3. For every node u in topological order:
+- Do following for every adjacent node v of u
+- IF (v pathWeight > u pathWeight + weight(u, v)) THEN v pathWeight: u pathWeight + weight(u, v)
+]]]
+
+The Pharo implementation is as follows.
+
+[[[
+AIShortestPathInDAG>>#run
+
+	| topSorter stack sortedNode |
+	self initializePathWeights.
+	topSorter := AITopologicalSorting new
+		             addNodesFromDifferentGraph: nodes;
+		             yourself.
+	topSorter run.
+	"Sort the nodes in topological order"
+	stack := topSorter topologicalSortedElements.
+	[ stack isNotEmpty ] whileTrue: [
+		sortedNode := self findNode: stack removeFirst.
+		sortedNode outgoingEdges do: [ :nextEdge |
+			nextEdge to pathWeight >
+      (sortedNode pathWeight + nextEdge weight)
+				ifTrue: [
+					nextEdge to pathWeight: sortedNode pathWeight +
+          nextEdge weight.
+					"The previousNode variable is used for retrieving the path"
+					nextEdge to previousNode: sortedNode ] ] ]
+]]]
+
 !!!!Case study
+
++DAG>figures/dag.pdf|width=50+
 
 !!!Shortest path on weighted graphs
 
