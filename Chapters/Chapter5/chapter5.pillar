@@ -8,6 +8,9 @@ can be solved in linear time.
 
 If the graph is unweighted or all edges have the same ""non-negative"" weight, the shortest path can be found
 in linear time {{{$O(V + E)$}}} using Breadth First Search (BFS) algorithm. BFS algorithm travels the graph in a traversal way.
+BFS is a single source shortest path algorithm. That means that before running the algorithm if needed
+to specify a starting node. Then, the algorithm can tell us the shortest path between the starting node
+and all the other nodes.
 
 [[[
 initialize a queue Q
@@ -92,12 +95,61 @@ bfs end: $d.
 pathToD := bfs reconstructPath
 ]]]
 
+!!!Shortest path on weighted graphs
+
+The Dijkstra's algorithm is one of the most-know algorithms for calculating the shortest path in a weighted graph.
+As BFS, this algorithm is also a single source shortest path algorithm. In its naive implementation has a time
+complexity of{{{$O(V^2)$}}}. But, it can be optimized using a head or a tree as a data structure to a time
+complexity of {{{$O((V+E)*log V)$}}}. If a Fibonacci heap is used we can the best possible time complexity
+{{{$O(E + V * log V)$}}}. Dijkstra's algorithm can handle a graph with cycles. But, it cannot handle negative weights.
+
+The algorithm idea is:
+
+[[[
+1. Mark all nodes as unvisited.
+2. Assign to every node infinity as the distance value. Set it to zero for the initial. Set the initial node as current.
+3. Consider all of unvisited neighbours of the current node and calculate their distances through the current node. Compare the newly calculated tentative distance to the current assigned value and assign the smaller one.
+4. When all of the unvisited neighbours of the current node are checked, mark the current node as visited.
+5. Select the unvisited node that is marked with the smallest tentative distance, set it as the new "current node", and go back to step 3.
+]]]
+
+Selecting the unvisited node with the smallest distance is the part of the algorithm that can improve or worsen the time complexity.
+Depending on the data strcuture that is chosen. If we choose an array, the time complexity is the biggest one.
+
+The implementation in Pharo is the following:
+
+TO BE DONE. I HAVE TO FIX THIS ALGO
+
+!!!!Case study
+
++Dijkstra graph>figures/dijkstra.pdf|width=50+
+
+In this graph, the shortest path between node A and B is ==#( $A $C $B )==
+The shortest path between node A and node F is ==#( $A $C $B $D $E $F )==
+
+[[[
+nodes := $A to: $F.
+edges := #( #( $A $B 5 ) #( $A $C 1 ) #( $B $C 2 ) #( $B $E 20 )
+            #( $B $D 3 ) #( $C $B 3 ) #( $C $E 12 ) #( $D $C 3 )
+            #( $D $E 2 ) #( $D $F 6 ) #( $E $F 1 ) ).
+dijkstra nodes: nodes.
+dijkstra
+	edges: edges
+	from: #first
+	to: #second
+	weight: #third
+shortestPathAToB := dijkstra runFrom: $A to: $B.
+shortestPathAToF := dijkstra runFrom: $A to: $F.
+]]]
+
 !!!Shortest path on Directed Acyclic Graphs (DAG)
 
-If the graph is a directed acyclic graph (DAG), we can calculate the shortest path using an algorithm
-based on topological sort. The time complexity of the algorithm is also {{{$O(V + E)$}}}.
-The idea of the algorithm is order the nodes in a topological order, then keep tracking of the path weight
-of each node. Then, start poping the nodes in topological order and store the ones with the lowest path weight.
+If the graph is a directed acyclic weighted graph (DAG), we can calculate the shortest path using an algorithm
+based on topological sort. Using this algorithm we have a time complexity of {{{$O(V + E)$}}}.
+This algorithm is also single source shortest path. The idea of the algorithm is to order the nodes in a
+topological order, then keep tracking of the path weight of each node. Then, start poping the nodes in
+topological order and store the ones with the lowest path weight. As this algorithm runs in graphs that has no cycles,
+it ""can"" accept negative weights.
 The pseudocode is:
 
 [[[
@@ -135,16 +187,22 @@ AIShortestPathInDAG>>#run
 
 !!!!Case study
 
+On this weighted, calculate the shortest path between node A and node F.
+
 +DAG>figures/dag.pdf|width=50+
-
-!!!Shortest path on weighted graphs
-
-!!!!Case study
 
 !!!Shortest path on weighted graphs with negative weights
 
+As the Dijkstra's algorithm always tries to minimize the distance, if the graph has negative weights then it will enter
+into an infinity cycle. The Bellman-Ford algorithm handles graphs with negative weights. Like all the other previous algorithms,
+this is also single source shortest path. It has a time complexity of {{{$O(V * E)$}}}.
+
 !!!!Case study
+
++Bellman-Ford graph>figures/bellman_ford.pdf|width=50+
 
 !!!Longest path problem
 
-!!!!Case study
+To calculate the longest path of a graph we can simply multiply all the nodes weights by {{{$-1$}}} and then
+calculate the shortest path. If the graph is a DAG, then we can use the topological sort based algorithm.
+If not, we can use Bellman-Ford.
