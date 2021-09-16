@@ -197,6 +197,8 @@ As the Dijkstra's algorithm always tries to minimize the distance, if the graph 
 into an infinity cycle. The Bellman-Ford algorithm handles graphs with negative weights. Like all the other previous algorithms,
 this is also single source shortest path. It has a time complexity of {{{$O(V * E)$}}}.
 
+NEEDS TO BE COMPLETED BECAUSE THE BELLMAN-FORD ALGO WAS NOT PRESENT IN THE PREVIOUS LIBRARY AND I DID NOT IMPLEMENTED YET.
+
 !!!!Case study
 
 +Bellman-Ford graph>figures/bellman_ford.pdf|width=50+
