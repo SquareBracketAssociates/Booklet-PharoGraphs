@@ -1,11 +1,10 @@
 !!Introduction
 
 In this booklet the most common graph algorithms will be explained along with some case studies
-where these algorithms can be applied. These algorithms are available in the ''Pharo AI'' ''graph-algorithms'' library.
-''https://github.com/pharo-ai/graph-algorithms''
+where these algorithms can be applied. These algorithms are available in the ''Pharo AI'' ''graph-algorithms'' library available at: *https://github.com/pharo-ai/graph-algorithms*
 
-This booklet will have the pseudocode of the algotihms and an explanation of how do they work. You can install the library
-running the following code in a Playground.
+This booklet describes the pseudocode of the algotihms and an explanation of how do they work. You can install the library
+executing the following code snippet:
 
 [[[
 Metacello new
@@ -14,5 +13,6 @@ Metacello new
 	load
 ]]]
 
-All the algorithms have the same API to set the nodes and the edges. The edges can be both weighted or unweighted.
-A detailed explanation of how to use the API will be given on chapter 3.
+All the algorithms have the same API to set the nodes and the edges. 
+The edges can be both weighted or unweighted.
+A detailed explanation of how to use the API will be given on Chapter 3.
