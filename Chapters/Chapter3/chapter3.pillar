@@ -1,19 +1,15 @@
-!!Representation
+!!Graph Representation
 
-So far the graphs were represented as drawings. But, to program them a data structure is needed. The most used data structures to represent graphs are:
-- An adjacency Matrix
-- An Adjacency List
+So far the graphs were represented as drawings. But, to program them a data structure is needed. 
+The most used data structures to represent graphs are:
+- An adjacency matrix where connection between nodes is basically a cross within a matrix whose entries are nodes.
+- An adjacency list where connection between nodes are given as a list of pairs of nodes or triples in case of weighted edges.
 
-In this library the adjacency list is the data structure that is used.
+THERE IS DIFFERENCE BETWEEN structure to represent as input and internal structure.
 
-!!!Graph algorithms
-
-All the different graph algorithms of this library have a common API. All the algorithms are
-subclasses of ==AIGraphAlgorithm==. The class ==AIGraphAlgorithm== provides the common API to add nodes, edges, searching the nodes, etc.
-
-+Class diagram>figures/uml.pdf|width=30+
-
-For example, to creating a graph, you can use the methods ==nodes:== and ==edges:from:to:==
+In this library we use the adjacency list is the data structure to represent a graph.
+For example, the following graph is created using the messages ==nodes:== and ==edges:from:to:==.
+It also defines that the edges are coming from the first element to the second one. 
 
 [[[
 | graph |
@@ -25,7 +21,8 @@ graph edges: #( #( $A $B ) #( $A $C ) #( $B $C ) )
 graph run.
 ]]]
 
-First, we instantiate the graph algorithm (in this case the abstract one). Then, instantiate the nodes. And finally, set the edges.
+
+First, we instantiate the graph algorithm (in this case the abstract one). Then, we instantiate the nodes. And finally, we set the edges.
 Note that for the edges we need to pass a list. The elements inside a list can be any kind of object. In the above example
 the objects are also a list. And then, we need to specific a block that is needed to obtain
 the ==from:== and ==to:== relationships. In the example, the ''in node'' is the first element
@@ -45,3 +42,43 @@ graph run.
 ]]]
 
 So in this case the library is going to take the third element as the weight for each of the edges.
+
+!!!About nodes
+
+WE SHOULD PRESENT THE NODE API
+
+- ==node incomingNodes==	
+- ==node adjacentNodes== what is this?	
+- instead of node incomingNodes isEmpty we could have node isLeaf?
+
+
+!!!Graph algorithm inheritance tree
+
+All the different graph algorithms of this library share a common API. 
+They are subclasses of ==AIGraphAlgorithm==. 
+The class ==AIGraphAlgorithm== provides the common API to add nodes, edges, searching the nodes, etc.
+
++Class diagram>figures/uml.pdf|width=30+
+
+WE SHOULD SHOW AN INHERITANCE WITH THE API AND THE SUBCLASSES
+
+%ClassHierarchyPrinter new 
+%		forClass: AIGraphAlgorithm; 
+%		doNotShowState;
+%		doNotShowSuperclasses;
+%		print 
+[[[
+AIGraphAlgorithm
+	AIBFS
+	AIDijkstra
+	AIGraphReducer
+	AIHits
+		AIWeightedHits
+	AIKruskal
+	AIShortestPathInDAG
+	AITarjan
+	AITopologicalSorting
+]]]
+
+
+

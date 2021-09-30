@@ -26,3 +26,4 @@ A detailed explanation of how to use the API will be given on Chapter 3.
 !!! Outline 
 
 We will start with some basic definitions, then in subsequent chapters we will describe the following algorithms: 
+topological sort, sortest path, Kruskal, Tarjan, HITs,

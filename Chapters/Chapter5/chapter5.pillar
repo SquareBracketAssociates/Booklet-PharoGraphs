@@ -1,17 +1,20 @@
 !!Shortest path problem
 
-The shortest path problem consists on finding a path between two pais of nodes in which the sum
+The shortest path problem consists on finding a path between two pairs of nodes in which the sum
 of the weights is minimized. For a general graph this problem is NP-hard. For some kind of graphs this problem
 can be solved in linear time.
 
 !!!Shortest path on unweighted graphs
 
 If the graph is unweighted or all edges have the same ""non-negative"" weight, the shortest path can be found
-in linear time {{{$O(V + E)$}}} using Breadth First Search (BFS) algorithm. BFS algorithm travels the graph in a traversal way.
-BFS is a single source shortest path algorithm. That means that before running the algorithm if needed
+in linear time {{{$O(V + E)$}}} using Breadth First Search (BFS) algorithm. 
+
+BFS algorithm travels the graph in a traversal way. 
+BFS is a single source shortest path algorithm. That means that before running the algorithm it is needed
 to specify a starting node. Then, the algorithm can tell us the shortest path between the starting node
 and all the other nodes.
 
+The algorithm is the following one: 
 [[[
 initialize a queue Q
 mark start node as visited
@@ -25,6 +28,9 @@ while Q is not empty do:
       mark adjacentNode as visited
       Q.enqueue(adjacentNode)
 ]]]
+
+
+
 
 In the Pharo implementation we use a linked list as a queue.
 

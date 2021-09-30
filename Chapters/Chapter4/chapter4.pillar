@@ -1,16 +1,38 @@
 !!Topological sorting
 
+Let us start with our first algorithm: a topological sort. A topological sort makes that that a node is treated before the nodes that depend on it
+are treated. If you consider tasks, it means that you want to do first a task before doing the ones that depend on this one. 
+
+
+
+
 Topological sorting is a way of ordering a ""directed acyclic graph"" such that for every directed edge {{{$(U, V)$}}} from
-node {{{$U$}}} to node {{{$V$}}}, {{{$U$}}} becomes first in the resulting ordering. The topological sorting can be applied
-for example to a graph in which its nodes represents software dependencies. In order to install a library, there are some
-modules that need to be installed before others. So, in case case a topological sorting will be useful to know which modules
+node {{{$U$}}} to node {{{$V$}}}, {{{$U$}}} becomes first in the resulting ordering. 
+
+
+
+CAN WE HAVE A VISUAL EXAMPLE
+
+!!! Example
+The topological sorting can be applied to a graph in which its nodes represents software dependencies.
+For example to install a library, there are some modules that need to be installed before others.
+So, in this case, a topological sort is useful to know which modules
 to install first (the one that has no dependencies) and so on.
 
-In order to apply a topological sort to a graph, the graph must be a directed acyclic graph (DAG). There is at least one topological
+Now for a same graph multiple topological sorts are possible just because since we treat first the nodes having no dependencies
+their travaersal order can be different and in addition the traversal order of their dependent can be different too.
+
+CAN WE HAVE AN EXAMPLE.
+
+
+
+!!! Kahn's algorithm
+To apply a topological sort to a graph, the graph must be a directed acyclic graph (DAG). There is at least one topological
 possible order for a DAG.
 
-The algorithm that is used in this library is the Kahn's algorithm. It has a time complexity of {{{$O(V + E)$}}}.
-The pseudocode is:${footnote:note=https://en.wikipedia.org/wiki/Topological\_sorting}$.
+The algorithm that is used in this library is the Kahn's algorithm. 
+It has a time complexity of {{{$O(V + E)$}}}.
+The pseudocode taken from *https://en.wikipedia.org/wiki/Topological_sorting* is the following one:
 
 [[[
 L ← Empty list that will contain the sorted elements
@@ -28,18 +50,19 @@ else
     return L   (a topologically sorted order)
 ]]]
 
-This algorithm is implemented in the class ==AITopologicalSorting==. As said in the previous chapter, this ==AITopologicalSorting==
-class is a subclass of ==AIGraphAlgorithm==. So, the parent class provides all the mechanisms to handle the implementation of the
+This algorithm is implemented in the class ==AITopologicalSorting== subclass of ==AIGraphAlgorithm==. 
+So, the parent class provides all the mechanisms to handle the implementation of the
 graph data structure and the algorithm class only has the responsibility to implement the logic of the algorithm.
 
 The implementation of this algorithm is as follows:
 
 [[[
-AITopologicalSorting>>#run
+AITopologicalSorting >> run
 
   topologicalSortedElements := OrderedCollection empty.
   nodesWithNoIncomingEdges := OrderedCollection empty.
   "Obtain all the nodes without incoming nodes"
+
   nodesWithNoIncomingEdges addAll:
   	(nodes select: [ :node | node incomingNodes isEmpty ]).
 
@@ -65,11 +88,11 @@ AITopologicalSorting>>#run
 
 !!!Case study
 
-Image that the following graph represents software dependencies. You want to install the module ''G''. But, to install
+Image that the graph shown in Figure *@soft* represents software dependencies. You want to install the module ''G''. But, to install
 that module you must install all the other ones before in a topological order. You need to install module ''C'' and ''A'' before installing
 module ''D''. So in this case the topological sorting is the algorithm that we need to solve the problem.
 
-+Software modules>figures/topological_sorting.pdf|width=45+
++Software modules>figures/topological_sorting.pdf|width=45|label=soft+
 
 To solve this problem programatically we only need to declare the nodes, the edges and them running the algorithm.
 
@@ -92,3 +115,6 @@ Note that a ''DAG'' may have several topological orders which all of them are co
 order in which the software dependencies need to be installed.
 
 ==\#( $A $B $C $D $E $F $G )==
+
+
+
