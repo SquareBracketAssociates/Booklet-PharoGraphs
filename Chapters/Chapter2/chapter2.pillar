@@ -7,8 +7,7 @@ In computer science is more commonly used the term ''node'' instead of ''vertex'
 There are multiple types of graphs according if the edges are directed or undirected, if the edges are weighted or unweighted and so on.
 In this chapter, basic graph concepts and graphs types are going to be explained to ease the following of the algorithms.
 
-
-!!!Kind of Graphs
+!!!Type of Graphs
 
 !!!!Directed Graph
 
@@ -26,7 +25,7 @@ understood that the graph has no direction if the direction is not specified exp
 
 !!!!Weighted Graph
 
-A weighted graph is a graph that each of its edges has an associated weight (see Figure *@weighted*). In real life examples, the weights can represent several things. 
+A weighted graph is a graph that each of its edges has an associated weight (see Figure *@weighted*). In real life examples, the weights can represent several things.
 For example, a graph can be a map in which the nodes represent cities and the edges represent the distance between those cities.
 
 +Weighted graph: edges have a weight>figures/weighted_graph.pdf|width=40|label=weighted+
@@ -82,15 +81,15 @@ A strongly connected component of a directed graph is the maximal subgraph that 
 !!!Tree
 
 A tree is a connected graph without cycles. That means that there is only one path between every pair of vertices. But, in the computer science context, normally a tree is
-represented as a ""directed"" graph. In that case, the definition will be that a ""directed"" tree is a directed acyclic graph in which every node has only one incoming (parent) node (See Figure *@|label=Tree*).
-If you remove the direction of the directed acyclic graph the reaming graph has to be an ""undirected"" tree (See Figure *@undiTree*).
+represented as a ""directed"" graph. In that case, the definition will be that a ""directed"" tree is a directed acyclic graph in which every node has only one
+incoming (parent) node (See Figure *@directedTree*). If you remove the direction of the directed acyclic graph the reaming graph has to be an ""undirected"" tree (See Figure *@undiTree*).
 
-+Tree>figures/tree.pdf|width=40|label=Tree+
++Tree>figures/tree.pdf|width=40|label=undiTree+
 
-+Directed tree>figures/directed_tree.pdf|width=40|label=undiTree+
++Directed tree>figures/directed_tree.pdf|width=40|label=directedTree+
 
 !!! Conclusion
 
 These definitions set the stage for the algorithms that we will now describe.
-Identifying clearly the kind of graphs an algorithm is applied on is key because the working hypotheses 
-are really important. 
+Identifying clearly the kind of graphs an algorithm is applied on is key because the working hypotheses
+are really important.
