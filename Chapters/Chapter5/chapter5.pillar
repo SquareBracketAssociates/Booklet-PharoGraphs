@@ -4,17 +4,17 @@ The shortest path problem consists on finding a path between two pairs of nodes 
 of the weights is minimized. For a general graph this problem is NP-hard. For some kind of graphs this problem
 can be solved in linear time.
 
-!!!Shortest path on unweighted graphs
+!!!Shortest path on unweighted graphs (BFS algorithm)
 
 If the graph is unweighted or all edges have the same ""non-negative"" weight, the shortest path can be found
-in linear time {{{$O(V + E)$}}} using Breadth First Search (BFS) algorithm. 
+in linear time {{{$O(V + E)$}}} using Breadth First Search (BFS) algorithm.
 
-BFS algorithm travels the graph in a traversal way. 
+BFS algorithm travels the graph in a traversal way.
 BFS is a single source shortest path algorithm. That means that before running the algorithm it is needed
 to specify a starting node. Then, the algorithm can tell us the shortest path between the starting node
 and all the other nodes.
 
-The algorithm is the following one: 
+The algorithm is the following one:
 [[[
 initialize a queue Q
 mark start node as visited
@@ -28,8 +28,6 @@ while Q is not empty do:
       mark adjacentNode as visited
       Q.enqueue(adjacentNode)
 ]]]
-
-
 
 
 In the Pharo implementation we use a linked list as a queue.
@@ -85,10 +83,11 @@ bfs := AIBFS new.
 bfs
 	nodes: nodes;
 	edges: edges from: #first to: #second.
+
 path := bfs runFrom: $a to: $g
 ]]]
 
-The ==path== variable constains all the nodes that are part of the path, if we inspect the variable we see:
+The ==path== variable contains all the nodes that are part of the path, if we inspect the variable we see:
 [[[
 ($a $b $e $f $g)
 ]]]
@@ -101,7 +100,7 @@ bfs end: $d.
 pathToD := bfs reconstructPath
 ]]]
 
-!!!Shortest path on weighted graphs
+!!!Shortest path on weighted graphs (Dijkstra's algorithm)
 
 The Dijkstra's algorithm is one of the most-know algorithms for calculating the shortest path in a weighted graph.
 As BFS, this algorithm is also a single source shortest path algorithm. In its naive implementation has a time
@@ -119,12 +118,41 @@ The algorithm idea is:
 5. Select the unvisited node that is marked with the smallest tentative distance, set it as the new "current node", and go back to step 3.
 ]]]
 
-Selecting the unvisited node with the smallest distance is the part of the algorithm that can improve or worsen the time complexity.
-Depending on the data strcuture that is chosen. If we choose an array, the time complexity is the biggest one.
+Depending on the data structure that is chosen, the time complexity will vary. The array is the most inefficient one because to get the most
+promising pair it is necessary to travel all the array {{{$O(N)$}}}. But on a heap, or a Fibonacci heap, the time complexity for getting
+the most promising pair is in the logarithmic order.
 
 The implementation in Pharo is the following:
 
-TO BE DONE. I HAVE TO FIX THIS ALGO
+[[[
+AIDijkstra>>#run
+
+	| pq |
+	pq := self newPriorityQueue.
+	pq add: start -> 0.
+
+	[ pq isNotEmpty ] whileTrue: [
+		| assoc node minWeight |
+		assoc := self removeMostPromisingPair: pq.
+		node := assoc key.
+		minWeight := assoc value.
+		"Do not visit again the node"
+		node visited: true.
+
+		"Skip if the path weight is less than the one obtained from the pq.
+		This is an optimization for not processing unnecessary nodes."
+		node pathDistance < minWeight ifFalse: [
+
+			node outgoingEdges do: [ :edge |
+				edge to visited ifFalse: [
+					| newDistance |
+					newDistance := node pathDistance + edge weight.
+
+					newDistance < edge to pathDistance ifTrue: [
+						edge to previousNode: node.
+						edge to pathDistance: newDistance.
+						pq add: edge to -> newDistance ] ] ] ] ]
+]]]
 
 !!!!Case study
 
@@ -143,9 +171,17 @@ dijkstra
 	edges: edges
 	from: #first
 	to: #second
-	weight: #third
+	weight: #third.
+
 shortestPathAToB := dijkstra runFrom: $A to: $B.
-shortestPathAToF := dijkstra runFrom: $A to: $F.
+pathDistanceAToB := (dijkstra findNode: $B) pathDistance.
+
+dijkstra end: $F.
+shortestPathAToF := dijkstra reconstructPath.
+pathDistanceAToF := (dijkstra findNode: $F) pathDistance.
+
+dijkstra reset.
+shortestPathBToE := dijkstra runFrom: $B to: $E.
 ]]]
 
 !!!Shortest path on Directed Acyclic Graphs (DAG)
@@ -211,20 +247,107 @@ pathAtoF := shortestPathInDAG runFrom: $A to: $F.
 
 +DAG>figures/dag.pdf|width=50+
 
-!!!Shortest path on weighted graphs with negative weights
+!!!Shortest path on weighted graphs with negative weights (Bellman-Ford algorithm)
 
-As the Dijkstra's algorithm always tries to minimize the distance, if the graph has negative weights then it will enter
-into an infinity cycle. The Bellman-Ford algorithm handles graphs with negative weights. Like all the other previous algorithms,
-this is also single source shortest path. It has a time complexity of {{{$O(V * E)$}}}.
+In the Dijkstra's algorithm when a node is marked as visited, the algorithm already found the best distance to it, because adding any positive numbers
+will only increase the path distance. When we are dealing with negative numbers the assumption is not true.
 
-NEEDS TO BE COMPLETED BECAUSE THE BELLMAN-FORD ALGO WAS NOT PRESENT IN THE PREVIOUS LIBRARY AND I DID NOT IMPLEMENTED YET.
+The Bellman-Ford algorithm can handle negative weighted graphs. It runs in {{{$O(V*E)$}}} time. As the other algorithms of this chapter, this is also a single source
+shortest path algorithm. The logic behind the algorithm is to perform at worst {{{V-1$}}} times an edge relaxation. Relaxing an edge means to update the value of the
+distance from the starting node to the node to which to edge goes. Then, run the algorithm one more time, if an edge can reduce its distance (be relaxed) means that the node
+to which the edge goes is part of a negative cycle.
 
-!!!!Case study
+The algorithm works as follows:
 
-+Bellman-Ford graph>figures/bellman_ford.pdf|width=50+
+[[[
+1. Set the distance to every node to be infinity
+2. Set the distance to the starting node to be 0
+3. Perform V-1 times the edge relaxation
+4. Run another V-1 times the edge relaxation, if an edge can be still relaxed means that is part of a negative cycle.
+]]]
+
+The Pharo implementation is:
+
+[[[
+AIBellmanFord>>#run
+
+	start pathDistance: 0.
+	self relaxEdges.
+	"Run the algorithm another time to detect if any negative cycles exist.
+	The only variation now is that if we can relax another time an edge,
+	then means that we are part of a negative cycle. So, we put negative infinity as the path distance"
+	self relaxEdgesToNegativeInfinity
+]]]
+
+[[[
+AIBellmanFord>>#relaxEdges
+
+	| anEdgeHasBeenRelaxed |
+	"Relax the edges V-1 times at worst case"
+	nodes size - 1 timesRepeat: [
+		anEdgeHasBeenRelaxed := false.
+
+		edges do: [ :edge |
+			edge from pathDistance + edge weight < edge to pathDistance ifTrue: [
+				edge to pathDistance: edge from pathDistance + edge weight.
+				edge to previousNode: edge from.
+				anEdgeHasBeenRelaxed := true ] ].
+
+		"If no edge has been relaxed means that we can stop the iteration before V-1 times"
+		anEdgeHasBeenRelaxed ifFalse: [ ^ self ] ]
+]]]
+
+[[[
+AIBellmanFord>>#relaxEdgesToNegativeInfinity
+
+	"This method is called after a first relaxation has ocurred already.
+  The algorithm is the same as the previous one but with the only difference that now if an edge can be relaxed we set the path distance
+  as negative infinity because means that the edge is part of a negative cycle."
+
+	| anEdgeHasBeenRelaxed |
+	"Relax the edges V-1 times at worst case"
+	nodes size - 1 timesRepeat: [
+		anEdgeHasBeenRelaxed := false.
+
+		edges do: [ :edge |
+			edge from pathDistance + edge weight < edge to pathDistance ifTrue: [
+				edge to pathDistance: Float negativeInfinity.
+				anEdgeHasBeenRelaxed := true ] ].
+
+		"If no edge has been relaxed means that we can stop the iteration before V-1 times"
+		anEdgeHasBeenRelaxed ifFalse: [ ^ self ] ]
+]]]
 
 !!!Longest path problem
 
 To calculate the longest path of a graph we can simply multiply all the nodes weights by {{{$-1$}}} and then
 calculate the shortest path. If the graph is a DAG, then we can use the topological sort based algorithm.
 If not, we can use Bellman-Ford.
+
+!!!!Case study
+
++Bellman-Ford graph>figures/longest_path.pdf|width=50+
+
+We multiply by {{{$-1$}}} the weight of the edges of the previous graph used as an example for the DAG algorithm
+and then we calculate the shortest path between two nodes using the Bellman-Ford algorithm. Doing that, actually
+we are calculating the longest path for the original graph.
+
+[[[
+bellmanFord := AIBellmanFord new.
+nodes := $A to: $F.
+edges := #( #($A $B -1) #($B $C -5) #($B $E -11)
+            #($B $D -8) #($E $F -7) #($D $E -6)
+            #($G $D -4) ).
+bellmanFord nodes: nodes.
+bellmanFord
+	edges: edges
+	from: #first
+	to: #second
+	weight: #third.
+
+pathFromAtoF := bellmanFord runFrom: $A to: $F.
+pathDistanceFromAToF := (bellmanFord findNode: $F) pathDistance
+]]]
+
+If we look at the path between ==A== and ==F==, we see == #( $A $B $D $E $F )== which is actually the longest path
+of the original graph.
