@@ -104,7 +104,7 @@ pathToD := bfs reconstructPath
 
 The Dijkstra's algorithm is one of the most-know algorithms for calculating the shortest path in a weighted graph.
 As BFS, this algorithm is also a single source shortest path algorithm. In its naive implementation has a time
-complexity of{{{$O(V^2)$}}}. But, it can be optimized using a head or a tree as a data structure to a time
+complexity of {{{$O(V^2)$}}}. But, it can be optimized using a head or a tree as a data structure to a time
 complexity of {{{$O((V+E)*log V)$}}}. If a Fibonacci heap is used we can the best possible time complexity
 {{{$O(E + V * log V)$}}}. Dijkstra's algorithm can handle a graph with cycles. But, it cannot handle negative weights.
 
@@ -245,7 +245,7 @@ shortestPathInDAG
 pathAtoF := shortestPathInDAG runFrom: $A to: $F.
 ]]]
 
-+DAG>figures/dag.pdf|width=50+
++DAG.>figures/dag.pdf|width=50+
 
 !!!Shortest path on weighted graphs with negative weights (Bellman-Ford algorithm)
 
@@ -253,7 +253,7 @@ In the Dijkstra's algorithm when a node is marked as visited, the algorithm alre
 will only increase the path distance. When we are dealing with negative numbers the assumption is not true.
 
 The Bellman-Ford algorithm can handle negative weighted graphs. It runs in {{{$O(V*E)$}}} time. As the other algorithms of this chapter, this is also a single source
-shortest path algorithm. The logic behind the algorithm is to perform at worst {{{V-1$}}} times an edge relaxation. Relaxing an edge means to update the value of the
+shortest path algorithm. The logic behind the algorithm is to perform at worst {{{$V-1$}}} times an edge relaxation. Relaxing an edge means to update the value of the
 distance from the starting node to the node to which to edge goes. Then, run the algorithm one more time, if an edge can reduce its distance (be relaxed) means that the node
 to which the edge goes is part of a negative cycle.
 
