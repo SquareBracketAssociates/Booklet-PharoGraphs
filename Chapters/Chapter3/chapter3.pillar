@@ -97,7 +97,7 @@ AIGraphNode
 	AITarjanNode
 ]]]
 
-+Node hierarchy.>figures/hierarchy.pdf|width=35|label=NodeHierarchy+
++Node hierarchy.>figures/hierarchy.pdf|width=55|label=NodeHierarchy+
 
 We have different subclasses because a specific algorithm may need some store some special state. 
 But all the nodes share a common API.
@@ -117,6 +117,12 @@ The most important methods of the API are:
 
 All of the algorithms are subclasses of ==AIGraphAlgorithm==. 
 
+
+%ClassHierarchyPrinter new
+%		forClass: AIGraphAlgorithm;
+%		doNotShowState;
+%		doNotShowSuperclasses;
+%		print 
 [[[
 AIGraphAlgorithm
 	AIBFS
@@ -133,7 +139,7 @@ AIGraphAlgorithm
 
 
 
-+Class diagram>figures/uml.pdf|width=30+
++Class diagram>figures/hierarchyAlgo.pdf|width=55+
 
 As the nodes, all the graph algorithms of this library share a common API also.
 The class ==AIGraphAlgorithm== provides the common API to add nodes, edges, searching the nodes, etc.
