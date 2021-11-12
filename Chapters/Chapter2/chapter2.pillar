@@ -14,32 +14,32 @@ In this chapter, basic graph concepts and graphs types are going to be explained
 A directed graph is a type of graph in which every edges has a direction: an ingoing node and an outgoing node. The most commonly way of representing a graph is to draw it.
 A directed graph can de drawn like in Figure *@directed*:
 
-+Directed graph>figures/directed_graph.pdf|width=30|label=directed+
++A directed graph.>figures/directed_graph.pdf|width=30|label=directed+
 
 !!!!Undirected Graph
 
 An undirected graph is a type of graph in which the edges does not have a direction. They can be drawn without a line that does not have any arrows head. It is
 understood that the graph has no direction if the direction is not specified explicitly as shown in Figure *@undirected*.
 
-+Undirected graph>figures/undirected_graph.pdf|width=30|label=undirected+
++An undirected graph.>figures/undirected_graph.pdf|width=30|label=undirected+
 
 !!!!Weighted Graph
 
 A weighted graph is a graph that each of its edges has an associated weight (see Figure *@weighted*). In real life examples, the weights can represent several things.
 For example, a graph can be a map in which the nodes represent cities and the edges represent the distance between those cities.
 
-+Weighted graph: edges have a weight>figures/weighted_graph.pdf|width=40|label=weighted+
++A weighted graph: edges have a weight.>figures/weighted_graph.pdf|width=40|label=weighted+
 
 !!!!Connected Graph
 
 A connected graph is an undirected graph in which exists a path for every pair of nodes.
 For example, Figure *@connected* represents a connected graph because from any node you can get to any node.
 
-+Connected graph>figures/connected_graph.pdf|width=40|label=connected+
++A connected graph: all the nodes are reachable from any others.>figures/connected_graph.pdf|width=40|label=connected+
 
 But, Figure *@directed2* is a disconnected graph because the nodes F and G are isolated from the rest.
 
-+Disconnected graph>figures/disconnected_graph.pdf|width=48|label=directed2+
++A disconnected graph: some nodes are not reachable from others.>figures/disconnected_graph.pdf|width=48|label=directed2+
 
 !!! Graph Cycle
 
@@ -48,28 +48,28 @@ That means, a graph cycle is a path that ends and starts in the same node withou
 
 For example, in  Figure *@cycle1* there is a cycle between nodes ''A, B, D''.
 
-+Cycle in a graph>figures/cycle_in_a_graph.pdf|width=40|label=cycle1+
++A Cycle in a graph.>figures/cycle_in_a_graph.pdf|width=40|label=cycle1+
 
 But, in Figure *@cycle2* there is no cycle because the node D has to be traveled twice to reach node A from A.
 
-+Not a cycle>figures/not_a_cycle.pdf|width=45|label=cycle2+
++In a directed graph, direction is impacting cycle presence. >figures/not_a_cycle.pdf|width=52|label=cycle2+
 
 !!!!Directed Acyclic Graph (DAG)
 
 Like the name suggests, a directed acyclic graph is a directed graph that does not have any cycles (as shown in Figure *@DAG*).
 
-+Directed Acyclic Graph>figures/dag.pdf|width=40|label=DAG+
++A directed Acyclic Graph.>figures/dag.pdf|width=35|label=DAG+
 
 !!!!Strongly Connected Graph
 
 Unlike the Connected Graph, a Strongly Connect is a ""directed"" graph in which there is a path for every pair of nodes. Figure *@strongly1* is a strongly connected graph.
 
-+Strongly connected graph>figures/strongly_connected_graph.pdf|width=40|label=strongly1+
++A strongly connected graph.>figures/strongly_connected_graph.pdf|width=30|label=strongly1+
 
 Figure *@strongly2* is not strongly connected because it is not possible to reach node D from node A. However, if the directions of the graph are deleted, the graph becomes a
-""undirected"" connected graph. For that reason, the second figure is called a weakly connected graph.
+""undirected"" connected graph. For that reason, Figure *@strongly2* is called a weakly connected graph.
 
-+Weakly connected graph>figures/not_strongly_connected_graph.pdf|width=40|label=strongly2+
++A weakly connected graph.>figures/not_strongly_connected_graph.pdf|width=30|label=strongly2+
 
 !!!! Strongly Connected Component
 
@@ -84,9 +84,9 @@ A tree is a connected graph without cycles. That means that there is only one pa
 represented as a ""directed"" graph. In that case, the definition will be that a ""directed"" tree is a directed acyclic graph in which every node has only one
 incoming (parent) node (See Figure *@directedTree*). If you remove the direction of the directed acyclic graph the reaming graph has to be an ""undirected"" tree (See Figure *@undiTree*).
 
-+Tree>figures/tree.pdf|width=40|label=undiTree+
++A tree: a connected graph without cycles.>figures/tree.pdf|width=40|label=undiTree+
 
-+Directed tree>figures/directed_tree.pdf|width=40|label=directedTree+
++A directed tree.>figures/directed_tree.pdf|width=40|label=directedTree+
 
 !!! Conclusion
 

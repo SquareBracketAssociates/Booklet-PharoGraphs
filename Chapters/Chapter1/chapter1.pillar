@@ -12,10 +12,10 @@ This booklet describes the pseudocode of the algotihms and an explanation of how
 A typical example is a metro map as the one of Paris as shown in Figure *@paris*.
 What we see is that metro lines are connected by some stations for example (Gare du Nord connects line 5 and 4) and some stations are real hub where multiple lines meet such as Chatelet.
  
-+Paris metro>figures/Paris_Metro_map_1024.pdf|width=100|label=paris+
++Newly design paris metro maps.>figures/Paris_Metro_map_1024.pdf|width=100|label=paris+
 
-When you visit Paris, you are often asking yourself how can you go from one place to another one
-- what are the different possibilities?
+When you visit Paris, you are often asking yourself:
+- what are the different possibilities to go to that place?
 - are they straight connections?
 - finding the fastest one?
 - finding the one with the least stops (because RER is a fast kind of metro but stopping only in certain places)
@@ -34,11 +34,12 @@ In this little book we will describe some algorithms that can be applied to grap
 We will start with some basic definitions, then in subsequent chapters we will describe the following algorithms: 
 topological sort, sortest path, Kruskal, Tarjan, HITs, ...
 
+All the algorithms of the libraryhave the same API to set the nodes and the edges.
+The edges can be both weighted or unweighted.
+A detailed explanation of how to use the API will be given on Chapter *@cha:repre*.
 
 !!! How to install
-
-You can install the library
-executing the following code snippet:
+You can install the library executing the following code snippet:
 
 [[[
 Metacello new
@@ -47,9 +48,7 @@ Metacello new
 	load
 ]]]
 
-All the algorithms have the same API to set the nodes and the edges. 
-The edges can be both weighted or unweighted.
-A detailed explanation of how to use the API will be given on Chapter *@cha:repre*.
+
 
 
 

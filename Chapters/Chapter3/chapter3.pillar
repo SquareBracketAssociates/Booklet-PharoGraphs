@@ -1,14 +1,19 @@
 !!Graph Representation
 @cha:repre
 
-So far the graphs were represented as drawings. But, to program them a data structure is needed.
+So far the graphs were represented as drawings. But, to program them we need a data structure.
 The most used data structures to represent graphs are:
-- An adjacency matrix where connection between nodes is basically a cross within a matrix whose entries are nodes.
+- An adjacency matrix where connection between nodes is basically a cross within a matrix whose entries are nodes. The cross can contain information when we want to manipulate weigthed graphs).
 - An adjacency list where connection between nodes are given as a list of pairs of nodes or triples in case of weighted edges.
 
-THERE IS DIFFERENCE BETWEEN structure to represent as input and internal structure.
+Note that you can use an adjancency list to ''define'' a graph and use internally a matrix to perform the computation. 
+Basically the internal representation should be seen more as a design choice and it should not impact
+the way we express algorithms. Providing a good API to manipulate graph will make the algorithm independent from the internal representation
+and let the developer implement optimizations when needed.
 
-In this library we use the adjacency list is the data structure to represent a graph.
+!!! Graph description
+
+In this library we use the adjacency list data structure to specify a graph.
 For example, the following graph is created using the messages ==nodes:== and ==edges:from:to:==.
 It also defines that the edges are coming from the first element to the second one.
 
@@ -16,19 +21,39 @@ It also defines that the edges are coming from the first element to the second o
 | graph |
 graph := AIGraphAlgorithm new.
 graph nodes: #( $A $B $C ).
-graph edges: #( #( $A $B ) #( $A $C ) #( $B $C ) )
+graph edges: #( 
+				#( $A $B ) 
+				#( $A $C ) 
+				#( $B $C ) )
+  from: [:each | each first]
+  to: [:each | each second].
+graph run.
+]]]
+
+The previous snippet is a template in the sense that:
+- First, we instantiate the graph algorithm (in this case an abstract one). 
+- Then, we instantiate the nodes. And finally, we set the edges. Note that for the edges we need to pass a list. The elements inside a list can be any kind of object. In the above example the objects are also a list. 
+- And then, we need to specific a block that is needed to obtain the ==from:== and ==to:== relationships.  In the example, the ''in node'' is the first element of the list and the second one is the ''out node''. So, we need only to send the messages ==first== and ==second==.
+
+We will often define our graphs this way.
+
+!!!! Blocks and symbols.
+Since we are a bit lazy to type, we pass directly the method names as symbol that we want to apply on the edge to extract information.
+
+[[[
+| graph |
+graph := AIGraphAlgorithm new.
+graph nodes: #( $A $B $C ).
+graph edges: #( 
+				#( $A $B ) 
+				#( $A $C ) 
+				#( $B $C ) )
   from: #first
   to: #second.
 graph run.
 ]]]
 
-
-First, we instantiate the graph algorithm (in this case the abstract one). Then, we instantiate the nodes. And finally, we set the edges.
-Note that for the edges we need to pass a list. The elements inside a list can be any kind of object. In the above example
-the objects are also a list. And then, we need to specific a block that is needed to obtain
-the ==from:== and ==to:== relationships. In the example, the ''in node'' is the first element
-of the list and the second one is the ''out node''. So, we need only to send the messages ==first== and ==second==.
-
+!!!! Weigthed graphs
 To represent weighted graphs we use the ==edges:from:to:weight:== method.
 
 [[[
@@ -36,13 +61,15 @@ To represent weighted graphs we use the ==edges:from:to:weight:== method.
 graph := AIGraphAlgorithm new.
 graph nodes: #( $A $B $C ).
 graph edges: #( #( $A $B 2 ) #( $A $C 4 ) #( $B $C 7 ) )
-  from: #first
-  to: #second
-  weight: #third.
+  from: [:each | each first]
+  to: [:each | each second]
+  weight: [:each | each third].
 graph run.
 ]]]
 
 So in this case the library is going to take the third element as the weight for each of the edges.
+
+
 
 !!!About nodes
 
