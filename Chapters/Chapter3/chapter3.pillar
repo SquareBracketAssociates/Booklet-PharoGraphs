@@ -120,7 +120,7 @@ All of the algorithms are subclasses of ==AIGraphAlgorithm==.
 [[[
 AIGraphAlgorithm
 	AIBFS
-  AIBellmanFord
+	AIBellmanFord
 	AIDijkstra
 	AIGraphReducer
 	AIHits
