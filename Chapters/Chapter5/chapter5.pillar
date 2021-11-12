@@ -300,7 +300,7 @@ AIBellmanFord>>#relaxEdges
 [[[
 AIBellmanFord>>#relaxEdgesToNegativeInfinity
 
-	"This method is called after a first relaxation has ocurred already.
+	"This method is called after a first relaxation has occurred already.
   The algorithm is the same as the previous one but with the only difference that now if an edge can be relaxed we set the path distance
   as negative infinity because means that the edge is part of a negative cycle."
 
