@@ -1,4 +1,5 @@
 !!Graph Representation
+@cha:repre
 
 So far the graphs were represented as drawings. But, to program them a data structure is needed.
 The most used data structures to represent graphs are:
