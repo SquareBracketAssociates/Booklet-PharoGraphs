@@ -7,9 +7,7 @@ If you consider tasks, it means that you want to do first a task before doing th
 Topological sorting is a way of ordering a ""directed acyclic graph"" such that for every directed edge {{{$(U, V)$}}} from
 node {{{$U$}}} to node {{{$V$}}}, {{{$U$}}} becomes first in the resulting ordering. 
 
-
-
-
+We present here one algorithm named Khan's algorithm.
 
 !!! Example
 The topological sorting can be applied to a graph in which its nodes represents software dependencies.
@@ -17,9 +15,9 @@ For example to install a library, there are some modules that need to be install
 So, in this case, a topological sort is useful to know which modules to install first (the one that has no dependencies) and so on.
 
 Now for a same graph multiple topological sorts are possible just because since we treat first the nodes having no dependencies
-their travaersal order can be different and in addition the traversal order of their dependent can be different too.
+their traversal order can be different and in addition the traversal order of their dependent can be different too.
 
-@@todo CAN WE HAVE A VISUAL EXAMPLE
+@@todo we should put a visual example here.
 
 
 
@@ -48,10 +46,10 @@ else
 ]]]
 
 This algorithm is implemented in the class ==AITopologicalSorting== subclass of ==AIGraphAlgorithm==. 
-So, the parent class provides all the mechanisms to handle the implementation of the
-graph data structure and the algorithm class only has the responsibility to implement the logic of the algorithm.
+The parent class (==AIGraphAlgorithm==) provides all the mechanisms to handle the implementation of the
+graph data structure. ==AITopologicalSorting== is only has the responsibility to implement the logic of the algorithm.
 
-The implementation of this algorithm is as follows:
+The following proposes a first implementation 
 
 [[[
 AITopologicalSorting >> run
@@ -83,7 +81,86 @@ AITopologicalSorting >> run
   ^ topologicalSortedElements
 ]]]
 
-!!!Case study
+!!! Improving the implementation
+
+The method ==run== is a bit too long to our taste. 
+The fact that we have to add comments to separate its code logic is a call to define separate methods. 
+
+First we define two methods ==initializeElements== and ==gatherNoIncomingNodes==.
+And we express the algorithm by redefining the method ==run== as follows:
+@@todo why not using initialize
+
+[[[
+AITopologicalSorting >> initializeElements
+
+	topologicalSortedElements := OrderedCollection empty.
+	nodesWithNoIncomingEdges := OrderedCollection empty.
+]]]
+
+[[[
+AITopologicalSorting >> gatherNoIncomingNodes
+	"Obtain all the nodes without incoming nodes"
+	
+	nodesWithNoIncomingEdges addAll:
+	(nodes select: [ :node | node incomingNodes isEmpty ]).
+]]]
+
+
+
+[[[
+AITopologicalSorting >> run
+
+	self initializeElements.
+	self gatherNoIncomingNodes.
+
+	[ nodesWithNoIncomingEdges isNotEmpty ] whileTrue: [
+		| node |
+		node := nodesWithNoIncomingEdges removeFirst.
+	...		
+
+]]]
+
+Then we continue by extracting the handling of node dependencies and extract the validation.
+
+[[[
+AITopologicalSorting >> handleDependenciesOf: node
+
+	node adjacentNodes do: [ :adjacentNode |
+		adjacentNode incomingNodes remove: node.
+		adjacentNode incomingNodes ifEmpty: [
+			nodesWithNoIncomingEdges add: adjacentNode ] ].
+	node adjacentNodes: #( )].
+]]]
+
+[[[
+AITopologicalSorting >> validate
+	"If the graph still has edges, then there is a problem"
+
+	(nodes anySatisfy: [ :node | node adjacentNodes isNotEmpty ])
+		ifTrue: [ Error signal: 'Not a DAG (Directed Acyclic Graph)' ].
+]]]
+
+[[[
+AITopologicalSorting >> run
+
+	self initializeElements.
+	self gatherNoIncomingNodes.
+
+	[ nodesWithNoIncomingEdges isNotEmpty ] whileTrue: [
+		| node |
+		node := nodesWithNoIncomingEdges removeFirst.
+		topologicalSortedElements addLast: node model.
+		self handleDependenciesOf: node ].
+	self validate. 
+	^ topologicalSortedElements
+]]]
+
+Now the logic of the algorithm is clearer and at a nice level of abstraction. 
+In addition we can focus on the structure of the algorithm, treated nodes are added one by one to the ==topologicalSortedElements== collection 
+while dependents are added to the working list ==nodesWithNoIncomingEdges==. 
+And the algorithm iterates until the working list gets empty.
+
+!!! Case study
 
 Image that the graph shown in Figure *@soft* represents software dependencies. You want to install the module ''G''. But, to install
 that module you must install all the other ones before in a topological order. You need to install module ''C'' and ''A'' before installing
@@ -114,4 +191,8 @@ order in which the software dependencies need to be installed.
 ==\#( $A $B $C $D $E $F $G )==
 
 
+!!! Conclusion
 
+Topological sorting is simple algorithm working with a working list, the list where we add the next nodes to be treated. 
+It shows that the algorithm works until the list gets empty.
+This is the typical structure of iterating algorithms based on working list.
