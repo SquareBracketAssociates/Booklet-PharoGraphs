@@ -77,7 +77,7 @@ So in this case the library is going to take the third element as the weight for
 !!!About nodes
 
 The graph algorithms of this library use different nodes. All the nodes inherit from the same abstract class called ==AIGraphNode==
-and show below where indentation represents inheritance.
+and show below where indentation represents inheritance (Fig. *@NodeHierarchy*).
 
 %ClassHierarchyPrinter new
 %		forClass: AIGraphNode;
@@ -97,11 +97,12 @@ AIGraphNode
 	AITarjanNode
 ]]]
 
++Node hierarchy.>figures/hierarchy.pdf|width=35|label=NodeHierarchy+
 
 We have different subclasses because a specific algorithm may need some store some special state. 
 But all the nodes share a common API.
 
-Some of the methods of the API are:
+The most important methods of the API are:
 - ==node from:==
 - ==node from:edge:==
 - ==node adjacentNodes==
@@ -114,12 +115,29 @@ Some of the methods of the API are:
 
 !!!Graph algorithm inheritance tree
 
-As the nodes, all the graph algorithms of this library share a common API also.
-All of them are subclasses of ==AIGraphAlgorithm==. The class ==AIGraphAlgorithm== provides the common API to add nodes, edges, searching the nodes, etc.
+All of the algorithms are subclasses of ==AIGraphAlgorithm==. 
+
+[[[
+AIGraphAlgorithm
+	AIBFS
+  AIBellmanFord
+	AIDijkstra
+	AIGraphReducer
+	AIHits
+		AIWeightedHits
+	AIKruskal
+	AIShortestPathInDAG
+	AITarjan
+	AITopologicalSorting
+]]]
+
+
 
 +Class diagram>figures/uml.pdf|width=30+
 
-WE SHOULD SHOW AN INHERITANCE WITH THE API AND THE SUBCLASSES
+As the nodes, all the graph algorithms of this library share a common API also.
+The class ==AIGraphAlgorithm== provides the common API to add nodes, edges, searching the nodes, etc.
+
 
 Some of the methods of the API are:
 
@@ -136,16 +154,4 @@ Some of the methods of the API are:
 %		doNotShowState;
 %		doNotShowSuperclasses;
 %		print
-[[[
-AIGraphAlgorithm
-	AIBFS
-  AIBellmanFord
-	AIDijkstra
-	AIGraphReducer
-	AIHits
-		AIWeightedHits
-	AIKruskal
-	AIShortestPathInDAG
-	AITarjan
-	AITopologicalSorting
-]]]
+
