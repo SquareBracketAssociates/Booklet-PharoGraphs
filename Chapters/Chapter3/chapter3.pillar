@@ -60,7 +60,10 @@ To represent weighted graphs we use the ==edges:from:to:weight:== method.
 | graph |
 graph := AIGraphAlgorithm new.
 graph nodes: #( $A $B $C ).
-graph edges: #( #( $A $B 2 ) #( $A $C 4 ) #( $B $C 7 ) )
+graph edges: #( 
+	#( $A $B 2 ) 
+	#( $A $C 4 ) 
+	#( $B $C 7 ) )
   from: [:each | each first]
   to: [:each | each second]
   weight: [:each | each third].
@@ -73,24 +76,15 @@ So in this case the library is going to take the third element as the weight for
 
 !!!About nodes
 
-The graph algorithms of this library use different nodes. All the nodes inherit from the same abstract class. An specific algotihm may need
-some store some special state. But all the nodes also shared a common API.
-
-Some of the methods of the API are:
-
-- ==node from:==
-- ==node from:edge:==
-- ==node adjacentNodes==
-- ==node model==
-- ==node model:==
-- ==node to:==
-- ==node to:edge:==
+The graph algorithms of this library use different nodes. All the nodes inherit from the same abstract class called ==AIGraphNode==
+and show below where indentation represents inheritance.
 
 %ClassHierarchyPrinter new
 %		forClass: AIGraphNode;
 %		doNotShowState;
 %		doNotShowSuperclasses;
 %		print
+
 [[[
 AIGraphNode
   AIBFSNode
@@ -102,6 +96,21 @@ AIGraphNode
 	AIReducedGraphNode
 	AITarjanNode
 ]]]
+
+
+We have different subclasses because a specific algorithm may need some store some special state. 
+But all the nodes share a common API.
+
+Some of the methods of the API are:
+- ==node from:==
+- ==node from:edge:==
+- ==node adjacentNodes==
+- ==node model==
+- ==node model:==
+- ==node to:==
+- ==node to:edge:==
+
+
 
 !!!Graph algorithm inheritance tree
 
