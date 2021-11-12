@@ -1,28 +1,25 @@
 !!Topological sorting
 
-Let us start with our first algorithm: a topological sort. A topological sort makes that that a node is treated before the nodes that depend on it
-are treated. If you consider tasks, it means that you want to do first a task before doing the ones that depend on this one. 
-
-
-
+Let us start with our first algorithm: a topological sort.
+A topological sort makes that a node is treated before the nodes that depend on it are treated.
+If you consider tasks, it means that you want to do first a task before doing the ones that depend on this one.
 
 Topological sorting is a way of ordering a ""directed acyclic graph"" such that for every directed edge {{{$(U, V)$}}} from
 node {{{$U$}}} to node {{{$V$}}}, {{{$U$}}} becomes first in the resulting ordering. 
 
 
 
-CAN WE HAVE A VISUAL EXAMPLE
+
 
 !!! Example
 The topological sorting can be applied to a graph in which its nodes represents software dependencies.
 For example to install a library, there are some modules that need to be installed before others.
-So, in this case, a topological sort is useful to know which modules
-to install first (the one that has no dependencies) and so on.
+So, in this case, a topological sort is useful to know which modules to install first (the one that has no dependencies) and so on.
 
 Now for a same graph multiple topological sorts are possible just because since we treat first the nodes having no dependencies
 their travaersal order can be different and in addition the traversal order of their dependent can be different too.
 
-CAN WE HAVE AN EXAMPLE.
+@@todo CAN WE HAVE A VISUAL EXAMPLE
 
 
 
