@@ -3,13 +3,13 @@
 The minimum spanning tree is a subset of the edges of a undirected weighted graph that connects all the nodes of the graph
 without any cycles and with the total sum of the weights minimized. There are several algorithm for obtaining the minimum spanning
 tree of a weighted graph, the most famous is the Kruskal's algorithm. In the case of an disconnected graph, the algorithm
-returns the minimum spanning tree for each of the graph components. That is a minimum spanning forest.
+returns a minimum spanning forest.
 
 !!!Disjoint-Set data structure
 
 Also called union-find data structure, is a data structure that stores disjoints set. It provides two operation: unite
 two disjoint sets into one and find if two elements belong to the same disjoint set. This data structure is used in
-Kruskal's algorithm to detect if adding a new edge create a cycle in the graph.
+Kruskal's algorithm to detect if adding a new edge create a cycle in the minimum spanning tree that is being built.
 
 The time complexity of both of the operations is {{{$O(a(n))$}}}. {{{$a$}}} is the amortized time complexity.  Each time that
 the ==find:== method is invoked a operation called ''path compression'' is done. Thanks to the path compression operation is that
@@ -69,7 +69,7 @@ AIKruskal >> run
 	| treeEdges sortedEdges |
   sortBlock := [ :e1 :e2 | e1 weight < e2 weight ].
 	treeEdges := OrderedCollection new.
-	nodes do: #makeSet.
+	nodes do: [ :node | node makeSet].
 	sortedEdges := edges asSortedCollection: sortBlock.
 	sortedEdges
 		reject: [ :edge |
@@ -148,3 +148,9 @@ when creating the graph algorithm.
 [[[
 kruskal := AIKruskal new maxSpanningTree.
 ]]]
+
+
+!!! Conclusion
+
+The data structures play a powerful role when it comes to algorithms. In this specific case thank to the Disjoint data structure we can detect cycles in
+amortized linear time complexity and with few lines of code. Also, the Kruskal algorithm have many real life application and it is an important algorithm in the context of graph theory.

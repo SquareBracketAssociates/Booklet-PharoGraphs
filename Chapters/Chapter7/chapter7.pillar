@@ -139,7 +139,7 @@ an OrderedCollection($a)
 
 So, our graph has 5 strongly connected components, which are: {{{$\{A\}$}}}, {{{$\{B\}$}}}, {{{$\{E\}$}}}, {{{$\{G, H\}$}}}, {{{$\{C, D, F\}$}}}
 
-!!!Reducing a Graph
+!!! Reducing a Graph
 
 If we want to collapse all strongly connected components of a graph into a single one, we can use the Tarjan's algorithm to help in the task.
 To do that
@@ -181,3 +181,10 @@ Merged nodes: $c, $f, $d
 ]]]
 
 +Reduced graph>figures/reduced_graph.pdf|width=45+
+
+
+!!! Conclusion
+
+Although Tarjan's algorithm can be a bit complicated to understand a first sight, once we understand the logic
+behind the updating the low-link values it gets clearer. The strongly connected components can represent several
+things in real life and the Tarjan algorithm is very useful because it runs on linear time.

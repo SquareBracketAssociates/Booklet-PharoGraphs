@@ -152,3 +152,9 @@ AIWeightedHits >> computeHubsFor: aNode
 			 inject: 0
 			 into: [ :sum :edge | sum + (edge weight * edge to auth) ])
 ]]]
+
+
+!!! Conclusion
+
+Nevertheless the HITS algorithm is not used anymore in the modern search engines, is a very good algorithm for
+having a first look on how to classify links according to their relevance in the network.
