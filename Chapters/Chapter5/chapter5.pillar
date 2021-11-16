@@ -4,41 +4,40 @@ The shortest path problem consists on finding a path between two pairs of nodes 
 of the weights is minimized. For a general graph this problem is NP-hard. For some kind of graphs this problem
 can be solved in linear time.
 
-In this chapter we will present multiple algortihms:
-- a version implementing breath first traversal, 
-- Dijkstra's algortohm for weigthed nodes, and
-- an algorithm for Directed Acyclic Graphs.
+In this chapter we will present multiple algorithms:
+- A version implementing breath first traversal,
+- Dijkstra's algorithm for weighted nodes,
+- an algorithm for Directed Acyclic Graphs and,
+- Bellman-Ford algorithm for negative weighted graphs.
 !!!Shortest path on unweighted graphs (BFS algorithm)
 
 If the graph is unweighted or all edges have the same ""non-negative"" weight, the shortest path can be found
 in linear time {{{$O(V + E)$}}} using Breadth First Search (BFS) algorithm.
 
-BFS algorithm travels the graph in a traversal way. 
-@@todo doe not say much
+BFS is an algorithm for traveling a graph in a traversal way. That means that the algorithm will travel the children of the starting node always in order
+ensuring that when the goal node, if exists, is founded the path will be the shortest one possible.
 
 BFS is a single source shortest path algorithm. That means that before running the algorithm it is needed
 to specify a starting node. Then, the algorithm can tell us the shortest path between the starting node
 and all the other nodes.
 
-@@todo Seb what is queue? an ordered collection? so it would be better to use it or at least to use the same vocabulary: addFirst: addLast: and removeLast removeFirst?
-
 The algorithm is the following one:
 [[[
 initialize a queue Q
 mark start node as visited
-Q.enqueue(start)
+Q.addLast(start)
 while Q is not empty do:
-  node := Q.dequeue()
+  node := Q.removeFist()
   if node is the end then:
     return node
   for adjacent nodes of node do:
     if adjacentNode is not visited then:
       mark adjacentNode as visited
-      Q.enqueue(adjacentNode)
+      Q.addLast(adjacentNode)
 ]]]
 
-In the Pharo implementation we use a linked list as a queue.
-@@todo Seb why? is orderedCOllection not good enough?
+In the Pharo implementation we use a linked list as a queue. We use a Linked List instead of a Ordered Collection because the ==removeFirst== operation for a LinkedList
+takes constant time and for an OrderedCollection takes linear time.
 
 We define a new subclass of ==AIGraphAlgorithm== named ==AIBFS==.
 And we define a new method ==run==.
@@ -70,7 +69,7 @@ AIBFS >> reconstructPath
 	| path previous |
 	"If no path exists between the start and the end node"
 	end previousNode ifNil: [ ^ #(  ) ].
-	
+
 	path := LinkedList empty.
 	previous := end.
 	path addFirst: end model.
@@ -99,8 +98,6 @@ bfs
 path := bfs runFrom: $a to: $g
 ]]]
 
-
-@@todo instead of having this 	edges: edges from: #first to: #second. everywhere we could have edgesByPair: 
 
 The ==path== variable contains all the nodes that are part of the path, if we inspect the variable we see:
 [[[
@@ -133,7 +130,7 @@ The algorithm idea is:
 # Select the unvisited node that is marked with the smallest tentative distance, set it as the new "current node", and go back to step 3.
 
 Depending on the data structure that is chosen, the time complexity will vary. The array is the most inefficient one because to get the most
-promising pair it is necessary to travel all the array {{{$O(N)$}}}. But on a heap, or a Fibonacci heap, the time complexity for getting
+promising pair it is necessary to travel all the array {{{$O(N)$}}}. But with a heap, or a Fibonacci heap, the time complexity for getting
 the most promising pair is in the logarithmic order.
 
 The implementation in Pharo is the following:
@@ -150,25 +147,47 @@ AIDijkstra >> run
 		assoc := self removeMostPromisingPair: pq.
 		node := assoc key.
 		minWeight := assoc value.
-		"Do not visit again the node"
 		node visited: true.
 
 		"Skip if the path weight is less than the one obtained from the pq.
 		This is an optimization for not processing unnecessary nodes."
 		node pathDistance < minWeight ifFalse: [
-
 			node outgoingEdges do: [ :edge |
 				edge to visited ifFalse: [
 					| newDistance |
 					newDistance := node pathDistance + edge weight.
 
 					newDistance < edge to pathDistance ifTrue: [
-						edge to previousNode: node.
-						edge to pathDistance: newDistance.
+						self updateDistance: newDistance of: edge to previousNode: node.
 						pq add: edge to -> newDistance ] ] ] ] ]
 ]]]
 
-@@todo can we refactor a bit this method
+[[[
+AIDijkstra >> updateDistance: newDistance of: aNode previousNode: previousNode
+
+	aNode previousNode: previousNode.
+	aNode pathDistance: newDistance
+]]]
+
+In this implementation we will use an Oredered Collection as a data structure for the priority queue.
+
+[[[
+AIDijkstra >> newPriorityQueue
+
+	"This is the naive implementation of the data structure."
+
+	^ OrderedCollection new
+]]]
+
+[[[
+AIDijkstra >> removeMostPromisingPair: aPriorityQueue
+
+	"This is the naive implementation of the data structure."
+
+	| minValue |
+	minValue := aPriorityQueue detectMin: [ :assoc | assoc value ].
+	^ aPriorityQueue remove: minValue
+]]]
 
 !!! Case study
 
@@ -206,10 +225,8 @@ If the graph is a directed acyclic weighted graph (DAG), we can calculate the sh
 based on topological sort. Using this algorithm we have a time complexity of {{{$O(V + E)$}}}.
 
 This algorithm is also single source shortest path. The idea of the algorithm is to order the nodes in a
-topological order, then keep tracking of the path weight of each node. Then, start popping the nodes in
-topological order and store the ones with the lowest path weight. 
-
-@@todo the previous description is a bit abstract.
+topological order, using the topological sort algorithm. Then, keep track of the path weight from the start node to the other nodes.
+Then, start popping the nodes in order and store in a collection the ones that have the lowest path weight.
 
 As this algorithm runs in graphs that has no cycles, it ''can'' handle negative weights.
 The pseudocode is:
@@ -237,11 +254,11 @@ AIShortestPathInDAG >> run
 	| topSorter stack sortedNode |
 	self initializePathWeights.
 	topSorter := AITopologicalSorting new
-		             addNodesFromDifferentGraph: nodes;
-		             yourself.
+    addNodesFromDifferentGraph: nodes;
+    yourself.
 	topSorter run.
 	stack := topSorter topologicalSortedElements.
-	
+
 	[ stack isNotEmpty ] whileTrue: [
 		sortedNode := self findNode: stack removeFirst.
 		sortedNode outgoingEdges do: [ :nextEdge |
@@ -249,45 +266,50 @@ AIShortestPathInDAG >> run
       (sortedNode pathWeight + nextEdge weight)
 				ifTrue: [
 					nextEdge to pathWeight: sortedNode pathWeight +
-          nextEdge weight.
-					"The previousNode variable is used for retrieving the path"
+            nextEdge weight.
 					nextEdge to previousNode: sortedNode ] ] ]
 ]]]
 
-@todo say a word on tests.
 
 !!! DAG shortest path refactored
 
-Now we are ready to refactor our code. 
+Now we are ready to refactor our code.
 
-@todo refactor more
-
-[[[
-AIShortestPathInDAG >> topologicalSortedElements
-	
-	| topSorter |
-	topSorter := AITopologicalSorting new
-			addNodesFromDifferentGraph: nodes; yourself.
-	 topSorter run.
-	 ^ topSorter topologicalSortedElements.
- ]]]
- 
 [[[
 AIShortestPathInDAG >> run
 
-	| topSorter stack sortedNode |
+	| stack sortedNode |
 	self initializePathWeights.
-	stack := self topologicalSortedElements.
-	
+	stack := self topologicalSortedNodes.
+
 	[ stack isNotEmpty ] whileTrue: [
 		sortedNode := self findNode: stack removeFirst.
+
 		sortedNode outgoingEdges do: [ :nextEdge |
-			nextEdge to pathWeight > (sortedNode pathWeight + nextEdge weight)
+			nextEdge to pathDistance >
+      (sortedNode pathDistance + nextEdge weight)
 				ifTrue: [
-					nextEdge to pathWeight: sortedNode pathWeight +
-          nextEdge weight.
-					"The previousNode variable is used for retrieving the path"
-					nextEdge to previousNode: sortedNode ] ] ]
+          self updatePathDistance: nextEdge previousNode: sortedNode ] ] ]
+]]]
+
+
+[[[
+AIShortestPathInDAG >> topologicalSortedNodes
+
+	| topSorter |
+	topSorter := AITopologicalSorting new
+		addNodesFromDifferentGraph: nodes;
+    yourself.
+	 topSorter run.
+	 ^ topSorter topologicalSortedElements.
+]]]
+
+
+[[[
+AIShortestPathInDAG >> updatePathDistance: edge previousNode: previousNode
+
+	edge to pathDistance: previousNode pathDistance + edge weight.
+	edge to previousNode: previousNode
 ]]]
 
 
@@ -338,9 +360,10 @@ AIBellmanFord >> run
 
 	start pathDistance: 0.
 	self relaxEdges.
-	"Run the algorithm another time to detect if any negative cycles exist.
-	The only variation now is that if we can relax another time an edge,
-	then means that we are part of a negative cycle. So, we put negative infinity as the path distance"
+	"Run the algorithm one more time to detect if there is any negative cycles.
+	The variation is if we can relax one more time an edge,
+	means that the edge is part of a negative cycle.
+	So, we put negative infinity as the path distance"
 	self relaxEdgesToNegativeInfinity
 ]]]
 
@@ -363,7 +386,7 @@ AIBellmanFord >> relaxEdges
 ]]]
 
 [[[
-AIBellmanFord>>#relaxEdgesToNegativeInfinity
+AIBellmanFord >> relaxEdgesToNegativeInfinity
 	"This method is called after a first relaxation has occurred already.
 	The algorithm is the same as the previous one but with the only difference that now if an edge can be relaxed we set the path distance
 	as negative infinity because means that the edge is part of a negative cycle."
@@ -387,7 +410,6 @@ AIBellmanFord>>#relaxEdgesToNegativeInfinity
 To calculate the longest path of a graph we can simply multiply all the nodes weights by {{{$-1$}}} and then
 calculate the shortest path. If the graph is a DAG, then we can use the topological sort based algorithm.
 If not, we can use Bellman-Ford.
-
 
 !!!!Case study
 
@@ -418,6 +440,14 @@ If we look at the path between ==A== and ==F==, we see == #( $A $B $D $E $F )== 
 of the original graph.
 
 
+!!! About tests
+
+To ensure that the algorithms are working properly, we have implemented several tests in this library. We have a graph fixture in which we have
+implemented different types of graphs. Each graph is implemented on a class side method and the method has a link to a picture to see the graph visually.
+Then, in each of the tests for each of the algorithms, we construct a graph and check if the result after running the algorithm is the expected one.
+
+
 !!! Conclusion
 
-@@todo write soemthign here 
+In this chapter we saw some of the most-know algorithms for calculating the shortest (and longest) distance on graphs. Calculate the shortest path, or distance,
+in a graph is not a trivial problem and it is a NP-Hard problem. For some types of graphs, like trees or DAG (Directed Acyclic Graphs), we can solve the problem in linear time.
