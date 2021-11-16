@@ -27,51 +27,69 @@ The update rules are simple.
 Update each node's authority score to be equal to the sum of the hub scores of each node that points to it.
 
 ""Hub update rule""
-Update each node's hub score to be equal to the sum of the authority scores of each node that it points to.
+Update each node's hub score to be equal to the sum of the authority scores of the nodes that points to.
 
 The Pharo implementation is as follows. The ==k== number is the number of times that the scores are going to be
 updated. The default value is ==20== but it can also be set manually.
 
 [[[
-AIHits>>#run
+AIHits >> run
 
-	"Put the initial values for auth and hub scores"
-	nodes do: [ :n |
-		n
-			auth: 1.0;
-			hub: 1.0 ].
-	"Repeat k times"
+	self initializeNodes.
 	k timesRepeat: [
-		nodes do: [ :aNode |
-			"Update the auth score of all the nodes"
-			aNode auth:
-				(aNode incomingNodes
-					 inject: 0
-					 into: [ :sum :node | sum + node hub ]) ].
-		nodes do: [ :aNode |
-			"Update the hub scores of all the nodes"
-			aNode hub:
-				(aNode adjacentNodes
-					 inject: 0
-					 into: [ :sum :node | sum + node auth ]) ].
-		"Normalize the scores of all the nodes"
-		self normalizeScores ]
+		nodes do: [ :node | self computeAuthoritiesFor: node ].
+		nodes do: [ :node | self computeHubsFor: node ].
+		self normalizeScores ].
+	^ nodes
 ]]]
 
 [[[
-AIHits>>#normalizeScores
+AIHits >> initializeNodes
+
+	nodes do: [ :n |
+		n auth: 1.0.
+		n hub: 1.0 ]
+]]]
+
+
+[[[
+AIHits >> computeAuthoritiesFor: aNode
+
+	aNode auth:
+		(aNode incomingNodes
+			inject: 0
+			into: [ :sum :node | sum + node hub ])
+]]]
+
+
+[[[
+AIHits >> computeHubsFor: aNode
+
+	aNode hub:
+		(aNode adjacentNodes
+			inject: 0
+			into: [ :sum :node | sum + node auth ])
+]]]
+
+
+[[[
+AIHits >> normalizeScores
 
 	| authNorm hubNorm |
 	authNorm := 0.
 	hubNorm := 0.
+
 	nodes do: [ :node |
 		authNorm := authNorm + node auth squared.
 		hubNorm := hubNorm + node hub squared ].
+
 	authNorm := authNorm sqrt.
 	hubNorm := hubNorm sqrt.
+
 	"To avoid dividing by 0"
 	authNorm = 0 ifTrue: [ authNorm := 1.0 ].
 	hubNorm = 0 ifTrue: [ hubNorm := 1.0 ].
+
 	nodes do: [ :n |
 		n auth: n auth / authNorm.
 		n hub: n hub / hubNorm ]
@@ -115,4 +133,22 @@ For more information, you can read these papers:
 - ''An Improved Weighted HITS Algorithm Based on Similarity andPopularity'' by Zhang et al. ${cite:Zhan07a}$
 
 In terms of implementation, it is only necessary to multiply the weights with the scores in each iteration.
+That means changing ==computeAuthoritiesFor:== and ==computeHubsFor:== methods.
 This is done in ==AIWeightedHits== class.
+
+[[[
+AIWeightedHits >> computeAuthoritiesFor: aNode
+
+	aNode auth: (aNode incomingEdges
+			 inject: 0
+			 into: [ :sum :edge | sum + (edge weight * edge from hub) ])
+]]]
+
+
+[[[
+AIWeightedHits >> computeHubsFor: aNode
+
+	aNode hub: (aNode outgoingEdges
+			 inject: 0
+			 into: [ :sum :edge | sum + (edge weight * edge to auth) ])
+]]]

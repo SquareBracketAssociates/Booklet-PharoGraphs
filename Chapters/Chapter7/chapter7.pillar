@@ -25,7 +25,7 @@ The pseudocode is:
 In the Pharo implementation a ==traverse:== method is used. This is the DFS call. All the magic happens in that method.
 
 [[[
-AITarjan>>#run
+AITarjan >> run
 
 	"Initialize an empty array for the strongly connected components"
 	sccs := OrderedCollection new.
@@ -38,37 +38,72 @@ AITarjan>>#run
 	^ self stronglyConnectedComponents
 ]]]
 
-[[[
-AITarjan>>#traverse: aTarjanNode
 
-	"Assign a low-link and an ID"
+[[[
+AITarjan >> traverse: aTarjanNode
+
 	aTarjanNode tarjanIndex: runningIndex.
 	aTarjanNode tarjanLowlink: runningIndex.
 	runningIndex := runningIndex + 1.
-	"Put the node in the stack"
+
 	self putOnStack: aTarjanNode.
-	"For all the adjacent nodes"
+
 	aTarjanNode adjacentNodes do: [ :adjacentNode |
 		adjacentNode isTarjanUndefined
 			ifTrue: [
-        "If the adjacent node doesn't have a low link make a recursive call"
+				"If the adjacent node doesn't have a low link"
+
 				self traverse: adjacentNode.
-				"Then update the low-link value with the min"
 				aTarjanNode tarjanLowlink:
 					(aTarjanNode tarjanLowlink
-            min: adjacentNode tarjanLowlink) ]
+						min: adjacentNode tarjanLowlink) ]
 			ifFalse: [
         "If the adjacent node had already a low link value"
+
 				adjacentNode inStack ifTrue: [
-          "And is in the stack update the low-link value"
 					aTarjanNode tarjanLowlink:
 						(aTarjanNode tarjanLowlink
-              min: adjacentNode tarjanIndex) ] ] ].
+							min: adjacentNode tarjanIndex) ] ] ].
+
 	"If the node is the beginning of a strongly connected component"
 	(self isRootNode: aTarjanNode) ifTrue: [
-    "Get the nodes of the strongly connected component"
-		self popStackAndAddNewSccUntil: aTarjanNode ]
+		self addNewSccForNode:: aTarjanNode ]
 ]]]
+
+
+[[[
+AITarjan >> putOnStack: aTarjanNode
+
+	stack push: aTarjanNode.
+	aTarjanNode inStack: true
+]]]
+
+
+[[[
+AITarjan >> addNewSccForNode: aTarjanNode
+
+	| currentNode stronglyConnectedComponent |
+	stronglyConnectedComponent := OrderedCollection empty.
+
+	[ currentNode := stack pop.
+	currentNode popped.
+	stronglyConnectedComponent add: currentNode ]
+	doWhileFalse: [ currentNode = aTarjanNode ].
+
+	sccs add: stronglyConnectedComponent.
+	stronglyConnectedComponent do: [ :each |
+		each cycleNodes: stronglyConnectedComponent ]
+]]]
+
+
+[[[
+AITarjan >> stronglyConnectedComponents
+
+	sccs ifNil: [ self run ].
+	^ sccs collect: [ :component |
+		component collect: [ :each | each model ] ]
+]]]
+
 
 !!!Case study
 
