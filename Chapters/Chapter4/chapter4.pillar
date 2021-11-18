@@ -17,7 +17,7 @@ So, in this case, a topological sort is useful to know which modules to install 
 Now for a same graph multiple topological sorts are possible just because since we treat first the nodes having no dependencies
 their traversal order can be different and in addition the traversal order of their dependent can be different too.
 
-+Topological sort visual example>figures/top_sort_visual_example.pdf|width=90|label=soft+
++Topological sort visual example.>figures/top_sort_visual_example.pdf|width=90|label=soft+
 
 !!! Kahn's algorithm
 To apply a topological sort to a graph, the graph must be a directed acyclic graph (DAG). There is at least one topological
@@ -38,14 +38,14 @@ while S is not empty do
         if m has no other incoming edges then
             insert m into S
 if graph has edges then
-    return error   (graph is not a DAG)
+    return error (graph is not a DAG)
 else
-    return L   (a topologically sorted order)
+    return L (a topologically sorted order)
 ]]]
 
 This algorithm is implemented in the class ==AITopologicalSorting== subclass of ==AIGraphAlgorithm==.
 The parent class (==AIGraphAlgorithm==) provides all the mechanisms to handle the implementation of the
-graph data structure. ==AITopologicalSorting== is only has the responsibility to implement the logic of the algorithm.
+graph data structure. ==AITopologicalSorting== has the onlyresponsibility to implement the logic of the algorithm.
 
 The following proposes a first implementation
 
@@ -54,8 +54,8 @@ AITopologicalSorting >> run
 
   topologicalSortedElements := OrderedCollection empty.
   nodesWithNoIncomingEdges := LinkedList empty.
+  
   "Obtain all the nodes without incoming nodes"
-
   nodesWithNoIncomingEdges addAll:
   	(nodes select: [ :node | node incomingNodes isEmpty ]).
 
@@ -91,10 +91,10 @@ And we express the algorithm by redefining the method ==run== as follows:
 AITopologicalSorting >> initializeElements
 
 	topologicalSortedElements := OrderedCollection new.
-	"nodesWithNoIncomingEdge is a queue is a linked list because it has
-	a better time complexity for removing the first element."
 	nodesWithNoIncomingEdges := LinkedList new
 ]]]
+Note that ==nodesWithNoIncomingEdge== uses a linked list because it has
+a better time complexity for removing the first element.
 
 [[[
 AITopologicalSorting >> gatherNoIncomingNodes
