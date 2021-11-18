@@ -36,11 +36,11 @@ while Q is not empty do:
       Q.addLast(adjacentNode)
 ]]]
 
-In the Pharo implementation we use a linked list as a queue. We use a Linked List instead of a Ordered Collection because the ==removeFirst== operation for a LinkedList
-takes constant time and for an OrderedCollection takes linear time.
+In the Pharo implementation we use a linked list as a queue. We use a ==LinkedList== instead of an ==OrderedCollection== because the ==removeFirst== operation of ==LinkedList==
+takes constant time and for an ==OrderedCollection==, it takes linear time.
 
 We define a new subclass of ==AIGraphAlgorithm== named ==AIBFS==.
-And we define a new method ==run==.
+And we define a new method ==run== as follows:
 
 [[[
 AIBFS >> run
@@ -68,7 +68,7 @@ AIBFS >> reconstructPath
 
 	| path previous |
 	"If no path exists between the start and the end node"
-	end previousNode ifNil: [ ^ #(  ) ].
+	end previousNode ifNil: [ ^ #( ) ].
 
 	path := LinkedList empty.
 	previous := end.
@@ -129,9 +129,14 @@ The algorithm idea is:
 # When all of the unvisited neighbours of the current node are checked, mark the current node as visited.
 # Select the unvisited node that is marked with the smallest tentative distance, set it as the new "current node", and go back to step 3.
 
-Depending on the data structure that is chosen, the time complexity will vary. The array is the most inefficient one because to get the most
-promising pair it is necessary to travel all the array {{{$O(N)$}}}. But with a heap, or a Fibonacci heap, the time complexity for getting
+Depending on the data structure that is chosen, the time complexity will vary. 
+Using an array is the most inefficient one because to get the most
+promising pair it is necessary to travel all the array {{{$O(N)$}}}. 
+But with a heap, or a Fibonacci heap, the time complexity for getting
 the most promising pair is in the logarithmic order.
+
+@@todo what the implementation is using: an array or a heap? what is a heap?
+
 
 The implementation in Pharo is the following:
 
@@ -173,7 +178,6 @@ In this implementation we will use an Oredered Collection as a data structure fo
 
 [[[
 AIDijkstra >> newPriorityQueue
-
 	"This is the naive implementation of the data structure."
 
 	^ OrderedCollection new
@@ -181,7 +185,6 @@ AIDijkstra >> newPriorityQueue
 
 [[[
 AIDijkstra >> removeMostPromisingPair: aPriorityQueue
-
 	"This is the naive implementation of the data structure."
 
 	| minValue |
@@ -440,11 +443,6 @@ If we look at the path between ==A== and ==F==, we see == #( $A $B $D $E $F )== 
 of the original graph.
 
 
-!!! About tests
-
-To ensure that the algorithms are working properly, we have implemented several tests in this library. We have a graph fixture in which we have
-implemented different types of graphs. Each graph is implemented on a class side method and the method has a link to a picture to see the graph visually.
-Then, in each of the tests for each of the algorithms, we construct a graph and check if the result after running the algorithm is the expected one.
 
 
 !!! Conclusion

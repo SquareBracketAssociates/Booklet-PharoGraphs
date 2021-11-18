@@ -29,6 +29,16 @@ Several graphs can be represented:
 - we can have a graph with the time between two stations.
 
 
+!!! About tests
+
+To ensure that the algorithms are working properly, we have implemented several tests for this library. We have a graph fixture in which we have implemented different types of graphs. 
+Each graph is implemented on a class side method and the method has a link to a picture to see the graph visually.
+Then, in each of the tests for each of the algorithms, we construct a graph and check if the result after running the algorithm is the expected one.
+
+@@todo can we have an example here. 
+
+
+
 !!!! Outline of the document
 In this little book we will describe some algorithms that can be applied to graphs. 
 We will start with some basic definitions, then in subsequent chapters we will describe the following algorithms: 
