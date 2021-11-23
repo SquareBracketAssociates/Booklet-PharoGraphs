@@ -134,8 +134,8 @@ Using an array is the most inefficient one because to get the most
 promising pair it is necessary to travel all the array {{{$O(N)$}}}. 
 But with a heap, or a Fibonacci heap, the time complexity for getting
 the most promising pair is in the logarithmic order.
+Our implementation uses an array for now. 
 
-@@todo what the implementation is using: an array or a heap? what is a heap?
 
 
 The implementation in Pharo is the following:
@@ -265,8 +265,8 @@ AIShortestPathInDAG >> run
 	[ stack isNotEmpty ] whileTrue: [
 		sortedNode := self findNode: stack removeFirst.
 		sortedNode outgoingEdges do: [ :nextEdge |
-			nextEdge to pathWeight >
-      (sortedNode pathWeight + nextEdge weight)
+			nextEdge to pathWeight > 
+					(sortedNode pathWeight + nextEdge weight)
 				ifTrue: [
 					nextEdge to pathWeight: sortedNode pathWeight +
             nextEdge weight.
@@ -347,7 +347,6 @@ distance from the starting node to the node to which to edge goes. Then, run the
 to which the edge goes is part of a negative cycle.
 
 The algorithm works as follows:
-
 
 # Set the distance to every node to be infinity
 # Set the distance to the starting node to be 0
