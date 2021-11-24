@@ -47,14 +47,15 @@ In the Pharo implementation a ==traverse:== method is used. This is the DFS call
 
 [[[
 AITarjan >> run
-
 	"Initialize an empty array for the strongly connected components"
+
 	sccs := OrderedCollection new.
 	stack := Stack new.
 	runningIndex := 0.
+
 	nodes do: [ :node |
 		node isTarjanUndefined ifTrue: [
-      "If the node has no low-link value set make a dfs call"
+			"If the node has no low-link value set make a dfs call"
 			self traverse: node ] ].
 	^ self stronglyConnectedComponents
 ]]]
@@ -73,14 +74,12 @@ AITarjan >> traverse: aTarjanNode
 		adjacentNode isTarjanUndefined
 			ifTrue: [
 				"If the adjacent node doesn't have a low link"
-
 				self traverse: adjacentNode.
 				aTarjanNode tarjanLowlink:
 					(aTarjanNode tarjanLowlink
 						min: adjacentNode tarjanLowlink) ]
 			ifFalse: [
-        "If the adjacent node had already a low link value"
-
+				"If the adjacent node had already a low link value"
 				adjacentNode inStack ifTrue: [
 					aTarjanNode tarjanLowlink:
 						(aTarjanNode tarjanLowlink
@@ -101,6 +100,8 @@ AITarjan >> putOnStack: aTarjanNode
 
 ""Please comment a bit the method""
 
+""What is popped""
+
 [[[
 AITarjan >> addNewSccForNode: aTarjanNode
 
@@ -110,13 +111,16 @@ AITarjan >> addNewSccForNode: aTarjanNode
 	[ currentNode := stack pop.
 	currentNode popped.
 	stronglyConnectedComponent add: currentNode ]
-	doWhileFalse: [ currentNode = aTarjanNode ].
+		doWhileFalse: [ currentNode = aTarjanNode ].
 
 	sccs add: stronglyConnectedComponent.
 	stronglyConnectedComponent do: [ :each |
 		each cycleNodes: stronglyConnectedComponent ]
 ]]]
 
+
+The method ==stronglyConnectedComponents== returns a list of group of elements. 
+Each group represents a strongly connected component.
 
 [[[
 AITarjan >> stronglyConnectedComponents
@@ -125,6 +129,7 @@ AITarjan >> stronglyConnectedComponents
 	^ sccs collect: [ :component |
 		component collect: [ :each | each model ] ]
 ]]]
+
 
 
 !!!Case study
@@ -163,7 +168,7 @@ So, our graph has 5 strongly connected components, which are: {{{$\{A\}$}}}, {{{
 
 !!! Reducing a Graph
 
-""I have no idea what is to collapse""
+""I have no idea what is to collapse or why we would like to do it. Please explain""
 
 If we want to collapse all strongly connected components of a graph into a single one, we can use the Tarjan's algorithm to help in the task.
 Note that this algorithm for reducing a graph does not work on weighted graphs.
