@@ -1,19 +1,30 @@
-!!Minimum spanning tree algorithm
+!! Minimum spanning trees
 
 The minimum spanning tree is a subset of the edges of a undirected weighted graph that connects all the nodes of the graph
-without any cycles and with the total sum of the weights minimized. There are several algorithm for obtaining the minimum spanning
+without any cycles and with the total sum of the weights minimized. There are several algorithms for obtaining the minimum spanning
 tree of a weighted graph, the most famous is the Kruskal's algorithm. In the case of an disconnected graph, the algorithm
-returns a minimum spanning forest.
+returns a minimum spanning forest (i.e., it will return a list a minimum spanning trees)
 
-!!!Disjoint-Set data structure
+We will show you how to implement Kruskal but before that we have to introduce a little data-structure called ''Disjoint-Set''.
 
-Also called union-find data structure, is a data structure that stores disjoints set. It provides two operation: unite
-two disjoint sets into one and find if two elements belong to the same disjoint set. This data structure is used in
-Kruskal's algorithm to detect if adding a new edge create a cycle in the minimum spanning tree that is being built.
+!!! Please put a visual example with a diagram
 
-The time complexity of both of the operations is {{{$O(a(n))$}}}. {{{$a$}}} is the amortized time complexity.  Each time that
-the ==find:== method is invoked a operation called ''path compression'' is done. Thanks to the path compression operation is that
-this data structure has an amortized linear time complexity.
+@@todo Please put a visual example with a diagram else this is super abstract and dry.
+
+
+!!! Disjoint-Set data structure
+
+A disjoint-set, also called union-find data structure, is a data structure that stores disjoint sets. It provides two operations:
+- unite that groups two disjoint sets into one and 
+- find that returns two elements belong to the same disjoint set. (I could not understand exactly what find is doing.)
+
+@@todo can we have an example or a test showing such behavior because the text is super abstract.
+
+This data structure is used in Kruskal's algorithm to detect if adding a new edge creates a cycle in the minimum spanning tree that is being built.
+
+The time complexity of both of the operations is {{{$O(a(n))$}}}, where {{{$a$}}} is the amortized time complexity.  Each time that
+the ==find:== method is invoked an operation called ''path compression'' is done.
+This is due to the path compression operation that this data structure has an amortized linear time complexity.
 
 In Pharo, this data structure represents a node in the Kruskal's graph algorithm.
 
@@ -23,16 +34,19 @@ AIDisjointSetNode >> union: aDSNode
 	| root1 root2 |
 	root1 := aDSNode find.
 	root2 := self find.
-	"The nodes already belong to the same component"
-	root1 = root2 ifTrue: [ ^ self ].
+	
+	root1 = root2 ifTrue: [ 
+		"The nodes already belong to the same component"
+		^ self ].
+		
 	root1 parent: root2
 ]]]
 
 [[[
 AIDisjointSetNode >> find
-
+	"Return the root of the component but modifying the parent/child structure during the process of finding a root."
+	
 	| root next node |
-	"Find the root of the component"
 	node := self.
 	root := node.
 	[ root = root parent ] whileFalse: [ root := root parent ].
@@ -44,7 +58,6 @@ AIDisjointSetNode >> find
 		node parent: root.
 		node := next ].
 
-	"Return the root of the component"
 	^ root
 ]]]
 
@@ -53,11 +66,16 @@ AIDisjointSetNode >> find
 As said above, the Kruskal's algorithm calculates the minimum spanning tree (or forest) of an undirected weighted graph.
 The algorithm has a time complexity of {{{$O(V*log(E)) = O(E*log(E))$}}}. This time complexity is achieved thanks to the
 Disjoint-Set data structure. This algorithm uses the Disjoint-Set data structure to check if adding an edge to the spanning
-tree will create a cycle. The pseudocode is:
+tree creates a cycle. 
+
+The pseudocode is:
 
 [[[
 1. Sort edges in ascending weight.
-2. Pick the smallest edge. Check if its two nodes are already unified. If they are not, unified them and include the edge to the spanning tree. Else, discard it.
+2. Pick the smallest edge. 
+    Check if its two nodes are already unified. 
+      If they are not, unified them and include the edge to the spanning tree. 
+      Else, discard it.
 3. Repeat step 2 until there are all nodes are connected.
 ]]]
 

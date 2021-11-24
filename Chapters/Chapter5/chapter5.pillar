@@ -9,6 +9,13 @@ In this chapter we will present multiple algorithms:
 - Dijkstra's algorithm for weighted nodes,
 - an algorithm for Directed Acyclic Graphs and,
 - Bellman-Ford algorithm for negative weighted graphs.
+
+
+!!! Examples
+
+@@todo can we have one example with a diag and we could show on the same example and variations how the other algos are working. 
+
+
 !!!Shortest path on unweighted graphs (BFS algorithm)
 
 If the graph is unweighted or all edges have the same ""non-negative"" weight, the shortest path can be found
