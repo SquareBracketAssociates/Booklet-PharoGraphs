@@ -7,16 +7,31 @@ returns a minimum spanning forest (i.e., it will return a list a minimum spannin
 
 We will show you how to implement Kruskal but before that we have to introduce a little data-structure called ''Disjoint-Set''.
 
-!!! Please put a visual example with a diagram
+!!! Motivating scenario
 
-@@todo Please put a visual example with a diagram else this is super abstract and dry.
+Imagine that you have a telecommunication company and you want to build a connection between different neighbourhoods.
+Some of the connections are more expensive than others. For example, one connection has to pass under the ground or above some mountains.
+So, you have a graph in which the nodes represent the different neighbourhoods and the edges represent all the
+possible cables that can be built to make the connections between the neighbourhoods. The weights represent the cost of
+actually building the connection.Imagine that you have a telecommunication company and you want to build a connection between different neighbourhoods.
+Some of the connections are more expensive than others. For example, one connection has to pass under the ground or above some mountains.
+So, you have a graph in which the nodes represent the different neighbourhoods and the edges represent all the
+possible cables that can be built to make the connections between the neighbourhoods. The weights represent the cost of
+actually building the connection.
 
+Imagine that we have the graph shown in Figure *@spanningsmall*, we would like to get the tree that allows us to get all the nodes of the graph without circle as shown in Figure *@spanningsmall*.
+
++Connections costs between neighbourhoods.>figures/kruskal.pdf|width=35|label=spanningsmall+
+
++Minimum spanning tree>figures/minimum_spanning_tree.pdf|width=35|label=spanningsmall+
+
+@todo can be explain maximum
 
 !!! Disjoint-Set data structure
 
 A disjoint-set, also called union-find data structure, is a data structure that stores disjoint sets. It provides two operations:
-- unite that groups two disjoint sets into one and 
-- find that returns two elements belong to the same disjoint set. (I could not understand exactly what find is doing.)
+- ''unite'' that groups two disjoint sets into one and 
+- ''find'' that returns two elements belong to the same disjoint set. (""STEF:I could not understand exactly what find is doing."")
 
 @@todo can we have an example or a test showing such behavior because the text is super abstract.
 
@@ -99,9 +114,13 @@ AIKruskal >> run
 	^ treeEdges
 ]]]
 
-!!!Kruskal's algorithm for maximum spanning tree
+!!! Kruskal's algorithm for maximum spanning tree
+
+
+@todo I have no idea what is a maximum spanning tree.
 
 This is exactly the same algorithm except that we have to order the edges in descending weight instead of ascending.
+
 [[[
 1. Sort edges in descending weight.
 2. Pick the biggest edge...
@@ -112,15 +131,11 @@ In the implementation we only need to change one line:
 sortBlock := [ :e1 :e2 | e1 weight > e2 weight ].
 ]]]
 
-!!!Case study
+!!! Case study
 
-Imagine that you have a telecommunications company and you want to build a connection between different neighbourhoods.
-Some of the connections are more expensive than others. For example, one connection has to pass under the ground or above some mountains.
-So, you have a graph in which the nodes represent the different neighbourhoods and the edges represent all the
-possible cables that can be built to make the connections between the neighbourhoods. The weights represent the cost of
-actually building the connection.
+We can now apply our algorithm to the graph shown at the beginning of this chapter and in Figure *@spsituation*.
 
-+Connections costs between neighbourhoods>figures/kruskal.pdf|width=55+
++Connections costs between neighbourhoods.>figures/kruskal.pdf|width=55|label=spsituation+
 
 So, like in the other graph algorithms we only need to declare the nodes and the edges an then call the method ==run==
 to obtain the result.
@@ -159,7 +174,7 @@ DSN $A -> DSN $F weight: 11
 DSN $C -> DSN $B weight: 12
 ]]]
 
-+Minimum spanning tree>figures/minimum_spanning_tree.pdf|width=55+
++Minimum spanning tree. SEB WHAT IS THE ROOT OF THE TREE?>figures/minimum_spanning_tree.pdf|width=55+
 
 If we want to obtain the maximum spanning tree, we only need to call the ==maxSpanningTree== method
 when creating the graph algorithm.
@@ -170,5 +185,4 @@ kruskal := AIKruskal new maxSpanningTree.
 
 !!! Conclusion
 
-The data structures play a powerful role when it comes to algorithms. In this specific case thank to the Disjoint data structure we can detect cycles in
-amortized linear time complexity and with few lines of code. Also, the Kruskal algorithm have many real life application and it is an important algorithm in the context of graph theory.
+Data structures play a powerful role when it comes to algorithms. In this specific case thank to the Disjoint-Set data structure we can detect cycles in amortized linear time complexity and with few lines of code. Also, the Kruskal algorithm has many real life applications and it is an important algorithm in the context of graph theory.
