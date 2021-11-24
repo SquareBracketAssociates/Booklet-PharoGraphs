@@ -100,7 +100,7 @@ AITarjan >> putOnStack: aTarjanNode
 
 ""Please comment a bit the method""
 
-""What is popped""
+""What is popped for a node?""
 
 [[[
 AITarjan >> addNewSccForNode: aTarjanNode
@@ -134,12 +134,12 @@ AITarjan >> stronglyConnectedComponents
 
 !!!Case study
 
- Graph in Figure *@strongSituation* represents a graph of connected people on a social media. An edge represents a follow. One person can follow
-and can be followed. We want to know which and how many strongly connected components has the social network.
+ The graph in Figure *@strongSituation* represents a set of connected people on a social media. An edge represents a follow. One person can follow
+and can be followed. We want to know which and how many strongly connected components  the social network has.
 
 +A social network: each node is a person and an edge a contact.>figures/strongly_connected_graph.pdf|width=45|label=strongSituation+
 
-The code for solving the problem is similar to the other algorithms. We instantiate the nodes, the edges and call the method run.
+The code for solving the problem is similar to the other algorithms. We instantiate the nodes, the edges and call the method ==run==.
 
 [[[
 nodes := $a to: $h.
@@ -153,7 +153,7 @@ tarjan
 stronglyConnectedComponents := tarjan run
 ]]]
 
-If we inspect the ==stronglyConnectedComponents== variable we will that that is a collection that contains 5 elements.
+If we inspect the ==stronglyConnectedComponents== variable we see that that is a collection that contains 5 elements.
 Each element is a list that contains the nodes corresponding to the strongly connected component.
 
 [[[
@@ -168,7 +168,7 @@ So, our graph has 5 strongly connected components, which are: {{{$\{A\}$}}}, {{{
 
 !!! Reducing a Graph
 
-""I have no idea what is to collapse or why we would like to do it. Please explain""
+""Iwhy we would like to do it. do we create new nodes between the ? Please explain""
 
 If we want to collapse all strongly connected components of a graph into a single one, we can use the Tarjan's algorithm to help in the task.
 Note that this algorithm for reducing a graph does not work on weighted graphs.
