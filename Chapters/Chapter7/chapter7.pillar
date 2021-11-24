@@ -4,12 +4,23 @@ The most knew algorithms for finding the strongly connected components of a grap
 Both algorithms have a time complexity of {{{$O(V + E)$}}} and are based on DFS (depth search first). But Tarjan's algorithm
 is faster on practice. Because Kosaraju’s algorithm does two passes of DFS and Tarjan's only one.
 
+@todo after reading the text above I still do not have nay idea about what is strongly connected components.
+
+
+!!! Motivating example
+
 Finding strongly connected components in a graph has several real life applications. For example it is used on social
-media to find groups of friends to suggest commonly liked pages.
+media to find groups of friends to suggest commonly liked pages (see Figure *@strongSituationSmall*).
 
-!!!Tarjan's algorithm
 
-In order to find the strongly connected components of a graph, Tarjan's algorithm assigns a low-link value and an ID to each node.
++A social network: each node is a person and an edge a contact.>figures/strongly_connected_graph.pdf|width=35|label=strongSituationSmall+
+
+@todo add a diag with the strongly connected components.
+
+!!! Tarjan's algorithm
+
+To find the strongly connected components of a graph, Tarjan's algorithm assigns a low-link value and an ID to each node.
+(""SEB WHAT IS A LOW LINK"")
 It does a DFS pass to all the node in the graph and changes the low-link value. If at the end of the DFS call the low link value
 of a node is the same as its ID, means that that node is the beginning of a strongly connect component.
 The pseudocode is:
@@ -18,9 +29,19 @@ The pseudocode is:
 1. Mark the as unvisited and without an ID nor a low-link value.
 2. Start DFS. When visiting a node assign it an ID and a low-link value same as the ID.
 3. Mark current node as visited and add it to the stack.
-4. On DFS callback, first, min the current node's low-link value with the low-link value of the adjacent node. Then, if the adjacent node is on the stack then min the current node's low-link with the adjacent node's ID.
-5. After visiting all adjacent nodes, if the current node has its ID value as the same of its low-link value it means that there is a strongly connected component. So, pop all nodes from the stack until current node is reached.
+4. On DFS callback, 
+    First, min the current node's low-link value with the low-link value of the adjacent node. 
+    Then, if the adjacent node is on the stack 
+	            then min the current node's low-link with the adjacent node's ID.
+5. After visiting all adjacent nodes, if the current node has its ID value as the same of its low-link value 
+		Then it means that there is a strongly connected component. 
+		So, pop all nodes from the stack until current node is reached.
 ]]]
+
+
+""What is a DFS callback?""
+
+!!! Tarjan's implementation
 
 In the Pharo implementation a ==traverse:== method is used. This is the DFS call. All the magic happens in that method.
 
@@ -78,6 +99,7 @@ AITarjan >> putOnStack: aTarjanNode
 	aTarjanNode inStack: true
 ]]]
 
+""Please comment a bit the method""
 
 [[[
 AITarjan >> addNewSccForNode: aTarjanNode
@@ -107,10 +129,10 @@ AITarjan >> stronglyConnectedComponents
 
 !!!Case study
 
-The following graph represents a graph of connected people on a social media. An edge represents a follow. One person can follow
+ Graph in Figure *@strongSituation* represents a graph of connected people on a social media. An edge represents a follow. One person can follow
 and can be followed. We want to know which and how many strongly connected components has the social network.
 
-+Social network>figures/strongly_connected_graph.pdf|width=45+
++A social network: each node is a person and an edge a contact.>figures/strongly_connected_graph.pdf|width=45|label=strongSituation+
 
 The code for solving the problem is similar to the other algorithms. We instantiate the nodes, the edges and call the method run.
 
@@ -141,16 +163,17 @@ So, our graph has 5 strongly connected components, which are: {{{$\{A\}$}}}, {{{
 
 !!! Reducing a Graph
 
+""I have no idea what is to collapse""
+
 If we want to collapse all strongly connected components of a graph into a single one, we can use the Tarjan's algorithm to help in the task.
-To do that
+Note that this algorithm for reducing a graph does not work on weighted graphs.
+To do that: 
+# Find circuits using Tarjan's algorithm (strongly connected components which size is > 1)
+# Merge all nodes in circuit into one collapsed node.
+# Remove the nodes that were merged.
+# Add the new collapsed nodes.
+# Replace the old references to the merged nodes to reference the new collapsed nodes.
 
-1. Find circuits using Tarjan's algorithm (strongly connected components which size is > 1)
-2. Merge all nodes in circuit into one collapsed node.
-3. Remove the nodes that were merged.
-4. Add the new collapsed nodes.
-5. Replace the old references to the merged nodes to reference the new collapsed nodes.
-
-''Note that this algorithm for reducing a graph does not work on weighted graphs.''
 
 !!!Case study
 
@@ -180,7 +203,7 @@ Merged nodes: $h, $g
 Merged nodes: $c, $f, $d
 ]]]
 
-+Reduced graph>figures/reduced_graph.pdf|width=45+
++Reduced graph: a collection containing all the new nodes.>figures/reduced_graph.pdf|width=45+
 
 
 !!! Conclusion
