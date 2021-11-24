@@ -1,15 +1,16 @@
 !!Link analysis
 
 Link analysis is technique used to evaluate relationships between nodes. Link analysis is used on several fields,
-like search engines, fraud detection, among others. There is several algorithms of different kinds to perform Link analysis.
+such as search engines, fraud detection, among others. There is several algorithms of different kinds to perform link analysis.
 Here we are only going to focus on the Hyperlink-Induced Topic Search (HITS) algorithm.
+
+This algorithm was originally developed to rate web pages. But, nowadays modern search engines do not use
+this algorithm since there is more advanced techniques. HITS has been also used to identify the important classes that should be commented in a large software system or the classes that a developer should read to get an insight of the key classes.
+
 
 !!!Hyperlink-Induced Topic Search (HITS) algorithm
 
-Also know as Hubs and Authorities, is an algorithm that rates every the nodes of a graph. Every node has a hub and a authority
-score. A hub is a node that may not be relevant but references relevant nodes. An authority is a node that contains relevant
-information. This algorithm was originally developed to rate web pages. But, nowadays modern search engines do not use
-this algorithm since there is more advanced techniques.
+Hyperlink-Induced Topic Search (HITS) algorithm, also knows as Hubs and Authorities, is an algorithm that rates every the nodes of a graph. Every node has a hub and a authority score. A hub is a node that may not be relevant but references relevant nodes. An authority is a node that contains relevant information. 
 
 The algorithm does the following:
 
@@ -27,7 +28,10 @@ The update rules are simple.
 Update each node's authority score to be equal to the sum of the hub scores of each node that points to it.
 
 ""Hub update rule""
-Update each node's hub score to be equal to the sum of the authority scores of the nodes that points to.
+Update each node's hub score to be equal to the sum of the authority scores of the nodes that ""the node??""points to.
+
+
+!!! HITS implementation
 
 The Pharo implementation is as follows. The ==k== number is the number of times that the scores are going to be
 updated. The default value is ==20== but it can also be set manually.
@@ -43,6 +47,7 @@ AIHits >> run
 	^ nodes
 ]]]
 
+""why using a float? and not an int?  because of the normalization we should say it""
 [[[
 AIHits >> initializeNodes
 
@@ -124,8 +129,8 @@ If we inspect the nodes, these are the scores calculated after 3 iterations.
 
 !!!Weighted HITS
 
-There are cases where the Hits algorithm not behaves as expected and sometimes the Hits algorithm puts 0 as values
-for the hubs and authorities. Using weights in a graph helps in having better results. Establishing the weights is a
+There are cases where the Hits algorithm does not behave as expected and sometimes the Hits algorithm puts 0 as values
+for the hubs and authorities. Using weights in a graph helps in obtaining better results. Establishing the weights is a
 responsibility of the user.
 
 For more information, you can read these papers:
@@ -156,5 +161,5 @@ AIWeightedHits >> computeHubsFor: aNode
 
 !!! Conclusion
 
-Nevertheless the HITS algorithm is not used anymore in the modern search engines, is a very good algorithm for
+Even if the HITS algorithm is not used anymore in the modern search engines, it is a very good algorithm for
 having a first look on how to classify links according to their relevance in the network.
