@@ -25,15 +25,18 @@ Imagine that we have the graph shown in Figure *@spanningsmall*, we would like t
 
 +Minimum spanning tree. Where is the root of the tree>figures/minimum_spanning_tree.pdf|width=35|label=spanningsmall+
 
-@todo can be explain maximum
-
 !!! Disjoint-Set data structure
 
 A disjoint-set, also called union-find data structure, is a data structure that stores disjoint sets. It provides two operations:
-- ''unite'' that groups two disjoint sets into one and 
-- ''find'' that returns two elements belong to the same disjoint set. (""STEF:I could not understand exactly what find is doing."")
+- ''unite'' that groups two disjoint sets into one and
+- ''find'' that returns two elements belong to the same disjoint set.
 
-@@todo can we have an example or a test showing such behavior because the text is super abstract.
+For example, in *@union_find_set* we have two sets. If we call the operation find with A and D nodes, the operation will return false.
+With A and B find will return true.
++Union-Find set>figures/union_find.pdf|width=45|label=union_find_set+
+
+But if we call the operation unite with A and D now we will have only one set of elements. As in *@only_one_set*
++Union-Find set>figures/only_one_set.pdf|width=45|label=only_one_set+
 
 This data structure is used in Kruskal's algorithm to detect if adding a new edge creates a cycle in the minimum spanning tree that is being built.
 
@@ -49,18 +52,18 @@ AIDisjointSetNode >> union: aDSNode
 	| root1 root2 |
 	root1 := aDSNode find.
 	root2 := self find.
-	
-	root1 = root2 ifTrue: [ 
+
+	root1 = root2 ifTrue: [
 		"The nodes already belong to the same component"
 		^ self ].
-		
+
 	root1 parent: root2
 ]]]
 
 [[[
 AIDisjointSetNode >> find
 	"Return the root of the component but modifying the parent/child structure during the process of finding a root."
-	
+
 	| root next node |
 	node := self.
 	root := node.
@@ -81,15 +84,15 @@ AIDisjointSetNode >> find
 As said above, the Kruskal's algorithm calculates the minimum spanning tree (or forest) of an undirected weighted graph.
 The algorithm has a time complexity of {{{$O(V*log(E)) = O(E*log(E))$}}}. This time complexity is achieved thanks to the
 Disjoint-Set data structure. This algorithm uses the Disjoint-Set data structure to check if adding an edge to the spanning
-tree creates a cycle. 
+tree creates a cycle.
 
 The pseudocode is:
 
 [[[
 1. Sort edges in ascending weight.
-2. Pick the smallest edge. 
-    Check if its two nodes are already unified. 
-      If they are not, unified them and include the edge to the spanning tree. 
+2. Pick the smallest edge.
+    Check if its two nodes are already unified.
+      If they are not, unified them and include the edge to the spanning tree.
       Else, discard it.
 3. Repeat step 2 until there are all nodes are connected.
 ]]]
@@ -116,8 +119,7 @@ AIKruskal >> run
 
 !!! Kruskal's algorithm for maximum spanning tree
 
-
-@todo I have no idea what is a maximum spanning tree.
+As contrary to the minimum spanning tree, the maximum spanning tree of a graph is a subset of edges of a graph that connects all nodes with the ""maximum"" possible distance.
 
 This is exactly the same algorithm except that we have to order the edges in descending weight instead of ascending.
 
