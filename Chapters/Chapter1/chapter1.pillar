@@ -1,17 +1,17 @@
 !!Introduction
 
-Graphs are everywhere and they are well-known algorithms to get the best out of them. 
+Graphs are everywhere and they are well-known algorithms to get the best out of them.
 In this booklet the most common graph algorithms will be explained along with some case studies
 where these algorithms can be applied. These algorithms are available in the ''Pharo AI'' ''graph-algorithms'' library available at: *https://github.com/pharo-ai/graph-algorithms*
 
-This booklet describes the pseudocode of the algotihms and an explanation of how do they work. 
+This booklet describes the pseudocode of the algotihms and an explanation of how do they work.
 
 !!! Paris metro as graph example
 
 
 A typical example is a metro map as the one of Paris as shown in Figure *@paris*.
 What we see is that metro lines are connected by some stations for example (Gare du Nord connects line 5 and 4) and some stations are real hub where multiple lines meet such as Chatelet.
- 
+
 +Newly design paris metro maps.>figures/Paris_Metro_map_1024.pdf|width=100|label=paris+
 
 When you visit Paris, you are often asking yourself:
@@ -22,26 +22,22 @@ When you visit Paris, you are often asking yourself:
 - finding the one with the least changes?
 - what are all the places that I can reach in 5 stops?
 
-All such questions can be answered by modeling the metro of Paris as a graph and applying algorithms to it. 
+All such questions can be answered by modeling the metro of Paris as a graph and applying algorithms to it.
 
-Several graphs can be represented: 
+Several graphs can be represented:
 - we can have graph with only the shared stations and eliminate the station in between (this would not be really useful for users because you do not want to only used shared stations).
 - we can have a graph with the time between two stations.
 
 
 !!! About tests
 
-To ensure that the algorithms are working properly, we have implemented several tests for this library. We have a graph fixture in which we have implemented different types of graphs. 
+To ensure that the algorithms are working properly, we have implemented several tests for this library. We have a graph fixture in which we have implemented different types of graphs.
 Each graph is implemented on a class side method and the method has a link to a picture to see the graph visually.
 Then, in each of the tests for each of the algorithms, we construct a graph and check if the result after running the algorithm is the expected one.
 
-@@todo can we have an example here. 
-
-
-
 !!!! Outline of the document
-In this little book we will describe some algorithms that can be applied to graphs. 
-We will start with some basic definitions, then in subsequent chapters we will describe the following algorithms: 
+In this little book we will describe some algorithms that can be applied to graphs.
+We will start with some basic definitions, then in subsequent chapters we will describe the following algorithms:
 topological sort, sortest path, Kruskal, Tarjan, HITs, ...
 
 All the algorithms of the libraryhave the same API to set the nodes and the edges.
@@ -57,10 +53,3 @@ Metacello new
 	baseline: 'AIGraphAlgorithms';
 	load
 ]]]
-
-
-
-
-
-
-

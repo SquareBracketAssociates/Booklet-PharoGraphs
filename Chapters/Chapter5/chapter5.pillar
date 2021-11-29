@@ -13,8 +13,19 @@ In this chapter we will present multiple algorithms:
 
 !!! Examples
 
-@@todo can we have one example with a diag and we could show on the same example and variations how the other algos are working. 
+Let us take this graph as an example *@short_distance_graph* As it is an unweighted graph, we can calculate the distance between 2 nodes using he BFS algorithm.
++Short distance graph>figures/generic_example.pdf|width=50|label=short_distance_graph+
 
+But, if we add weights to the graph, as in *@short_distance_graph_2* we cannot no longer use BFS. But we can find the shortest distance using the Dijkstra algorithm.
++Short distance with weights>figures/dag.pdf|width=50|label=short_distance_graph_2+
+
+The Dijkstra's algorithm does not work on graphs with negative weights. So, if we add negative weights to the graph, we must use the Bellman-Ford
+algorithm to solve the problem. *@short_distance_graph_3*
++Short distance with negative weights>figures/longest_path.pdf|width=50|label=short_distance_graph_3+
+
+If the graph has no cycles, a Directed Acyclic Graph (DAG) (like the graph in this example), we can use an algorithm based on topological sort to find
+the shortest distance. This algorithm works for both negative and positive weights as long the graph has no cycles. This algorithm is better
+in terms of time complexity but is more restricted as it only runs on DAG. On the other hand, Dijkstra's and Bellman-Ford both run in both cyclic and acyclic graphs.
 
 !!!Shortest path on unweighted graphs (BFS algorithm)
 
@@ -136,12 +147,12 @@ The algorithm idea is:
 # When all of the unvisited neighbours of the current node are checked, mark the current node as visited.
 # Select the unvisited node that is marked with the smallest tentative distance, set it as the new "current node", and go back to step 3.
 
-Depending on the data structure that is chosen, the time complexity will vary. 
+Depending on the data structure that is chosen, the time complexity will vary.
 Using an array is the most inefficient one because to get the most
-promising pair it is necessary to travel all the array {{{$O(N)$}}}. 
+promising pair it is necessary to travel all the array {{{$O(N)$}}}.
 But with a heap, or a Fibonacci heap, the time complexity for getting
 the most promising pair is in the logarithmic order.
-Our implementation uses an array for now. 
+Our implementation uses an array for now.
 
 
 
@@ -272,7 +283,7 @@ AIShortestPathInDAG >> run
 	[ stack isNotEmpty ] whileTrue: [
 		sortedNode := self findNode: stack removeFirst.
 		sortedNode outgoingEdges do: [ :nextEdge |
-			nextEdge to pathWeight > 
+			nextEdge to pathWeight >
 					(sortedNode pathWeight + nextEdge weight)
 				ifTrue: [
 					nextEdge to pathWeight: sortedNode pathWeight +
@@ -341,7 +352,7 @@ shortestPathInDAG
 pathAtoF := shortestPathInDAG runFrom: $A to: $F.
 ]]]
 
-+DAG.>figures/dag.pdf|width=50+
++DAG>figures/dag.pdf|width=50+
 
 !!!Shortest path on weighted graphs with negative weights (Bellman-Ford algorithm)
 
