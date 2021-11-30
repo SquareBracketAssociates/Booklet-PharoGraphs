@@ -31,11 +31,11 @@ A disjoint-set, also called union-find data structure, is a data structure that 
 - ''unite'' that groups two disjoint sets into one and
 - ''find'' that returns two elements belong to the same disjoint set.
 
-For example, in *@union_find_set* we have two sets. If we call the operation find with A and D nodes, the operation will return false.
-With A and B find will return true.
+For example, in *@union_find_set* we have two sets of elements {{{$\{A, B, C\}$}}} and {{{$\{D, E\}$}}}. If we call the operation find with A and D nodes,
+as they do not belong to the same set, the operation will return false. With A and B nodes, the operation find will return true.
 +Union-Find set>figures/union_find.pdf|width=45|label=union_find_set+
 
-But if we call the operation unite with A and D now we will have only one set of elements. As in *@only_one_set*
+But if we call the operation unite with A and D, we will join the two sets to have only one set with all the elements. As in *@only_one_set*
 +Union-Find set>figures/only_one_set.pdf|width=45|label=only_one_set+
 
 This data structure is used in Kruskal's algorithm to detect if adding a new edge creates a cycle in the minimum spanning tree that is being built.
@@ -176,7 +176,7 @@ DSN $A -> DSN $F weight: 11
 DSN $C -> DSN $B weight: 12
 ]]]
 
-+Minimum spanning tree. SEB WHAT IS THE ROOT OF THE TREE?>figures/minimum_spanning_tree.pdf|width=55+
++Minimum spanning tree.>figures/minimum_spanning_tree.pdf|width=55+
 
 If we want to obtain the maximum spanning tree, we only need to call the ==maxSpanningTree== method
 when creating the graph algorithm.
