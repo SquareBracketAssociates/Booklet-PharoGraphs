@@ -45,7 +45,7 @@ else
 
 This algorithm is implemented in the class ==AITopologicalSorting== subclass of ==AIGraphAlgorithm==.
 The parent class (==AIGraphAlgorithm==) provides all the mechanisms to handle the implementation of the
-graph data structure. ==AITopologicalSorting== has the onlyresponsibility to implement the logic of the algorithm.
+graph data structure. ==AITopologicalSorting== has the only responsibility: to implement the logic of the algorithm.
 
 The following proposes a first implementation
 
@@ -54,7 +54,7 @@ AITopologicalSorting >> run
 
   topologicalSortedElements := OrderedCollection empty.
   nodesWithNoIncomingEdges := LinkedList empty.
-  
+
   "Obtain all the nodes without incoming nodes"
   nodesWithNoIncomingEdges addAll:
   	(nodes select: [ :node | node incomingNodes isEmpty ]).
@@ -165,7 +165,7 @@ module ''D''. So in this case the topological sorting is the algorithm that we n
 
 +Software modules>figures/topological_sorting.pdf|width=45|label=soft+
 
-To solve this problem programatically we only need to declare the nodes, the edges and them running the algorithm.
+To solve this problem programatically we only need to declare the nodes, the edges and the run the algorithm.
 
 [[[
 "First define the nodes and the edges"

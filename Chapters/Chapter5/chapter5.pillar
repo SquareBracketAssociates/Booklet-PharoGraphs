@@ -13,17 +13,20 @@ In this chapter we will present multiple algorithms:
 
 !!! Examples
 
-Let us take this graph as an example *@short_distance_graph* As it is an unweighted graph, we can calculate the distance between 2 nodes using he BFS algorithm.
+Let us take this graph as an example *@short_distance_graph* As it is an unweighted graph, we can calculate the distance between 2 nodes using the BFS algorithm.
+
 +Short distance graph>figures/generic_example.pdf|width=50|label=short_distance_graph+
 
 But, if we add weights to the graph, as in *@short_distance_graph_2* we cannot no longer use BFS. But we can find the shortest distance using the Dijkstra algorithm.
+
 +Short distance with weights>figures/dag.pdf|width=50|label=short_distance_graph_2+
 
 The Dijkstra's algorithm does not work on graphs with negative weights. So, if we add negative weights to the graph, we must use the Bellman-Ford
-algorithm to solve the problem. *@short_distance_graph_3*
+algorithm to solve the problem. Figure *@short_distance_graph_3*
+
 +Short distance with negative weights>figures/longest_path.pdf|width=50|label=short_distance_graph_3+
 
-If the graph has no cycles, a Directed Acyclic Graph (DAG) (like the graph in this example), we can use an algorithm based on topological sort to find
+If the graph has no cycles, a Directed Acyclic Graph (DAG) (like Figure *@short_distance_graph_3*), we can use an algorithm based on topological sort to find
 the shortest distance. This algorithm works for both negative and positive weights as long the graph has no cycles. This algorithm is better
 in terms of time complexity but is more restricted as it only runs on DAG. On the other hand, Dijkstra's and Bellman-Ford both run in both cyclic and acyclic graphs.
 
@@ -134,9 +137,9 @@ pathToD := bfs reconstructPath
 
 The Dijkstra's algorithm is one of the most-know algorithms for calculating the shortest path in a weighted graph.
 As BFS, this algorithm is also a single source shortest path algorithm. In its naive implementation has a time
-complexity of {{{$O(V^2)$}}}. But, it can be optimized using a head or a tree as a data structure to a time
-complexity of {{{$O((V+E)*log V)$}}}. If a Fibonacci heap is used we can the best possible time complexity
-{{{$O(E + V * log V)$}}}. Dijkstra's algorithm can handle a graph with cycles. But, it cannot handle negative weights.
+complexity of {{{$O(V^2)$}}}. But, it can be optimized using a heap or a Fibonacci's heap as a data structure to a time
+complexity of {{{$O((V+E)*log V)$}}}. If a Fibonacci heap is used we get the best possible time complexity
+{{{$O(E + V * log V)$}}} possible (at the moment). Dijkstra's algorithm can handle a graph with cycles. But, it cannot handle negative weights.
 
 The algorithm idea is:
 

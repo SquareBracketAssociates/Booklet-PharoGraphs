@@ -1,10 +1,10 @@
 !!Introduction
 
-Graphs are everywhere and they are well-known algorithms to get the best out of them.
+Graphs are everywhere and there is well-known algorithms to get the best out of them.
 In this booklet the most common graph algorithms will be explained along with some case studies
 where these algorithms can be applied. These algorithms are available in the ''Pharo AI'' ''graph-algorithms'' library available at: *https://github.com/pharo-ai/graph-algorithms*
 
-This booklet describes the pseudocode of the algotihms and an explanation of how do they work.
+This booklet will describe and implement this algorithms.
 
 !!! Paris metro as graph example
 
@@ -38,9 +38,9 @@ Then, in each of the tests for each of the algorithms, we construct a graph and 
 !!!! Outline of the document
 In this little book we will describe some algorithms that can be applied to graphs.
 We will start with some basic definitions, then in subsequent chapters we will describe the following algorithms:
-topological sort, sortest path, Kruskal, Tarjan, HITs, ...
+topological sort, shortest path, Kruskal, Tarjan, HITS, ...
 
-All the algorithms of the libraryhave the same API to set the nodes and the edges.
+All the algorithms of the library have the same API to set the nodes and the edges.
 The edges can be both weighted or unweighted.
 A detailed explanation of how to use the API will be given on Chapter *@cha:repre*.
 

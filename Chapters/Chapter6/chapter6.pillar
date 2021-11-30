@@ -13,10 +13,6 @@ Imagine that you have a telecommunication company and you want to build a connec
 Some of the connections are more expensive than others. For example, one connection has to pass under the ground or above some mountains.
 So, you have a graph in which the nodes represent the different neighbourhoods and the edges represent all the
 possible cables that can be built to make the connections between the neighbourhoods. The weights represent the cost of
-actually building the connection.Imagine that you have a telecommunication company and you want to build a connection between different neighbourhoods.
-Some of the connections are more expensive than others. For example, one connection has to pass under the ground or above some mountains.
-So, you have a graph in which the nodes represent the different neighbourhoods and the edges represent all the
-possible cables that can be built to make the connections between the neighbourhoods. The weights represent the cost of
 actually building the connection.
 
 Imagine that we have the graph shown in Figure *@spanningsmall*, we would like to get the tree that allows us to get all the nodes of the graph without circle as shown in Figure *@spanningsmall*.
@@ -41,7 +37,7 @@ But if we call the operation unite with A and D, we will join the two sets to ha
 This data structure is used in Kruskal's algorithm to detect if adding a new edge creates a cycle in the minimum spanning tree that is being built.
 
 The time complexity of both of the operations is {{{$O(a(n))$}}}, where {{{$a$}}} is the amortized time complexity.  Each time that
-the ==find:== method is invoked an operation called ''path compression'' is done.
+the ==find:== method is invoked an operation called ''path compression''.
 This is due to the path compression operation that this data structure has an amortized linear time complexity.
 
 In Pharo, this data structure represents a node in the Kruskal's graph algorithm.
@@ -135,7 +131,7 @@ sortBlock := [ :e1 :e2 | e1 weight > e2 weight ].
 
 !!! Case study
 
-We can now apply our algorithm to the graph shown at the beginning of this chapter and in Figure *@spsituation*.
+We can now apply our algorithm to the graph shown at the beginning of this chapter in Figure *@spsituation*.
 
 +Connections costs between neighbourhoods.>figures/kruskal.pdf|width=55|label=spsituation+
 
@@ -187,4 +183,5 @@ kruskal := AIKruskal new maxSpanningTree.
 
 !!! Conclusion
 
-Data structures play a powerful role when it comes to algorithms. In this specific case thank to the Disjoint-Set data structure we can detect cycles in amortized linear time complexity and with few lines of code. Also, the Kruskal algorithm has many real life applications and it is an important algorithm in the context of graph theory.
+Data structures play a powerful role when it comes to algorithms. In this specific case thank to the Disjoint-Set data structure we can detect cycles in amortized
+linear time complexity with few lines of code. Also, the Kruskal algorithm has many real life applications and it is an important algorithm in the context of graph theory.
