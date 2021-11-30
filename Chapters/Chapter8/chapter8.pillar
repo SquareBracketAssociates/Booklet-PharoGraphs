@@ -1,34 +1,36 @@
 !!Link analysis
 
-Link analysis is technique used to evaluate relationships between nodes. Link analysis is used on several fields,
+Link analysis is a technique used to evaluate relationships between nodes. Link analysis is used on several fields,
 such as search engines, fraud detection, among others. There is several algorithms of different kinds to perform link analysis.
 Here we are only going to focus on the Hyperlink-Induced Topic Search (HITS) algorithm.
 
 This algorithm was originally developed to rate web pages. But, nowadays modern search engines do not use
-this algorithm since there is more advanced techniques. HITS has been also used to identify the important classes that should be commented in a large software system or the classes that a developer should read to get an insight of the key classes.
+this algorithm since there is more advanced techniques. HITS has been also used to identify the important classes that should be
+commented in a large software system or the classes that a developer should read to get an insight of the key classes.
 
 
 !!!Hyperlink-Induced Topic Search (HITS) algorithm
 
-Hyperlink-Induced Topic Search (HITS) algorithm, also knows as Hubs and Authorities, is an algorithm that rates every the nodes of a graph. Every node has a hub and a authority score. A hub is a node that may not be relevant but references relevant nodes. An authority is a node that contains relevant information. 
+Hyperlink-Induced Topic Search (HITS) algorithm, also knows as Hubs and Authorities,
+is an algorithm that rates every the nodes of a graph. Every node has a hub and a authority score. A hub is a node that may not
+be relevant but references relevant nodes. An authority is a node that contains relevant information.
 
 The algorithm does the following:
 
-[[[
-1. Assign to each node a hub and an authority score equal to 1.
-2. Run the authority update rule for each node.
-3. Run the hub update rule for each.
-4. Normalize the values by dividing each Hub score by the square root of the sum of the squares of all Hub scores, and dividing each Authority score by the square root of the sum of the squares of all Authority scores.
-5. Repeat from the second step as necessary.
-]]]
+# Assign to each node a hub and an authority score equal to 1.
+# Run the authority update rule for each node.
+# Run the hub update rule for each.
+# Normalize the values by dividing each Hub score by the square root of the sum of the squares of all Hub scores, and dividing each Authority score by the square root of the sum of the squares of all Authority scores.
+# Repeat from the second step as necessary.
 
-The update rules are simple.
+
+The update rules are simple:
 
 ""Authority update rule""
 Update each node's authority score to be equal to the sum of the hub scores of each node that points to it.
 
 ""Hub update rule""
-Update each node's hub score to be equal to the sum of the authority scores of the nodes that ""the node??""points to.
+Update each node's hub score to be equal to the sum of the authority scores of each node that it points to.
 
 
 !!! HITS implementation
@@ -47,10 +49,10 @@ AIHits >> run
 	^ nodes
 ]]]
 
-""why using a float? and not an int?  because of the normalization we should say it""
 [[[
 AIHits >> initializeNodes
 
+	"Here we are using float instead of int because of the normalization."
 	nodes do: [ :n |
 		n auth: 1.0.
 		n hub: 1.0 ]
