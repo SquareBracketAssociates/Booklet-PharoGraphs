@@ -15,16 +15,16 @@ In this chapter we will present multiple algorithms:
 
 Let us take this graph as an example *@short_distance_graph* As it is an unweighted graph, we can calculate the distance between 2 nodes using the BFS algorithm.
 
-+Short distance graph>figures/generic_example.pdf|width=50|label=short_distance_graph+
++Short distance graph.>figures/generic_example.pdf|width=48|label=short_distance_graph+
 
 But, if we add weights to the graph, as in *@short_distance_graph_2* we cannot no longer use BFS. But we can find the shortest distance using the Dijkstra algorithm.
 
-+Short distance with weights>figures/dag.pdf|width=50|label=short_distance_graph_2+
++Short distance with weights.>figures/dag.pdf|width=48|label=short_distance_graph_2+
 
 The Dijkstra's algorithm does not work on graphs with negative weights. So, if we add negative weights to the graph, we must use the Bellman-Ford
 algorithm to solve the problem. Figure *@short_distance_graph_3*
 
-+Short distance with negative weights>figures/longest_path.pdf|width=50|label=short_distance_graph_3+
++Short distance with negative weights.>figures/longest_path.pdf|width=48|label=short_distance_graph_3+
 
 If the graph has no cycles, a Directed Acyclic Graph (DAG) (like Figure *@short_distance_graph_3*), we can use an algorithm based on topological sort to find
 the shortest distance. This algorithm works for both negative and positive weights as long the graph has no cycles. This algorithm is better
@@ -102,7 +102,7 @@ AIBFS >> reconstructPath
 
 !!! Case study
 
-+A graph for BFS.>figures/bfs.pdf|width=45+
++A graph for BFS.>figures/bfs.pdf|width=40+
 
 For the BFS graph, the shortest path can be calculated using the class ==AIBFS== like shown in the following example.
 
@@ -215,10 +215,9 @@ AIDijkstra >> removeMostPromisingPair: aPriorityQueue
 
 !!! Case study
 
-+Dijkstra graph>figures/dijkstra.pdf|width=50+
++Dijkstra graph.>figures/dijkstra.pdf|width=50|label=dij+
 
-In this graph, the shortest path between node A and B is ==#( $A $C $B )==
-The shortest path between node A and node F is ==#( $A $C $B $D $E $F )==
+In the graph shown in Figure *@dij*, the shortest path between node A and B is ==#( $A $C $B )==. The shortest path between node A and node F is ==#( $A $C $B $D $E $F )==
 
 [[[
 nodes := $A to: $F.
@@ -339,7 +338,7 @@ AIShortestPathInDAG >> updatePathDistance: edge previousNode: previousNode
 
 !!!!Case study
 
-On this weighted DAG, calculate the shortest path between node A and node F.
+On this weighted DAG (See Figure *@weight*), the following snippet calculates the shortest path between node A and node F.
 
 [[[
 nodes := $A to: $G.
@@ -355,7 +354,7 @@ shortestPathInDAG
 pathAtoF := shortestPathInDAG runFrom: $A to: $F.
 ]]]
 
-+DAG>figures/dag.pdf|width=50+
++DAG with weigthed paths.>figures/dag.pdf|width=50|label=weight+
 
 !!!Shortest path on weighted graphs with negative weights (Bellman-Ford algorithm)
 
@@ -436,7 +435,7 @@ If not, we can use Bellman-Ford.
 
 !!!!Case study
 
-+Bellman-Ford graph>figures/longest_path.pdf|width=50+
++A negative weighted graph used for experimenting with Bellman-Ford algorithm.>figures/longest_path.pdf|width=50+
 
 We multiply by {{{$-1$}}} the weight of the edges of the previous graph used as an example for the DAG algorithm
 and then we calculate the shortest path between two nodes using the Bellman-Ford algorithm. Doing that, actually

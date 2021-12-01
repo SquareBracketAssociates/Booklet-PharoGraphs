@@ -19,7 +19,7 @@ Imagine that we have the graph shown in Figure *@spanningsmall*, we would like t
 
 +Connections costs between neighbourhoods.>figures/kruskal.pdf|width=35|label=spanningsmall+
 
-+Minimum spanning tree. Where is the root of the tree>figures/minimum_spanning_tree.pdf|width=35|label=spanningsmall+
++Minimum spanning tree.>figures/minimum_spanning_tree.pdf|width=35|label=spanningsmall+
 
 !!! Disjoint-Set data structure
 

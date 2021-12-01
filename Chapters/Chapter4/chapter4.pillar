@@ -9,15 +9,17 @@ node {{{$U$}}} to node {{{$V$}}}, {{{$U$}}} becomes first in the resulting order
 
 We present here one algorithm named Khan's algorithm.
 
++A graph and one of its topological sorts.>figures/top_sort_visual_example.pdf|width=90|label=soft+
+
 !!! Example
 The topological sorting can be applied to a graph in which its nodes represents software dependencies.
 For example to install a library, there are some modules that need to be installed before others.
 So, in this case, a topological sort is useful to know which modules to install first (the one that has no dependencies) and so on.
 
 Now for a same graph multiple topological sorts are possible just because since we treat first the nodes having no dependencies
-their traversal order can be different and in addition the traversal order of their dependent can be different too.
+their traversal order can be different and in addition the traversal order of their dependent can be different too. Figure *@soft* shows one graph and one of the possible topological sort.
 
-+Topological sort visual example.>figures/top_sort_visual_example.pdf|width=90|label=soft+
+
 
 !!! Kahn's algorithm
 To apply a topological sort to a graph, the graph must be a directed acyclic graph (DAG). There is at least one topological
@@ -163,7 +165,7 @@ Image that the graph shown in Figure *@soft* represents software dependencies. Y
 that module you must install all the other ones before in a topological order. You need to install module ''C'' and ''A'' before installing
 module ''D''. So in this case the topological sorting is the algorithm that we need to solve the problem.
 
-+Software modules>figures/topological_sorting.pdf|width=45|label=soft+
++Software modules.>figures/topological_sorting.pdf|width=45|label=soft+
 
 To solve this problem programatically we only need to declare the nodes, the edges and the run the algorithm.
 
