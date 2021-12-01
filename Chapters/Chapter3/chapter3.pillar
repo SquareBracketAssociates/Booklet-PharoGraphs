@@ -53,7 +53,7 @@ graph edges: #(
 graph run.
 ]]]
 
-!!!! Weigthed graphs
+!!!! Weighted graphs
 To represent weighted graphs we use the ==edges:from:to:weight:== method.
 
 [[[
