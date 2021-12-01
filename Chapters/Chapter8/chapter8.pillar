@@ -102,11 +102,11 @@ AIHits >> normalizeScores
 		n hub: n hub / hubNorm ]
 ]]]
 
-!!!Case study
+!!! Case study
 
-Calculate the hubs and authorities scores for all the nodes of the following graph with 3 iterations.
+Here we calculate the hubs and authorities scores for all the nodes of the graph shown in Figure *@hits* with 3 iterations.
 
-+HITS graph>figures/hits.pdf|width=40+
++A graph to play with the HITS algorithm.>figures/hits.pdf|width=30|label=hits+
 
 [[[
 nodes := #( 'A' 'B' 'C' 'D' ).
@@ -136,8 +136,10 @@ for the hubs and authorities. Using weights in a graph helps in obtaining better
 responsibility of the user.
 
 For more information, you can read these papers:
-- ''Modifications of Kleinberg's HITS Algorithm Using Matrix Exponentiation and Web Log Records'' by Miller et al. ${cite:Mill01a}$
-- ''An Improved Weighted HITS Algorithm Based on Similarity andPopularity'' by Zhang et al. ${cite:Zhan07a}$
+- ''Modifications of Kleinberg's HITS Algorithm Using Matrix Exponentiation and Web Log Records'' by Miller et al. 
+%${cite:Mill01a}$
+- ''An Improved Weighted HITS Algorithm Based on Similarity andPopularity'' by Zhang et al. 
+%${cite:Zhan07a}$
 
 In terms of implementation, it is only necessary to multiply the weights with the scores in each iteration.
 That means changing ==computeAuthoritiesFor:== and ==computeHubsFor:== methods.

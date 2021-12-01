@@ -132,7 +132,7 @@ AITarjan >> stronglyConnectedComponents
  The graph in Figure *@strongSituation* represents a set of connected people on a social media. An edge represents a follow. One person can follow
 and can be followed. We want to know which and how many strongly connected components  the social network has.
 
-+A social network: each node is a person and an edge a connection.>figures/strongly_connected_graph.pdf|width=45|label=strongSituation+
++A social network: each node is a person and an edge a connection.>figures/strongly_connected_graph.pdf|width=35|label=strongSituation+
 
 The code for solving the problem is similar to the other algorithms. We instantiate the nodes, the edges and call the method ==run==.
 
@@ -170,7 +170,7 @@ This is useful when we want to treat all the strongly connected components as on
 simplifying the analysis of costs.
 
 To do that:
-# Find circuits using Tarjan's algorithm (strongly connected components which size is > 1)
+# Find circuits using Tarjan's algorithm (strongly connected components which size is > 1).
 # Merge all nodes in circuit into one collapsed node.
 # Remove the nodes that were merged.
 # Add the new collapsed nodes.

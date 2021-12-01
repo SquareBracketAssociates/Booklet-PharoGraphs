@@ -19,7 +19,7 @@ Imagine that we have the graph shown in Figure *@spanningsmall*, we would like t
 
 +Connections costs between neighbourhoods.>figures/kruskal.pdf|width=35|label=spanningsmall+
 
-+Minimum spanning tree.>figures/minimum_spanning_tree.pdf|width=35|label=spanningsmall+
++Minimum spanning tree with C as root.>figures/minimum_spanning_tree.pdf|width=35|label=spanningsmall+
 
 !!! Disjoint-Set data structure
 
@@ -27,12 +27,13 @@ A disjoint-set, also called union-find data structure, is a data structure that 
 - ''unite'' that groups two disjoint sets into one and
 - ''find'' that returns two elements belong to the same disjoint set.
 
-For example, in *@union_find_set* we have two sets of elements {{{$\{A, B, C\}$}}} and {{{$\{D, E\}$}}}. If we call the operation find with A and D nodes,
+For example, in Figure *@union_find_set* we have two sets of elements {{{$\{A, B, C\}$}}} and {{{$\{D, E\}$}}}. If we call the operation find with A and D nodes,
 as they do not belong to the same set, the operation will return false. With A and B nodes, the operation find will return true.
-+Union-Find set>figures/union_find.pdf|width=45|label=union_find_set+
++Two Union-Find sets.>figures/union_find.pdf|width=35|label=union_find_set+
 
-But if we call the operation unite with A and D, we will join the two sets to have only one set with all the elements. As in *@only_one_set*
-+Union-Find set>figures/only_one_set.pdf|width=45|label=only_one_set+
+But when we invoke the operation unite with A and D, it will join the two sets to have only one set with all the elements, as in Figure *@only_one_set*.
+
++Union-Find set: result of the unite operation between A and D. >figures/only_one_set.pdf|width=35|label=only_one_set+
 
 This data structure is used in Kruskal's algorithm to detect if adding a new edge creates a cycle in the minimum spanning tree that is being built.
 
