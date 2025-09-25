@@ -1,6 +1,6 @@
 ## Matchings (Independent Edge Sets)
 In graph theory, a matching or independent edge set in an undirected graph is a set of edges without common vertices. 
-The term matching ist more popular, but it shouldn't be confused with another meaning of graph matching, namely computing the similarity of graphs (graph isomorphism).
+The term matching is the more popular one, but it shouldn't be confused with another meaning of graph matching, namely computing the similarity of graphs (graph isomorphism).
 
 Matchings are used in various applications such as network design, job assignments, and scheduling. 
 More specifically, matching strategies are very useful in flow network algorithms such as the Edmonds-Karp algorithm that is also in our library.
