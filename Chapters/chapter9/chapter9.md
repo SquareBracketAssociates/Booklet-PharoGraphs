@@ -48,3 +48,4 @@ Figure 9-3: { (A, B, 1), (B, C, 1+epsilon), (C, D, 1) }
 The greedy algorithm for maximum-weight would first take weight 1+epsilon and then stop, missing the optimal weight sum 1+1.
 
 ### Stable matchings
+### Conclusion
