@@ -48,4 +48,15 @@ Figure 9-3: { (A, B, 1), (B, C, 1+epsilon), (C, D, 1) }
 The greedy algorithm for maximum-weight would first take weight 1+epsilon and then stop, missing the optimal weight sum 1+1.
 
 ### Stable matchings
+Maximality and minimality are not the only interesting optimal matching problems.
+Another target for optimal matching is stability, based on mutual preferences between two groups such as men and women or students and colleges.
+
+Our library implements the classical Gale-Shapely algorithm to solve the famous Stable Matching Problem (aka Stable Marriage Problem).
+To simplify, the problem considers two groups of equal size, modelled as complete bipartite graph.
+Each group member has defined a strict preference ordering over all the members of the other group.
+A resulting matching would contain n edges, each one relating a different pair.
+
+A matching is stable when there does not exist any pair which both prefer each other to their current partner under the matching.
+This leads to a sense of harmony and fairness in the outcome.
+It can be proved that... even n,m, ...
 ### Conclusion
