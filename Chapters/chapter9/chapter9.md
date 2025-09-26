@@ -49,7 +49,7 @@ The greedy algorithm for maximum-weight would first take weight 1+epsilon and th
 
 ### Stable matchings
 Maximality and minimality are not the only interesting optimal matching problems.
-Another target for optimal matching is stability, based on mutual preferences between two groups such as men and women or students and colleges.
+Another goal for optimal matching is stability, based on mutual preferences between two groups such as men and women or students and colleges.
 
 Our library implements the classical Gale-Shapely algorithm to solve the famous Stable Matching Problem (aka Stable Marriage Problem).
 To simplify, the problem considers two groups of equal size, modelled as complete bipartite graph.
