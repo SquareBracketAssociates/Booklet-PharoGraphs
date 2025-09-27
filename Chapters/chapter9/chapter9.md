@@ -5,7 +5,7 @@ The term matching is the more popular one, but it shouldn't be confused with ano
 Matchings are used in various applications such as network design, job assignments, and scheduling. 
 More specifically, matching strategies are very useful in flow network algorithms such as the Edmonds-Karp algorithm that is also in our library.
 
-### Definitions and examples
+### Definitions and small examples
 The **cardinality** of a matching is the number of its edges. Figure 9-1 shows 3 matchings of cardinality 1, 2 and 2 (from left to right).
 
 Figure 9-1: <img width="338" height="70" alt="image" src="https://github.com/user-attachments/assets/b7e53772-9506-4116-832d-7c0607fff34b" />
@@ -51,12 +51,21 @@ The greedy algorithm for maximum-weight would first take weight 1+epsilon and th
 Maximality and minimality are not the only interesting optimal matching problems.
 Another goal for optimal matching is stability, based on mutual preferences between two groups such as men and women or students and colleges.
 
-Our library implements the classical Gale-Shapely algorithm to solve the famous Stable Matching Problem (aka Stable Marriage Problem).
+Our library implements the classical Gale-Shapely algorithm that solves the famous Stable Matching Problem (aka Stable Marriage Problem).
 To simplify, the problem considers two groups of equal size n, modelled as complete bipartite graph.
 Each group member has defined a strict preference ordering over all the members of the other group.
 A resulting matching would contain n edges, each one relating a different pair.
 
 A matching is stable when there does not exist any pair which both prefer each other to their current partner under the matching.
-This leads to a sense of harmony and fairness in the outcome.
+This leads to a sense of harmony and fairness in the outcome. Here is the algorithm's pseudocode:
+```
+Every vertex begins unmatched.
+While there is an unmatched vertex in the set A
+    the next unmatched vertex in A proposes to match with its most preferred B vertex it has not already tried to match with
+        if the B vertex was unmatched then these vertices are now matched
+        if the B vertex was matched, it chooses its preferred vertex among the proposed one or the existing match;
+            depending on the choice, the proposed match wins or vertex A remains unmatched
+```
+This algorithm with complexity $O(n²))$ finds in any case a stable matching. However, it is biased in the sense that among all possible stable matchings, it always yields the one that is best for group A among all stable matchings, and worst (but still stable) for group B.
 It can be proved that... even n,m, ...
 ### Conclusion
