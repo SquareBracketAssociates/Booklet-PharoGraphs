@@ -68,7 +68,7 @@ While there is an unmatched vertex in the set A
         if the B vertex was matched, it chooses its preferred vertex among the proposed one or the existing match;
             depending on the choice, the proposed match wins or vertex A remains unmatched
 ```
-This algorithm with complexity $O(n²))$ finds in any case a stable matching. However, it is extreme in the sense that it generally yields the matching that is best for group A among all stable matchings, and worst (but still stable) for group B.
+This algorithm with complexity $O(n²))$ finds in any case a stable matching. However, it is extreme and dual in the sense that it generally yields the matching that is best for group A among all stable matchings, and worst (but still stable) for group B.
 
 To run ```AIStableMatchingAlgorithm```, both groups of equal size must be set with the complete preferences for each ```AIStableMatchingNode```. 
 
