@@ -57,7 +57,9 @@ Each group member has defined a strict preference ordering over all the members 
 A resulting matching would contain n edges, each one relating a different pair.
 
 A matching is stable when there does not exist any pair which both prefer each other to their current partner under the matching.
-This leads to a sense of harmony and fairness in the outcome. Here is the algorithm's pseudocode:
+This leads to a sense of harmony and fairness in the outcome. 
+
+Here is the algorithm's pseudocode:
 ```
 Every vertex begins unmatched.
 While there is an unmatched vertex in the set A
@@ -66,6 +68,9 @@ While there is an unmatched vertex in the set A
         if the B vertex was matched, it chooses its preferred vertex among the proposed one or the existing match;
             depending on the choice, the proposed match wins or vertex A remains unmatched
 ```
-This algorithm with complexity $O(n²))$ finds in any case a stable matching. However, it is biased in the sense that among all possible stable matchings, it always yields the one that is best for group A among all stable matchings, and worst (but still stable) for group B.
-It can be proved that... even n,m, ...
+This algorithm with complexity $O(n²))$ finds in any case a stable matching. However, it is extreme in the sense that it generally yields the matching that is best for group A among all stable matchings, and worst (but still stable) for group B.
+
+To run ```AIStableMatchingAlgorithm```, both groups of equal size must be set with the complete preferences for each ```AIStableMatchingNode```. 
+
+The Stable Matching Problem has extensions in many ways, e.g. with groups of different size or incomplete preference lists. 
 ### Conclusion
