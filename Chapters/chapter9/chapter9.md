@@ -70,7 +70,7 @@ While there is an unmatched vertex in the set A
 ```
 This algorithm with complexity $O(n²)$ finds in any case a stable matching. However, it is extreme and dual in the sense that it generally yields the matching that is best for group A among all stable matchings, and worst (but still stable) for group B.
 
-To run ```AIStableMatchingAlgorithm```, both groups of equal size must be set with the complete preferences of each contender ```AIStableMatchingNode``` in order to obtain a set of ```AIStableMatchingEdge``` as the result. 
+To run ```AIStableMatchingAlgorithm```, both groups of equal size must be set with the complete preferences of each contender ```AIStableMatchingNode``` in order to obtain a set of ```AIStableMatchingEdge``` as the stable matching result. 
 
 The Stable Matching Problem has extensions in many ways, e.g. with groups of different size or incomplete preference lists. 
 ### Conclusion
