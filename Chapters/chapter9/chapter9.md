@@ -78,6 +78,6 @@ Graph matching is a challenging problem, especially in large and complex graphs 
 Many graph matching algorithms exist in order to optimize for the parameters necessary dictated by the problem at hand.
 In such contexts, approximation algorithms cannot be neglected.
 
-From the practical point of view, envisaging the special case of bipartite graphs is very common, notably for matching problems.
+From the practical point of view, envisaging the special case of bipartite graphs is very common and fructiferous, notably for matching problems.
 
 Both the greedy and the stable matching algorithm presented here are further examples of using a working list until emptied, like discussed for the topological sorting.
