@@ -38,6 +38,9 @@ while E is not empty do
     add e to M
     remove e and all edges incident to e from E
 ```
+For finding a matching of small weight, we use exactly the same algorithm except that we have to order the edges in descending weight instead of ascending.
+This is the same principle we already met for the Kruskal's algorithm.
+
 In any case, the greedy graph matching algorithm finds a maximal matching but it doesn't always find the optimal solution, in contrast to more expensive matching algorithms like the Hungarian Maximum Matching Algorithm, the Blossom Algorithm or the Hopcroft–Karp Algorithm.
 Nevertheless, it can be proven that it is a 2-approximation (greedy result >= 1/2 optimal result).
 
