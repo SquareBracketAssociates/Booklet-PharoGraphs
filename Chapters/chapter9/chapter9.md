@@ -52,7 +52,7 @@ Maximality and minimality are not the only interesting optimal matching problems
 Another goal for optimal matching is stability, based on mutual preferences between two groups such as men and women or students and colleges.
 
 Our library implements the classical Gale-Shapely algorithm that solves the important Stable Matching Problem (aka Stable Marriage Problem).
-To simplify, the problem considers two groups of equal size n, modelled as a complete bipartite graph.
+To simplify, the problem considers two groups of equal size n, modelled as a complete **bipartite** graph.
 Each group member has defined a strict preference ordering over all the members of the other group.
 A resulting matching would contain n edges, each one relating a different pair.
 
@@ -70,7 +70,7 @@ While there is an unmatched vertex in the set A
 ```
 This algorithm with complexity $O(n²)$ finds in any case a stable matching. However, it is extreme and dual in the sense that it generally yields the matching that is best for group A among all stable matchings, and worst (but still stable) for group B.
 
-To run ```AIStableMatchingAlgorithm```, both groups of equal size must be set with the complete preferences of each contender ```AIStableMatchingNode``` in order to obtain a set of ```AIStableMatchingEdge``` as the stable matching result. 
+To run ```AIStableMatchingAlgorithm```, both groups of equal size must be set with the complete preferences of each contender ```AIStableMatchingNode``` in order to obtain the stable matching, a set of ```AIStableMatchingEdge```. 
 
 The Stable Matching Problem has extensions in many ways, e.g. with groups of different size or incomplete preference lists. 
 ### Conclusion
@@ -80,4 +80,4 @@ In such contexts, approximation algorithms cannot be neglected.
 
 From the practical point of view, envisaging the special case of bipartite graphs is very common, notably for matching problems.
 
-Both the greedy and the stable matching algorithm presented here are further examples of using a working list until emptied like discussed for the topological sorting.
+Both the greedy and the stable matching algorithm presented here are further examples of using a working list until emptied, like discussed for the topological sorting.
