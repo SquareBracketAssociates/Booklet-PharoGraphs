@@ -76,7 +76,7 @@ The Stable Matching Problem has extensions in many ways, e.g. with groups of dif
 ### Conclusion
 Graph matching is a challenging problem, especially in large and complex graphs where scalability and complexity are crucial.
 Many graph matching algorithms exist in order to optimize for the parameters necessary dictated by the problem at hand.
-In such contexts, approximating algorithms cannot be neglected.
+In such contexts, approximation algorithms cannot be neglected.
 
 From the practical point of view, envisaging the special case of bipartite graphs is very common and fructiferous, notably for matching problems.
 
