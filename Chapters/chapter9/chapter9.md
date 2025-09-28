@@ -55,7 +55,7 @@ Maximality and minimality are not the only interesting optimal matching problems
 Another goal for optimal matching is stability, based on mutual preferences between two groups such as men and women or students and colleges.
 
 Our library implements the classical Gale-Shapely algorithm that solves the important Stable Matching Problem (aka Stable Marriage Problem).
-To simplify, the problem considers two groups A and B of equal size n, modelled as a complete **bipartite** graph.
+To simplify, the problem considers two contender groups A and B of equal size n, modelled as a complete **bipartite** graph.
 Each group member has defined a strict preference ordering over all the members of the other group.
 A resulting matching would contain n edges, each one relating a different pair.
 
