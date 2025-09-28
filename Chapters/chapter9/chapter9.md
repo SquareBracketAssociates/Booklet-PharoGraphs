@@ -5,7 +5,7 @@ The term matching is the more popular one, but it shouldn't be confused with ano
 Matchings are used in various applications such as network design, job assignments, and scheduling. 
 More specifically, matching strategies are very useful in flow network algorithms such as the Edmonds-Karp algorithm that is also in our library.
 
-### Definitions and small examples
+### Some definitions and small examples
 The **cardinality** of a matching is the number of its edges. Figure 9-1 shows 3 matchings of cardinality 1, 2 and 2 (from left to right).
 
 Figure 9-1: <img width="338" height="70" alt="image" src="https://github.com/user-attachments/assets/b7e53772-9506-4116-832d-7c0607fff34b" />
@@ -51,12 +51,12 @@ The greedy algorithm for maximum-weight would first take weight 1+epsilon and th
 Maximality and minimality are not the only interesting optimal matching problems.
 Another goal for optimal matching is stability, based on mutual preferences between two groups such as men and women or students and colleges.
 
-Our library implements the classical Gale-Shapely algorithm that solves the famous Stable Matching Problem (aka Stable Marriage Problem).
-To simplify, the problem considers two groups of equal size n, modelled as complete bipartite graph.
+Our library implements the classical Gale-Shapely algorithm that solves the important Stable Matching Problem (aka Stable Marriage Problem).
+To simplify, the problem considers two groups of equal size n, modelled as a complete bipartite graph.
 Each group member has defined a strict preference ordering over all the members of the other group.
 A resulting matching would contain n edges, each one relating a different pair.
 
-A matching is stable when there does not exist any pair which both prefer each other to their current partner under the matching.
+A matching is **stable** when there does not exist any pair which both prefer each other to their current partner under the matching.
 This leads to a sense of harmony and fairness in the outcome. 
 
 Here is the algorithm's pseudocode:
@@ -68,9 +68,16 @@ While there is an unmatched vertex in the set A
         if the B vertex was matched, it chooses its preferred vertex among the proposed one or the existing match;
             depending on the choice, the proposed match wins or vertex A remains unmatched
 ```
-This algorithm with complexity $O(n²))$ finds in any case a stable matching. However, it is extreme and dual in the sense that it generally yields the matching that is best for group A among all stable matchings, and worst (but still stable) for group B.
+This algorithm with complexity $O(n²)$ finds in any case a stable matching. However, it is extreme and dual in the sense that it generally yields the matching that is best for group A among all stable matchings, and worst (but still stable) for group B.
 
-To run ```AIStableMatchingAlgorithm```, both groups of equal size must be set with the complete preferences for each ```AIStableMatchingNode```. 
+To run ```AIStableMatchingAlgorithm```, both groups of equal size must be set with the complete preferences of each contender ```AIStableMatchingNode``` in order to obtain a set of ```AIStableMatchingEdge``` as the result. 
 
 The Stable Matching Problem has extensions in many ways, e.g. with groups of different size or incomplete preference lists. 
 ### Conclusion
+Graph matching is a challenging problem, especially in large and complex graphs where scalability and complexity are crucial.
+Many graph matching algorithms exist in order to optimize for the parameters necessary dictated by the problem at hand.
+In such contexts, approximation algorithms cannot be neglected.
+
+From the practical point of view, envisaging the special case of bipartite graphs is very common, notably for matching problems.
+
+Both the greedy and the stable matching algorithm presented here are further examples of using a working list until emptied like discussed for the topological sorting.
