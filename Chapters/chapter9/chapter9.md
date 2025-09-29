@@ -8,7 +8,7 @@ More specifically, matching strategies are very useful in flow network algorithm
 ### Some definitions and small examples
 The **cardinality** of a matching is the number of its edges. Figure @maximal@ shows 3 matchings of cardinality 1, 2 and 2 (from left to right).
 
-![Matchings.](figures/Maximal-matching.pdf width=50&label=maximal)
+![Examples of maximal matchings.](figures/Maximal-matching.pdf width=50&label=maximal)
 
 A matching is **maximal** if it cannot be expanded to another matching by addition of any edge in the graph.
 The matchings in figure @maximal@ are maximal.
@@ -16,7 +16,7 @@ The matchings in figure @maximal@ are maximal.
 Moreover, a **maximum**(-cardinality) matching has the largest possible cardinality among all matchings in a graph.
 For each of the matchings in figure @maximal@, figure @maximum@ shows a maximum matching example with cardinality 2, 3 and 2 respectively.
 
-![Matchings.](figures/Maximum-matching.pdf width=50&label=maximum)
+![Examples of maximum matchings.](figures/Maximum-matching.pdf width=50&label=maximum)
 
 We note from these examples that a maximum matching is always maximal, but the converse does not always hold.
 
@@ -46,17 +46,16 @@ Nevertheless, it can be proven that it is a 2-approximation (greedy result >= 1/
 
 To see that the result is not always optimal, consider the two matching versions of the weighted graph with four nodes and three edges in figure @epsilon@.
 
-![Matchings.](figures/epsilon.pdf width=50&label=epsilon)
+![Counterexample: The greedy algorithm is not optimal.](figures/epsilon.pdf width=50&label=epsilon)
 
 The greedy algorithm for maximum-weight would first take weight 1+epsilon and then stop (figure @epsilon@ top), missing the optimal weight sum 1+1 (figure @epsilon@ bottom).
-Note, verifying the 2-approximation, that if the weight 1+epsilon would be 2 instead, the greedy algorithm would yield one of the maximum-weight matchings.
 
 ### Stable matchings
 Maximality and minimality are not the only interesting optimal matching problems.
 Another goal for optimal matching is stability, based on mutual preferences between two contender groups such as men and women or students and colleges.
 
 Our library implements the classical Gale-Shapely algorithm that solves the important Stable Matching Problem (aka Stable Marriage Problem).
-To simplify, the problem considers two groups A and B of equal size n, modelled as a complete **bipartite** graph.
+To simplify, the problem considers two groups A and B of equal size n and conceives a complete **bipartite** graph with their possible relations.
 Each group member has defined a strict preference ordering over all the members of the other group.
 A resulting matching would contain n edges, each one relating a different pair.
 
@@ -80,7 +79,7 @@ The Stable Matching Problem has extensions in many ways, e.g. with groups of dif
 ### Conclusion
 Graph matching is a challenging problem, especially in large and complex graphs where scalability and complexity are crucial.
 Many graph matching algorithms exist in order to optimize for the parameters necessary dictated by the problem at hand.
-In such contexts, approximation algorithms may be suitable.
+Depending on the context, approximation algorithms may be a suitable alternative.
 
 From the practical and theoretical points of view, envisaging the special case of bipartite graphs is very common and fructiferous, notably for matching problems.
 
