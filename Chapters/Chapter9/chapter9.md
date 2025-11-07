@@ -6,17 +6,17 @@ Matchings are used in various applications such as network design, job assignmen
 More specifically, matching strategies are very useful in flow network algorithms such as the Edmonds-Karp algorithm that is also in our library.
 
 ### Some definitions and small examples
-The **cardinality** of a matching is the number of its edges. Figure @maximal@ shows 3 matchings of cardinality 1, 2 and 2 (from left to right).
+The **cardinality** of a matching is the number of its edges. Figure *@maximal@* shows 3 matchings of cardinality 1, 2 and 2 (from left to right).
 
-![Examples of maximal matchings.](figures/Maximal-matching.pdf width=50&label=maximal)
+![Examples of maximal matchings. (Source: Wikimedia)](figures/Maximal-matching.pdf width=50&label=maximal)
 
 A matching is **maximal** if it cannot be expanded to another matching by addition of any edge in the graph.
-The matchings in figure @maximal@ are maximal.
+The matchings in Figure *@maximal@* are maximal.
 
 Moreover, a **maximum**(-cardinality) matching has the largest possible cardinality among all matchings in a graph.
-For each of the matchings in figure @maximal@, figure @maximum@ shows a maximum matching example with cardinality 2, 3 and 2 respectively.
+For each of the matchings in Figure *@maximal@*, Figure *@maximum@* shows a maximum matching example with cardinality 2, 3 and 2 respectively.
 
-![Examples of maximum matchings.](figures/Maximum-matching.pdf width=50&label=maximum)
+![Examples of maximum matchings. (Source: Wikimedia)](figures/Maximum-matching.pdf width=50&label=maximum)
 
 We note from these examples that a maximum matching is always maximal, but the converse does not always hold.
 
@@ -44,11 +44,11 @@ This is the same principle we already met for the Kruskal's algorithm.
 In any case, the greedy graph matching algorithm finds a maximal matching but it doesn't always find the optimal solution, in contrast to more expensive matching algorithms like the Hungarian Maximum Matching Algorithm, the Blossom Algorithm or the Hopcroft–Karp Algorithm.
 Nevertheless, it can be proven that it is a 2-approximation (greedy result >= 1/2 optimal result).
 
-To see that the result is not always optimal, consider the two matching versions of the weighted graph with four nodes and three edges in figure @epsilon@.
+To see that the result is not always optimal, consider the two matching versions of the weighted graph with four nodes and three edges in Figure *@epsilon@*.
 
 ![Counterexample: The greedy algorithm is not optimal.](figures/epsilon.pdf width=50&label=epsilon)
 
-The greedy algorithm for maximum-weight would first take weight 1+epsilon and then stop (figure @epsilon@ top), missing the optimal weight sum 1+1 (figure @epsilon@ bottom).
+The greedy algorithm for maximum-weight would first take weight 1+epsilon and then stop (Figure *@epsilon@* top), missing the optimal weight sum 1+1 (Figure *@epsilon@* bottom).
 
 ### Stable matchings
 Maximality and minimality are not the only interesting optimal matching problems.
@@ -83,4 +83,4 @@ Depending on the context, approximation algorithms may be a suitable alternative
 
 From the practical and theoretical points of view, envisaging the special case of bipartite graphs is very common and fructiferous, notably for matching problems.
 
-Both the greedy and the stable matching algorithm presented here are further examples of using a working list until emptied, like discussed for the topological sorting.
+Both the greedy and the stable matching algorithm presented here are further examples of using a working list until emptied, like discussed for the topological sorting in this book.
