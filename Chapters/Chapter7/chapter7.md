@@ -5,7 +5,7 @@ A strongly connected component of a graph is a **maximal subgraph** which itself
 
 A subgraph refers to a portion of a graph, or more formally, a subset of the vertex set. The maximality condition refers to the fact that the subgraph cannot be extended while maintaining mutual reachability.
 
-The strongly connected components, therefore, partition the graph into disjoint subgraphs.
+The strongly connected components, therefore, partition the graph into *disjoint* subgraphs.
 
 The most known algorithms for finding the strongly connected components of a graph are the Tarjan's and the Kosaraju’s algorithm. Both algorithms have a time complexity of $O(V + E)$ and are based on DFS (depth first search). But Tarjan's algorithm is faster on practice, because Kosaraju’s algorithm does two passes of DFS and Tarjan's only one.
 
@@ -125,7 +125,7 @@ With slight modifications, Tarjan's algorithm can also be used for undirected gr
 
 ### Case study
 
-The graph in Figure *@strongSituation@* represents a set of connected people on a social media. A diected edge represents a follow. One person can follow and can be followed. We want to know which and how many strongly connected components the social network has.
+The graph in Figure *@strongSituation@* represents a set of connected people on a social media. A directed edge represents a follow. One person can follow and can be followed. We want to know which and how many strongly connected components the social network has.
 
 ![A social network: each node is a person and an edge a connection.](figures/strongly_connected_graph.pdf width=35&label=strongSituation)
 
