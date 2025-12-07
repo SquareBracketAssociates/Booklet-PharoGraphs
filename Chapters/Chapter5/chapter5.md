@@ -590,7 +590,7 @@ We see that the method is able to recognize disturbances derived from any negati
 
 ### Shortest path in an undirected graph
 
-Excepting the algorithm for finding the shortest path in a DAG, the rest of the algorithms presented here are able to find the shortest path not only in directed but also in undirected graphs. As a matter of fact, any undirected graph is also a directed graph. You just have to specify any edges ${u, v}$ twice $(u, v)$ and $(v, u)$.
+Excepting the algorithm for finding the shortest path in a DAG, the rest of the algorithms presented here are able to find the shortest path not only in directed but also in undirected graphs. As a matter of fact, any undirected graph is also a directed graph. You just have to specify any edges $\{u, v\}$ twice $u \to v$ and $v \to u$.
 
 ![An (unweighted) cyclic undirected graph.](figures/undirectedgraph.png width=70&label=undirectedgraph)
 
