@@ -1,6 +1,6 @@
 ## Shortest Path
 
-The Shortest Path problem consists on finding a path between two pairs of nodes in which the sum of the weights is minimized. For a general graph, this problem is NP-hard. For some kind of graphs, like trees or directed acyclic graphs, this problem can be solved in linear time.
+The Shortest Path problem consists on finding a path between two pairs of nodes in which the sum of the weights is minimized. For a general graph, this problem is NP-hard. For some kind of graphs, like trees or other directed acyclic graphs, this problem can be solved in linear time.
 
 In this chapter, we will present multiple algorithms to solve the shortest path problem, including case studies for some of them. Most of the algorithms find the solution for one single source to all other nodes. One finds the solution for a single source to a single sink, and one resolves the shortest path between all pairs of nodes. The following table is an overview of the algorithms.
 
@@ -171,7 +171,7 @@ The choice between BFS and DFS shortest path search depends on the structure of 
 
 ### Dijkstra's algorithm
 
-The Dijkstra's algorithm is one of the most-know algorithms for calculating the shortest path in a weighted graph. As BFS, this algorithm is also a single-source shortest path algorithm. In its naive implementation,  it has a time complexity of $O(V^2)$. But, it can be optimized using a heap or a Fibonacci heap as a data structure to a time complexity of $O((V+E)*log V)$. If a Fibonacci heap is used we get the best possible time complexity $O(E + V * log V)$ possible \(at the moment\). Dijkstra's algorithm can handle a graph with cycles, but it cannot handle negative weights.
+The Dijkstra's algorithm is one of the most-know algorithms for calculating the shortest path in a **nonnegative weighted graph**. As BFS, this algorithm is also a single-source shortest path algorithm. In its naive implementation,  it has a time complexity of $O(V^2)$. But, it can be optimized using a heap or a Fibonacci heap as a data structure to a time complexity of $O((V+E)*log V)$. If a Fibonacci heap is used we get the best possible time complexity $O(E + V * log V)$ possible \(at the moment\). Dijkstra's algorithm can handle a graph with cycles, but it cannot handle negative weights.
 
 The algorithm idea is:
 
@@ -587,6 +587,38 @@ pathFrom: sourceModel to: destinationModel
 ```
 
 We see that the method is able to recognize disturbances derived from any negative cycle.
+
+### Shortest path in an undirected graph
+
+Excepting the algorithm for finding the shortest path in a DAG, the rest of the algorithms presented here are able to find the shortest path not only in directed but also in undirected graphs. As a matter of fact, any undirected graph is also a directed graph. You just have to specify any edges $\{u, v\}$ twice $u \to v$ and $v \to u$.
+
+![An (unweighted) cyclic undirected graph.](figures/undirectedgraph.png width=70&label=undirectedgraph)
+
+In Figure *@undirectedgraph@*, we see an undirected graph used in our tests. It is initialized as follows:
+
+```
+AICyclicNonWeightedComplexFixture >> complexUndirectedGraph
+
+    "https://i.imgur.com/qK2zsYb.png"
+
+    | nodes edges graph|
+    nodes := 0 to: 12.
+    edges := #( #(0 7) #(0 11) #(0 8) #(1 9) #(1 10) #(2 3)
+                #(2 12) #(3 2) #(3 4) #(3 7) #(4 3) #(5 6)
+                #(6 7) #(6 5) #(7 3) #(7 0) #(7 11) #(7 6)
+                #(8 9) #(8 10) #(8 0) #(9 1) #(9 8) #(9 12)
+                #(10 1) #(10 8) #(11 7) #(11 0) #(12 2)
+                #(12 9) ).
+
+    graph:= AIGraphNonWeightedFixtureStructure new.
+    graph nodes: nodes.
+    graph edges: edges.
+    ^graph
+```
+
+Note that each undirected edge is represented by two corresponding directed edges.
+
+However, there is a restriction in case of negative weights, since by doubling an undirected negative edge with two directed edges, the Bellman-Ford or the Floyd-Warshall algorithm would detect a negative cycle.
 
 ### Longest path problem
 

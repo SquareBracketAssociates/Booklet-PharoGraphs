@@ -1,89 +1,202 @@
-## Strongly Connected Components in a GraphA graph is strongly connected if every of its nodes are reachable from every other node. That means, that from all nodes, you can reach any node of the graph.The strongly connected component of a graph if the **maximum** subset which itself forms also a strongly connected graph.The most knew algorithms for finding the strongly connected components of a graph are: Tarjan's and Kosaraju’s algorithms.Both algorithms have a time complexity of $O(V + E)$ and are based on DFS \(depth search first\). But Tarjan's algorithmis faster on practice. Because Kosaraju’s algorithm does two passes of DFS and Tarjan's only one.### Motivating exampleFinding strongly connected components in a graph has several real life applications. For example it is used on socialmedia to find groups of friends to suggest commonly liked pages \(see Figure *@strongSituationSmall@*\).In Figure *@strongSituationSmall@* we have 5 different strongly connected components that are highlighted with colors.![A social network: each node is a person and an edge a connection.](figures/strongly_connected_graph_with_colors.pdf width=35&label=strongSituationSmall)### Tarjan's algorithmTo find the strongly connected components of a graph, Tarjan's algorithm assigns a low-link value and an ID to each node. At the beginning, the low-link value is thesame as the node ID. Then, as the algorithm is running it updates the low-link value to be the smallest index of any node known that is reachable.It does a DFS pass to all the node to update low-link value. If at the end of the DFS call the low link valueof a node is the same as its ID, means that that node is the beginning of a strongly connect component.The pseudocode is:```1. Mark the as unvisited and without an ID nor a low-link value.
+## Strongly Connected Components
+
+A graph is strongly connected if every of its nodes are reachable from every other node. That means, that from all nodes, you can reach any node of the graph.
+A strongly connected component of a graph is a **maximal subgraph** which itself forms also a strongly connected graph.
+
+A subgraph refers to a portion of a graph, or more formally, a subset of the vertex set. The maximality condition refers to the fact that the subgraph cannot be extended while maintaining mutual reachability.
+
+The strongly connected components, therefore, partition the graph into *disjoint* subgraphs.
+
+The most known algorithms for finding the strongly connected components of a graph are the Tarjan's and the Kosaraju’s algorithm. Both algorithms have a time complexity of $O(V + E)$ and are based on DFS (depth first search). But Tarjan's algorithm is faster on practice, because Kosaraju’s algorithm does two passes of DFS and Tarjan's only one.
+
+### Motivating example
+
+Finding strongly connected components in a graph has several real life applications. For example it is used on social media to find groups of friends to suggest commonly liked pages \(see Figure *@strongSituationSmall@*\).
+
+In Figure *@strongSituationSmall@* we have five different strongly connected components that are highlighted with colors.
+
+![A social network: each node is a person and an edge a connection.](figures/strongly_connected_graph_with_colors.pdf width=35&label=strongSituationSmall)
+
+### Tarjan's algorithm
+
+To find the strongly connected components of a graph, Tarjan's algorithm assigns a low-link value and an ID to each node. At the beginning, the low-link value is the
+same as the node ID. Then, as the algorithm is running, it updates the low-link value to be the smallest index of any node known that is reachable.
+It does a DFS pass to all the node to update low-link value. If at the end of the DFS call the low link value of a node is the same as its ID, means that that node is the beginning of a strongly connected component.
+The pseudocode is:
+
+```
+1. Mark the as unvisited and without an ID nor a low-link value.
 2. Start DFS. When visiting a node assign it an ID and a low-link value same as the ID.
 3. Mark current node as visited and add it to the stack.
 4. On DFS callback,
     First, min the current node's low-link value with the low-link value of the adjacent node.
     Then, if the adjacent node is on the stack
-	            then min the current node's low-link with the adjacent node's ID.
+                then min the current node's low-link with the adjacent node's ID.
 5. After visiting all adjacent nodes, if the current node has its ID value as the same of its low-link value
-		Then it means that there is a strongly connected component.
-		So, pop all nodes from the stack until current node is reached.```The DFS callback is when we are going back from the recursion.### Tarjan's implementationIn the Pharo implementation a `traverse:` method is used. This is the DFS call. All the magic happens in that method.```AITarjan >> run
-	"Initialize an empty array for the strongly connected components"
+        Then it means that there is a strongly connected component.
+        So, pop all nodes from the stack until current node is reached.
+```
 
-	sccs := OrderedCollection new.
-	stack := Stack new.
-	runningIndex := 0.
+The DFS callback is when we are going back from the recursion.
 
-	nodes do: [ :node |
-		node isTarjanUndefined ifTrue: [
-			"If the node has no low-link value set make a dfs call"
-			self traverse: node ] ].
-	^ self stronglyConnectedComponents``````AITarjan >> traverse: aTarjanNode
+### Tarjan's implementation
 
-	aTarjanNode tarjanIndex: runningIndex.
-	aTarjanNode tarjanLowlink: runningIndex.
-	runningIndex := runningIndex + 1.
+In the Pharo implementation a `traverse:` method is used. This is the DFS call. All the magic happens in that method.
 
-	self putOnStack: aTarjanNode.
+```
+AITarjan >> run
+    "Initialize an empty array for the strongly connected components"
 
-	aTarjanNode adjacentNodes do: [ :adjacentNode |
-		adjacentNode isTarjanUndefined
-			ifTrue: [
-				"If the adjacent node doesn't have a low link"
-				self traverse: adjacentNode.
-				aTarjanNode tarjanLowlink:
-					(aTarjanNode tarjanLowlink
-						min: adjacentNode tarjanLowlink) ]
-			ifFalse: [
-				"If the adjacent node had already a low link value"
-				adjacentNode inStack ifTrue: [
-					aTarjanNode tarjanLowlink:
-						(aTarjanNode tarjanLowlink
-							min: adjacentNode tarjanIndex) ] ] ].
+    sccs := OrderedCollection new.
+    stack := Stack new.
+    runningIndex := 0.
 
-	"If the node is the beginning of a strongly connected component"
-	(self isRootNode: aTarjanNode) ifTrue: [
-		self addNewSccForNode:: aTarjanNode ]``````AITarjan >> putOnStack: aTarjanNode
+    nodes do: [ :node |
+        node isTarjanUndefined ifTrue: [
+            "If the node has no low-link value set make a dfs call"
+            self traverse: node ] ].
+    ^ self stronglyConnectedComponents
+```
 
-	stack push: aTarjanNode.
-	aTarjanNode inStack: true``````AITarjan >> addNewSccForNode: aTarjanNode
+```
+AITarjan >> traverse: aTarjanNode
 
-	| currentNode stronglyConnectedComponent |
-	stronglyConnectedComponent := OrderedCollection empty.
+    aTarjanNode tarjanIndex: runningIndex.
+    aTarjanNode tarjanLowlink: runningIndex.
+    runningIndex := runningIndex + 1.
 
-	[ currentNode := stack pop.
-	currentNode inStack: false.
-	stronglyConnectedComponent add: currentNode ]
-		doWhileFalse: [ currentNode = aTarjanNode ].
+    self putOnStack: aTarjanNode.
 
-	sccs add: stronglyConnectedComponent.
-	stronglyConnectedComponent do: [ :each |
-		each cycleNodes: stronglyConnectedComponent ]```The method `stronglyConnectedComponents` returns a list of group of elements.Each group represents a strongly connected component.```AITarjan >> stronglyConnectedComponents
+    aTarjanNode adjacentNodes do: [ :adjacentNode |
+        adjacentNode isTarjanUndefined
+            ifTrue: [
+                "If the adjacent node doesn't have a low link"
+                self traverse: adjacentNode.
+                aTarjanNode tarjanLowlink:
+                    (aTarjanNode tarjanLowlink
+                        min: adjacentNode tarjanLowlink) ]
+            ifFalse: [
+                "If the adjacent node had already a low link value"
+                adjacentNode inStack ifTrue: [
+                    aTarjanNode tarjanLowlink:
+                        (aTarjanNode tarjanLowlink
+                            min: adjacentNode tarjanIndex) ] ] ].
 
-	sccs ifNil: [ self run ].
-	^ sccs collect: [ :component |
-		component collect: [ :each | each model ] ]```### Case study The graph in Figure *@strongSituation@* represents a set of connected people on a social media. An edge represents a follow. One person can followand can be followed. We want to know which and how many strongly connected components  the social network has.![A social network: each node is a person and an edge a connection.](figures/strongly_connected_graph.pdf width=35&label=strongSituation)The code for solving the problem is similar to the other algorithms. We instantiate the nodes, the edges and call the method `run`.```nodes := $a to: $h.
+    "If the node is the beginning of a strongly connected component"
+    (self isRootNode: aTarjanNode) ifTrue: [
+        self addNewSccForNode:: aTarjanNode ]
+```
+
+```
+AITarjan >> putOnStack: aTarjanNode
+
+    stack push: aTarjanNode.
+    aTarjanNode inStack: true
+```
+
+```
+AITarjan >> addNewSccForNode: aTarjanNode
+
+    | currentNode stronglyConnectedComponent |
+    stronglyConnectedComponent := OrderedCollection empty.
+
+    [ currentNode := stack pop.
+    currentNode inStack: false.
+    stronglyConnectedComponent add: currentNode ]
+        doWhileFalse: [ currentNode = aTarjanNode ].
+
+    sccs add: stronglyConnectedComponent.
+    stronglyConnectedComponent do: [ :each |
+        each cycleNodes: stronglyConnectedComponent ]
+```
+
+The method `stronglyConnectedComponents` returns a list of group of elements.
+Each group represents a strongly connected component.
+
+```
+AITarjan >> stronglyConnectedComponents
+
+    sccs ifNil: [ self run ].
+    ^ sccs collect: [ :component |
+        component collect: [ :each | each model ] ]
+```
+
+With slight modifications, Tarjan's algorithm can also be used for undirected graphs.
+
+### Case study
+
+The graph in Figure *@strongSituation@* represents a set of connected people on a social media. A directed edge represents a follow. One person can follow and can be followed. We want to know which and how many strongly connected components the social network has.
+
+![A social network: each node is a person and an edge a connection.](figures/strongly_connected_graph.pdf width=35&label=strongSituation)
+
+The code for solving the problem is similar to the other algorithms. We instantiate the nodes, the edges and call the method `run`.
+
+```
+nodes := $a to: $h.
 edges := #( #( $a $b ) #( $a $c ) #( $a $g ) #( $b $e ) #( $c $b )
             #( $c $d ) #( $d $f ) #( $f $c ) #( $g $h ) #( $g $d )
             #( $h $g ) ).
 tarjan := AITarjan new.
 tarjan
-	nodes: nodes;
-	edges: edges from: #first to: #second.
-stronglyConnectedComponents := tarjan run```If we inspect the `stronglyConnectedComponents` variable we see that that is a collection that contains 5 elements.Each element is a list that contains the nodes corresponding to the strongly connected component.```an OrderedCollection($e)
+    nodes: nodes;
+    edges: edges from: #first to: #second.
+stronglyConnectedComponents := tarjan run
+```
+
+If we inspect the `stronglyConnectedComponents` variable, we see that it is a collection that contains five elements. Each element is a list that contains the nodes corresponding to the strongly connected component.
+
+```
+an OrderedCollection($e)
 an OrderedCollection($b)
 an OrderedCollection($c $f $d)
 an OrderedCollection($h $g)
-an OrderedCollection($a)```So, our graph has 5 strongly connected components, which are: $\{A\}$, $\{B\}$, $\{E\}$, $\{G, H\}$, $\{C, D, F\}$### Reducing a GraphIf we want to collapse all strongly connected components of a graph into a single one, we can use the Tarjan's algorithm to help in the task.Note that this algorithm for reducing a graph does not work on weighted graphs.This is useful when we want to treat all the strongly connected components as one node. For example in a telecommunication network it can be useful forsimplifying the analysis of costs.To do that:1. Find circuits using Tarjan's algorithm \(strongly connected components which size is > 1\).1. Merge all nodes in circuit into one collapsed node.1. Remove the nodes that were merged.1. Add the new collapsed nodes.1. Replace the old references to the merged nodes to reference the new collapsed nodes.### Case studyWe want to reduce the same graph collapsing all strongly connected components into one node.```nodes := $a to: $h.
+an OrderedCollection($a)
+```
+
+So, our graph has five strongly connected components, which are: $\{A\}$, $\{B\}$, $\{E\}$, $\{G, H\}$, $\{C, D, F\}$
+
+### Reducing a Graph
+
+If we want to collapse all strongly connected components of a graph into a single one, we can use the Tarjan's algorithm to help in the task. Note that this algorithm for reducing a graph does not work on weighted graphs.
+
+This is useful when we want to treat all the strongly connected components as one node. For example in a telecommunication network it can be useful for simplifying the analysis of costs.
+
+To do that:
+
+1. Find circuits using Tarjan's algorithm \(strongly connected components with size greater than $1$\).
+2. Merge all nodes in circuit into one collapsed node.
+3. Remove the nodes that were merged.
+4. Add the new collapsed nodes.
+5. Replace the old references to the merged nodes to reference the new collapsed nodes.
+
+### Case study
+
+We want to reduce the same graph collapsing all strongly connected components into one node.
+
+```
+nodes := $a to: $h.
 edges := #( #( $a $b ) #( $a $c ) #( $a $g ) #( $b $e ) #( $c $b )
             #( $c $d ) #( $d $f ) #( $f $c ) #( $g $h ) #( $g $d )
             #( $h $g ) ).
 graphReducer := AIGraphReducer new.
 graphReducer
-	nodes: nodes;
-	edges: edges from: #first to: #second.
-reducedGraph := graphReducer run````reducedGraph` is a collection that contains all the new nodes of the graph. We can see that now there is only 5 nodes\(because the graph contained 5 strongly connected components\). Also, you can inspect the collapsed nodes and you willsee the new adjacencies.```Merged nodes: $a
+    nodes: nodes;
+    edges: edges from: #first to: #second.
+reducedGraph := graphReducer run
+```
+
+The collection `reducedGraph` contains all the new nodes of the graph. We can see that now there is only five nodes (because the graph contained five strongly connected components\). Also, you can inspect the collapsed nodes and you will see the new adjacencies.
+
+```
+Merged nodes: $a
 Merged nodes: $b
 Merged nodes: $e
 Merged nodes: $h, $g
-Merged nodes: $c, $f, $d```![Reduced graph: a collection containing all the new nodes.](figures/reduced_graph.pdf width=45)### ConclusionAlthough Tarjan's algorithm can be a bit complicated to understand a first sight, once we understand the logicbehind the updating the low-link values it gets clearer. The strongly connected components can represent severalthings in real life and the Tarjan algorithm is very useful because it runs on linear time.
+Merged nodes: $c, $f, $d
+```
+
+![Reduced graph: a collection containing all the new nodes.](figures/reduced_graph.pdf width=45)
+
+### Conclusion
+
+Although Tarjan's algorithm can be a bit complicated to understand a first sight, once we understand the logic behind the updating the low-link values it gets clearer. The strongly connected components can represent several things in real life and Tarjan's algorithm is very useful because it runs on linear time.

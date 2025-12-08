@@ -198,7 +198,7 @@ Besides viewing the graph, we can interact with it. Thanks to Roassal's canvas c
 
 - inspect the model of a selected node or edge
 
-- rearrange the position of the nodes
+- rearrange the position of a node
 
 - zoom in and out.
 
@@ -225,7 +225,29 @@ structure nodes: (kruskal nodes collect: [:node | node model ]).
 structure inspect
 ```
 
-Note that we can also use `AIGraphNonWeightedFixtureStructure`  for a weighted graph in case we do not want the edge weights to be drawn. 
+![Visualized weighted graph with edge labels.](figures/edgelabels.png width=80&label=edgelabels)
+
+In case of visualizing a weighted graph, each edge weight is rendered in the inner middle of the edge arrow like in Figure *@edgelabels@*. You might want to move the edge labels for better readability, e.g. if you need the graph for a presentation. 
+In such a case, you can export it to SVG like in this example:  
+
+```
+RSSVGCairoExporter new
+    canvas: AIWeightedDAGFixture new weightedDAG buildGraphCanvas;
+    exportToFile: 'c:/temp/foo.svg' asFileReference
+```
+
+Then you can keep working on it with your favorite SVG editor.
+
+`RSSVGCairoExporter` and other Roassal exporters can be loaded by executing this code snippet:
+
+```
+Metacello new
+    baseline: 'RoassalExporters';
+    repository: 'github://pharo-graphics/RoassalExporters';
+    load.
+```
+
+Furthermore, note that we can also use `AIGraphNonWeightedFixtureStructure`  for a weighted graph in case we do not want the edge weights to be drawn. 
 
 ### Conclusion
 
