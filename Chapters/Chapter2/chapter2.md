@@ -1,34 +1,27 @@
-## Basic definitions
-
+## Basic Definitions
 
 There is a great set of mathematical problems that can be solved using graph models. Graphs are vastly used in all kind of computer science problems.
 Graphs are discrete mathematical structures that consist of a set of vertices \(also called nodes\) and a set of edges that connect those vertices.
-In computer science is more commonly used the term _node_ instead of _vertex_. In this booklet the term node is going to be the one used.
+In computer science is more commonly used the term _node_ instead of _vertex_. In this booklet, the term node is going to be the one used.
 
 There are multiple types of graphs according if the edges are directed or undirected, if the edges are weighted or unweighted and so on.
 In this chapter, basic graph concepts and graphs types are going to be explained to ease the following of the algorithms.
 
 ### Type of Graphs
 
-
 #### Directed Graph
 
-
-A directed graph is a type of graph in which every edges has a direction: an ingoing node and an outgoing node. The most commonly way of representing a graph is to draw it.
-A directed graph can de drawn like in Figure *@directed@*:
+A directed graph (a *digraph*, for short) is a type of graph in which every edges has a direction: an ingoing node and an outgoing node. The most commonly way of representing a graph is to draw it. A directed graph can be drawn like in Figure *@directed@*.
 
 ![A directed graph.](figures/directed_graph.pdf width=30&label=directed)
 
 #### Undirected Graph
 
-
-An undirected graph is a type of graph in which the edges does not have a direction. They can be drawn without a line that does not have any arrow heads. It is
-understood that the graph has no direction if the direction is not specified explicitly as shown in Figure *@undirected@*.
+An undirected graph is a type of graph in which the edges does not have a direction. They can be drawn without a line that does not have any arrow heads. It is understood that the graph has no direction if the direction is not specified explicitly as shown in Figure *@undirected@*.
 
 ![An undirected graph.](figures/undirected_graph.pdf width=30&label=undirected)
 
 #### Weighted Graph
-
 
 A weighted graph is a graph that each of its edges has an associated weight \(see Figure *@weighted@*\). In real life examples, the weights can represent several things.
 For example, a graph can be a map in which the nodes represent cities and the edges represent the distance between those cities.
@@ -36,7 +29,6 @@ For example, a graph can be a map in which the nodes represent cities and the ed
 ![A weighted graph: edges have a weight.](figures/weighted_graph.pdf width=40&label=weighted)
 
 #### Connected Graph
-
 
 A connected graph is an undirected graph in which exists a path for every pair of nodes.
 For example, Figure *@connected@* represents a connected graph because from any node you can get to any node.
@@ -49,46 +41,40 @@ But, Figure *@directed2@* is a disconnected graph because the nodes F and G are 
 
 #### Bipartite Graph
 
-A bipartite graph is a graph whose set of vertices can be split into two subsets A and B in such a way that each edge of the graph joins a vertex in A and a vertex in B.
-A complete bipartite graph is a bipartite graph in which each vertex in A is joined to each vertex in B by just one edge.
+A bipartite graph is a graph whose set of nodes can be split into two subsets $A$ and $B$ in such a way that each edge of the graph joins a node in $A$ and a node in $B$. In Figure @bipartite@, the two subsets are $\{A1, A2, A3, A4, A5\}$ and $\{B1, B2, B3, B4\}$.
+A *complete* bipartite graph is a bipartite graph in which each node in A is joined to each node in B by just one edge.
 
+![A bipartite graph: the nodes are split into two subsets.](figures/bipartite.png width=48&label=bipartite)
 
 ### Graph Cycle
 
-
-A graph cycle is a sequence of adjacent nodes in which all nodes are different except of the first and the last one.
-That means, a graph cycle is a path that ends and starts in the same node without repeating any other node and it has a size grater than 3.
+A graph cycle is a sequence of adjacent nodes in which all nodes are different except of the first and the last one. That means, a graph cycle is a path that ends and starts in the same node without repeating any other node and it has a size greater than 3.
 
 For example, in  Figure *@cycle1@* there is a cycle between nodes _A, B, D_.
 
-![A Cycle in a graph.](figures/cycle_in_a_graph.pdf width=40&label=cycle1)
+![A cycle in a graph.](figures/cycle_in_a_graph.pdf width=40&label=cycle1)
 
-But, in Figure *@cycle2@* there is no cycle between from node A to C because the node D has to be traveled twice.
-Nevertheless, there is a cycle between node D, B and C.
+But in Figure *@cycle2@*, there is no cycle from node A to C because the node D has to be traveled twice. Nevertheless, there is a cycle between nodes D, B and C.
 
-![In a directed graph, direction is impacting cycle presence. ](figures/not_a_cycle.pdf width=52&label=cycle2)
+![In a directed graph, direction is impacting cycle presence.](figures/not_a_cycle.pdf width=52&label=cycle2)
 
 #### Directed Acyclic Graph \(DAG\)
 
-
 Like the name suggests, a directed acyclic graph is a directed graph that does not have any cycles \(as shown in Figure *@DAG@*\).
 
-![A directed Acyclic Graph.](figures/dag.pdf width=35&label=DAG)
+![A Directed Acyclic Graph (DAG).](figures/dag.pdf width=35&label=DAG)
 
 #### Strongly Connected Graph
 
-
-Unlike the Connected Graph, a Strongly Connect is a **directed** graph in which there is a path for every pair of nodes. Figure *@strongly1@* is a strongly connected graph.
+Unlike the connected graph, a strongly connected graph is a **directed** graph in which there is a path for every pair of nodes. Figure *@strongly1@* is a strongly connected graph.
 
 ![A strongly connected graph.](figures/strongly_connected_graph.pdf width=30&label=strongly1)
 
-Figure *@strongly2@* is not strongly connected because it is not possible to reach node D from node A. However, if the directions of the graph are deleted, the graph becomes a
-**undirected** connected graph. For that reason, Figure *@strongly2@* is called a weakly connected graph.
+Figure *@strongly2@* is not strongly connected because it is not possible to reach node D from node A. However, if the directions of the graph are deleted, the graph becomes an **undirected** connected graph. For that reason, Figure *@strongly2@* is called a weakly connected graph.
 
 ![A weakly connected graph.](figures/not_strongly_connected_graph.pdf width=30&label=strongly2)
 
 #### Strongly Connected Component
-
 
 A strongly connected component of a directed graph is the maximal subgraph that is strongly connected. In the figure there are three strongly connected components in the graph:
  $\{A, B, C\}$, $\{F, E\}$, $\{D\}$.
@@ -97,17 +83,14 @@ A strongly connected component of a directed graph is the maximal subgraph that 
 
 ### Tree
 
-
 A tree is a connected graph without cycles. That means that there is only one path between every pair of vertices. But, in the computer science context, normally a tree is
-represented as a **directed** graph. In that case, the definition will be that a **directed** tree is a directed acyclic graph in which every node has only one
-incoming \(parent\) node \(See Figure *@directedTree@*\). If you remove the direction of the directed acyclic graph the reaming graph has to be an **undirected** tree \(See Figure *@undiTree@*\).
+represented as a **directed** graph. In that case, the definition will be that a **directed** tree is a directed acyclic graph in which every node has only one incoming \(parent\) node \(See Figure *@directedTree@*\). If you remove the direction of the directed acyclic graph, the remaining graph has to be an **undirected** tree \(See Figure *@undiTree@*\).
 
 ![A tree: a connected graph without cycles.](figures/tree.pdf width=40&label=undiTree)
 
 ![A directed tree.](figures/directed_tree.pdf width=40&label=directedTree)
 
 ### Conclusion
-
 
 These definitions set the stage for the algorithms that we will now describe.
 Identifying clearly the kind of graphs an algorithm is applied on is key because the working hypotheses
